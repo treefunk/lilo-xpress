@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.myoptimind.lilo_xpress.R
 
-class GuestInfoFragment : Fragment(R.layout.fragment_guest_info) {
+class GuestLoginInfoFragment : Fragment(R.layout.fragment_guest_login_info) {
 
     companion object {
-        fun newInstance(): GuestInfoFragment {
+        fun newInstance(): GuestLoginInfoFragment {
             val args = Bundle()
 
-            val fragment = GuestInfoFragment()
+            val fragment = GuestLoginInfoFragment()
             fragment.arguments = args
             return fragment
         }

@@ -2,4 +2,12 @@
     <string name="app_name">lilo-xpress</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="label_guest_info_header">STEP 1: GUEST INFORMATION</string>
+    <string name="label_full_name">Full Name*</string>
+    <string name="label_agency">Agency*</string>
+    <string name="text_confirm_receipt">I would like to receive electronic copy of my\nAppearance Receipt</string>
+    <string name="label_guest_purpose_header">STEP 2: PURPOSE OF VISIT</string>
+    <string name="label_division_to_visit">Division to visit*</string>
+    <string name="label_purpose_service">Purpose/Service*</string>
+    <string name="label_person_to_visit">Person to visit*</string>
 </resources>

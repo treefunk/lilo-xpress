@@ -4,8 +4,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.myoptimind.lilo_xpress.R
-import com.myoptimind.lilo_xpress.guestlogin.guestinfo.GuestInfoFragment
-import kotlinx.android.synthetic.main.fragment_cesbie.*
+import com.myoptimind.lilo_xpress.guestlogin.cit.GuestLoginCitFragment
+import com.myoptimind.lilo_xpress.guestlogin.guestinfo.GuestLoginInfoFragment
+import com.myoptimind.lilo_xpress.guestlogin.purpose.GuestLoginPurposeFragment
 
 class GuestLoginFragment : Fragment(R.layout.fragment_guest_login) {
 
@@ -23,6 +24,6 @@ class GuestLoginFragment : Fragment(R.layout.fragment_guest_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container_post,GuestInfoFragment.newInstance())?.commit()
+            ?.replace(R.id.fragment_container_post,GuestLoginCitFragment.newInstance())?.commit()
     }
 }
