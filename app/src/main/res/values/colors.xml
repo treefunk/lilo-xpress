@@ -5,8 +5,12 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="colorBlueTab">#0411FE</color>
-    <color name="colorYellowTab">#FEF540</color>
-    <color name="colorRedTab">#FA1C24</color>
-    <color name="colorOrangeTab">#ED3B18</color>
+    <color name="colorYellowTab">#FFF601</color>
+    <color name="colorRedTab">#FE0000</color>
+    <color name="colorWhiteTab">#FFEDC9</color>
+    <color name="colorGreyHighlight">#EBEBEB</color>
+    <color name="colorLightBlueHighlight">#E8FAFF</color>
+    <color name="colorGreyLight">#939393</color>
     <color name="colorBlackAlpha50">#80000000</color>
+
 </resources>
