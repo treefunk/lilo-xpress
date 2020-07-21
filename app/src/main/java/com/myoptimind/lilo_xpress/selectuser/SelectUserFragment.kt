@@ -1,7 +1,8 @@
-package com.myoptimind.lilo_xpress
+package com.myoptimind.lilo_xpress.selectuser
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.myoptimind.lilo_xpress.R
 
 class SelectUserFragment : Fragment(R.layout.fragment_select_user) {
 
