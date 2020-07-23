@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
 
         android:background="@drawable/shape_rectangle"
-        android:backgroundTint="@color/colorYellowTab"
+        android:backgroundTint="@color/colorBlueTab"
         tools:visibility="visible"
         />
 
@@ -33,13 +33,13 @@
 
 
     <TextView
-        android:id="@+id/tv_purpose_header"
+        android:id="@+id/tv_cesbie_header"
         style="@style/LiloTextBody1"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="@string/label_guest_purpose_header"
+        android:text="@string/label_cesbie_information_header"
 
         app:layout_constraintLeft_toLeftOf="@id/background_paper"
         app:layout_constraintRight_toRightOf="@id/background_paper"
@@ -63,36 +63,87 @@
         />
 
     <TextView
-        android:id="@+id/label_division_to_visit"
+        android:id="@+id/label_fullname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toRightOf="@id/left_guide"
+        app:layout_constraintRight_toLeftOf="@id/right_guide"
+        app:layout_constraintTop_toBottomOf="@id/tv_cesbie_header"
+        app:layout_constraintBottom_toTopOf="@id/til_full_name"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
+
+
+        android:layout_marginTop="25dp"
+        style="@style/LiloTextBody1"
+        android:text="@string/label_full_name"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_full_name"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        app:layout_constraintTop_toBottomOf="@id/label_fullname"
+        app:layout_constraintLeft_toLeftOf="@id/label_fullname"
+        app:layout_constraintRight_toRightOf="@id/label_fullname"
+        app:layout_constraintBottom_toTopOf="@id/label_temperature"
+        style="@style/lilo_til1"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/lilo_et_box"
+            android:text="test"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/iv_toggle_fullname"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        app:layout_constraintTop_toTopOf="@id/til_full_name"
+        app:layout_constraintRight_toRightOf="@id/til_full_name"
+        app:layout_constraintBottom_toBottomOf="@id/til_full_name"
+        android:src="@drawable/ic_round_keyboard_arrow_down_40"
+        android:tint="@android:color/black"
+        />
+
+    <TextView
+        android:id="@+id/label_temperature"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         app:layout_constraintLeft_toLeftOf="@id/left_guide"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
-        app:layout_constraintTop_toBottomOf="@id/tv_purpose_header"
-        app:layout_constraintBottom_toTopOf="@id/til_division_to_visit"
+        app:layout_constraintTop_toBottomOf="@id/til_full_name"
+        app:layout_constraintBottom_toTopOf="@id/til_temperature"
 
         android:layout_marginTop="20dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintVertical_bias="0"
-        android:text="@string/label_division_to_visit"
+        android:text="@string/label_body_temp"
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_division_to_visit"
+        android:id="@+id/til_temperature"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        app:layout_constraintTop_toBottomOf="@id/label_division_to_visit"
-        app:layout_constraintLeft_toLeftOf="@id/label_division_to_visit"
-        app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
-        app:layout_constraintBottom_toTopOf="@id/label_purpose_service"
+        app:layout_constraintTop_toBottomOf="@id/label_temperature"
+        app:layout_constraintLeft_toLeftOf="@id/label_temperature"
+        app:layout_constraintRight_toRightOf="@id/label_temperature"
+        app:layout_constraintBottom_toTopOf="@id/label_place_of_origin"
         style="@style/lilo_til1"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_division_to_visit"
+            android:id="@+id/et_temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/lilo_et_box"
@@ -101,46 +152,46 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/iv_toggle_division_to_visit"
+        android:id="@+id/iv_toggle_temperature"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="@id/til_division_to_visit"
-        app:layout_constraintRight_toRightOf="@id/til_division_to_visit"
-        app:layout_constraintBottom_toBottomOf="@id/til_division_to_visit"
+        app:layout_constraintTop_toTopOf="@id/til_temperature"
+        app:layout_constraintRight_toRightOf="@id/til_temperature"
+        app:layout_constraintBottom_toBottomOf="@id/til_temperature"
         android:src="@drawable/ic_round_keyboard_arrow_down_40"
         android:tint="@android:color/black"
         />
 
     <TextView
-        android:id="@+id/label_purpose_service"
+        android:id="@+id/label_place_of_origin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         app:layout_constraintLeft_toLeftOf="@id/left_guide"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
-        app:layout_constraintTop_toBottomOf="@id/til_division_to_visit"
-        app:layout_constraintBottom_toTopOf="@id/til_purpose_service"
+        app:layout_constraintTop_toBottomOf="@id/til_temperature"
+        app:layout_constraintBottom_toTopOf="@id/til_place_of_origin"
 
 
         android:layout_marginTop="20dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
-        android:text="@string/label_purpose_service"
+        android:text="@string/label_place_of_origin"
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_purpose_service"
+        android:id="@+id/til_place_of_origin"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        app:layout_constraintTop_toBottomOf="@id/label_purpose_service"
-        app:layout_constraintLeft_toLeftOf="@id/label_purpose_service"
-        app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
-        app:layout_constraintBottom_toTopOf="@id/label_person_to_visit"
+        app:layout_constraintTop_toBottomOf="@id/label_place_of_origin"
+        app:layout_constraintLeft_toLeftOf="@id/label_place_of_origin"
+        app:layout_constraintRight_toRightOf="@id/label_temperature"
+        app:layout_constraintBottom_toTopOf="@id/label_health_condition"
         style="@style/lilo_til1"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_purpose_service"
+            android:id="@+id/et_place_of_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/lilo_et_box"
@@ -149,95 +200,82 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/iv_toggle_purpose_service"
+        android:id="@+id/iv_toggle_place_of_origin"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="@id/til_purpose_service"
-        app:layout_constraintRight_toRightOf="@id/til_purpose_service"
-        app:layout_constraintBottom_toBottomOf="@id/til_purpose_service"
+        app:layout_constraintTop_toTopOf="@id/til_place_of_origin"
+        app:layout_constraintRight_toRightOf="@id/til_place_of_origin"
+        app:layout_constraintBottom_toBottomOf="@id/til_place_of_origin"
         android:src="@drawable/ic_round_keyboard_arrow_down_40"
         android:tint="@android:color/black"
         />
 
     <TextView
-        android:id="@+id/label_person_to_visit"
+        android:id="@+id/label_health_condition"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         app:layout_constraintLeft_toLeftOf="@id/left_guide"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
-        app:layout_constraintTop_toBottomOf="@id/til_purpose_service"
-        app:layout_constraintBottom_toTopOf="@id/til_person_to_visit"
+        app:layout_constraintTop_toBottomOf="@id/til_place_of_origin"
+        app:layout_constraintBottom_toTopOf="@id/til_health_condition"
 
 
         android:layout_marginTop="20dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
-        android:text="@string/label_person_to_visit"
+        android:text="Health Condition*"
         />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_person_to_visit"
+        android:id="@+id/til_health_condition"
         android:layout_width="0dp"
         android:layout_height="55dp"
-        app:layout_constraintTop_toBottomOf="@id/label_person_to_visit"
-        app:layout_constraintLeft_toLeftOf="@id/label_person_to_visit"
-        app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
-        app:layout_constraintBottom_toTopOf="@id/iv_guest_purpose_back"
+        app:layout_constraintTop_toBottomOf="@id/label_health_condition"
+        app:layout_constraintLeft_toLeftOf="@id/label_health_condition"
+        app:layout_constraintRight_toRightOf="@id/label_temperature"
+        app:layout_constraintBottom_toTopOf="@id/iv_cesbie_info_save"
         style="@style/lilo_til1"
+
         app:hintEnabled="false"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_person_to_visit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/lilo_et_box"
-            android:hint="Search Nickname/Full name"
-            />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_health_condition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/lilo_et_box"
+        />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
-        android:id="@+id/iv_toggle_person_to_visit"
+        android:id="@+id/iv_toggle_health_condition"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="@id/til_person_to_visit"
-        app:layout_constraintRight_toRightOf="@id/til_person_to_visit"
-        app:layout_constraintBottom_toBottomOf="@id/til_person_to_visit"
+        app:layout_constraintTop_toTopOf="@id/til_health_condition"
+        app:layout_constraintRight_toRightOf="@id/til_health_condition"
+        app:layout_constraintBottom_toBottomOf="@id/til_health_condition"
         android:src="@drawable/ic_round_keyboard_arrow_down_40"
         android:tint="@android:color/black"
         />
 
+
+
     <ImageView
-        android:id="@+id/iv_guest_purpose_back"
+        android:id="@+id/iv_cesbie_info_save"
         android:layout_width="170dp"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@id/iv_guest_purpose_next"
         app:layout_constraintLeft_toRightOf="@id/left_guide"
-        app:layout_constraintTop_toBottomOf="@id/til_person_to_visit"
-        app:layout_constraintBottom_toBottomOf="@id/background_paper"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-
-
-        android:layout_marginTop="30dp"
-        app:layout_constraintHorizontal_bias="0"
-        android:src="@drawable/back"
-        />
-
-    <ImageView
-        android:id="@+id/iv_guest_purpose_next"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/iv_guest_purpose_back"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
-        app:layout_constraintTop_toBottomOf="@id/til_person_to_visit"
+        app:layout_constraintTop_toBottomOf="@id/til_health_condition"
         app:layout_constraintBottom_toBottomOf="@id/background_paper"
-        app:layout_constraintVertical_bias="0"
 
         android:layout_marginTop="30dp"
+        app:layout_constraintDimensionRatio="W,0.7:1"
+        android:scaleType="fitStart"
         app:layout_constraintHorizontal_bias="1"
-        android:src="@drawable/next"
+        android:src="@drawable/save"
         />
 
 

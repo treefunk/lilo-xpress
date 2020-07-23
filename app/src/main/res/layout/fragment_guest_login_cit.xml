@@ -95,8 +95,7 @@
             android:id="@+id/et_temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="15sp"
+            style="@style/lilo_et_box"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -144,8 +143,7 @@
             android:id="@+id/et_place_of_origin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="15sp"
+            style="@style/lilo_et_box"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -185,7 +183,7 @@
         app:layout_constraintTop_toBottomOf="@id/label_mobile_number"
         app:layout_constraintLeft_toLeftOf="@id/label_mobile_number"
         app:layout_constraintRight_toRightOf="@id/label_temperature"
-        app:layout_constraintBottom_toTopOf="@id/iv_guest_purpose_save"
+        app:layout_constraintBottom_toTopOf="@id/iv_cit_save"
         style="@style/lilo_til1"
         app:hintEnabled="false"
         >
@@ -194,8 +192,7 @@
             android:id="@+id/et_mobile_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="15sp"
+            style="@style/lilo_et_box"
             android:hint="Search Nickname/Full name"
             />
 
@@ -235,8 +232,7 @@
         android:id="@+id/et_health_condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textSize="15sp"
+        style="@style/lilo_et_box"
         />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -255,25 +251,25 @@
 
 
     <ImageView
-        android:id="@+id/iv_guest_purpose_back"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintRight_toLeftOf="@id/right_guide"
+        android:id="@+id/iv_cit_back"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@id/iv_cit_save"
         app:layout_constraintLeft_toRightOf="@id/left_guide"
         app:layout_constraintTop_toBottomOf="@id/til_health_condition"
         app:layout_constraintBottom_toBottomOf="@id/background_paper"
 
         android:layout_marginTop="30dp"
         app:layout_constraintDimensionRatio="W,0.7:1"
-        android:scaleType="fitStart"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
         android:src="@drawable/back"
         />
 
     <ImageView
-        android:id="@+id/iv_guest_purpose_save"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/iv_cit_save"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/left_guide"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
         app:layout_constraintTop_toBottomOf="@id/til_health_condition"
@@ -281,8 +277,8 @@
 
         android:layout_marginTop="30dp"
         app:layout_constraintDimensionRatio="W,0.7:1"
-        android:scaleType="fitStart"
         app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintVertical_bias="0"
         android:src="@drawable/save"
         />
 

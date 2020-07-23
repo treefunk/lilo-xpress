@@ -5,7 +5,7 @@
     <string name="label_guest_info_header">STEP 1: GUEST INFORMATION</string>
     <string name="label_full_name">Full Name*</string>
     <string name="label_agency">Agency*</string>
-    <string name="text_confirm_receipt">I would like to receive electronic copy of my\nAppearance Receipt</string>
+    <string name="text_confirm_receipt">I would like to receive an electronic copy of my\nAppearance Receipt</string>
     <string name="label_guest_purpose_header">STEP 2: PURPOSE OF VISIT</string>
     <string name="label_division_to_visit">Division to visit*</string>
     <string name="label_purpose_service">Purpose/Service*</string>
@@ -21,4 +21,13 @@
     <string name="label_temperature_">Temperature</string>
     <string name="label_place_of_origin_">Place of Origin</string>
     <string name="label_pincode">Pin Code</string>
+    <string name="label_enter_pin_code">STEP 1: ENTER PIN CODE</string>
+    <string name="label_enter_pin_code2">Enter Pin Code*</string>
+    <string name="label_good">Good</string>
+    <string name="label_okay">Okay</string>
+    <string name="label_bad">Bad</string>
+    <string name="label_feedback">Feedback</string>
+    <string name="label_duration_of_visit">Duration of Visit</string>
+    <string name="label_cesbie_information_header">CESBIE INFORMATION</string>
+    <string name="label_body_temp">Body Temperature*</string>
 </resources>

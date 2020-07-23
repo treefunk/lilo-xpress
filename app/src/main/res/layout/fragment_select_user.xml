@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg"
-    tools:context=".selectuser.SelectUserFragment">
+    tools:context=".SelectUserFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/hor_guideline"
@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.35"
         />
-    
+
     <ImageView
         android:id="@+id/logo"
         android:layout_width="0dp"
@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/ib_guest"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="108dp"
         android:src="@drawable/guest"
 
         app:layout_constraintTop_toBottomOf="@id/hor_guideline"
@@ -40,16 +40,16 @@
         app:layout_constraintBottom_toTopOf="@id/ib_cesbie"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintDimensionRatio="W,7:1"
-
-        android:paddingRight="230dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintHorizontal_bias="0"
+        android:scaleType="fitStart"
         android:background="@null"
         />
 
     <ImageView
         android:id="@+id/ib_cesbie"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="108dp"
         android:src="@drawable/cesbie"
         app:layout_constraintTop_toBottomOf="@id/ib_guest"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -58,10 +58,10 @@
         app:layout_constraintDimensionRatio="W,7:1"
 
         app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"
         android:layout_marginTop="30dp"
-
+        android:adjustViewBounds="true"
         android:background="@null"
-        android:paddingLeft="230dp"
         />
 
     <ImageView

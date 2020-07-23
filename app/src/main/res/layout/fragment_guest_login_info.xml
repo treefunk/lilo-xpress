@@ -240,12 +240,14 @@
         app:layout_constraintTop_toBottomOf="@id/til_email_address"
         app:layout_constraintLeft_toLeftOf="@id/til_email_address"
         app:layout_constraintRight_toRightOf="@id/til_email_address"
+        app:layout_constraintBottom_toTopOf="@id/photo_tape"
         app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
         android:checked="true"
         android:text="@string/text_confirm_receipt"
         app:buttonTint="@android:color/black"
         android:maxLines="2"
-        android:textSize="19sp"
+        android:textSize="18sp"
         android:gravity="top"
         android:layout_marginTop="10dp"
         android:letterSpacing="0.09"
@@ -262,9 +264,9 @@
 
         app:layout_constraintLeft_toLeftOf="@id/background_paper"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="@id/background_paper"
+        app:layout_constraintRight_toLeftOf="@id/right_guide"
         app:layout_constraintDimensionRatio="h,1,1"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintHorizontal_bias="0.15"
         android:src="@drawable/takephototrimmed"
         />
 
@@ -285,15 +287,13 @@
 
     <ImageView
         android:id="@+id/iv_guest_info_next"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintLeft_toRightOf="@id/iv_take_photo"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
-        app:layout_constraintTop_toBottomOf="@id/photo_tape"
-        app:layout_constraintBottom_toBottomOf="@id/background_paper"
+        app:layout_constraintTop_toTopOf="@id/iv_take_photo"
+        app:layout_constraintBottom_toBottomOf="@id/iv_take_photo"
 
-        app:layout_constraintDimensionRatio="W,1.2:1.1"
-        android:scaleType="fitStart"
+
 
         app:layout_constraintHorizontal_bias="1"
         android:src="@drawable/next"

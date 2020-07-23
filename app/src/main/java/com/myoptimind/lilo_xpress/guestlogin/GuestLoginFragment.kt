@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.myoptimind.lilo_xpress.R
-import com.myoptimind.lilo_xpress.guestlogin.cit.GuestLoginCitFragment
-import com.myoptimind.lilo_xpress.guestlogin.guestinfo.GuestLoginInfoFragment
-import com.myoptimind.lilo_xpress.guestlogin.print.GuestLoginPrintFragment
-import com.myoptimind.lilo_xpress.guestlogin.purpose.GuestLoginPurposeFragment
 
-class GuestLoginFragment : Fragment(R.layout.fragment_guest_login) {
+private const val TAG = "GuestLoginFragment"
+
+class GuestLoginFragment : Fragment(R.layout.fragment_guest_login), GuestInfoTabChangeable {
 
     companion object {
         fun newInstance(): GuestLoginFragment {
@@ -24,7 +22,26 @@ class GuestLoginFragment : Fragment(R.layout.fragment_guest_login) {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.supportFragmentManager?.beginTransaction()
-            ?.replace(R.id.fragment_container_post,GuestLoginPrintFragment.newInstance())?.commit()
+        changeTab(GuestLoginTab.GUEST_INFO)
     }
+
+    override fun changeTab(tab: GuestLoginTab) {
+
+        val fragment = when(tab){
+            GuestLoginTab.GUEST_INFO -> GuestLoginInfoFragment.newInstance()
+            GuestLoginTab.PURPOSE    -> GuestLoginPurposeFragment.newInstance()
+            GuestLoginTab.CIT        -> GuestLoginCitFragment.newInstance()
+            GuestLoginTab.PRINT      -> GuestLoginPrintFragment.newInstance()
+        }
+
+        fragment.guestTabChanger = this
+
+        activity?.run{
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container_post, fragment)
+                .commit()
+        }
+    }
+
 }
