@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.data.Result
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class GuestLoginViewModel
@@ -33,20 +30,18 @@ class GuestLoginViewModel
     val attachedAgencies = MutableLiveData<Result<List<Option>>>()
 
     init {
-
-    }
-
-    fun populateFields() {
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(Dispatchers.IO) {
+            delay(5000)
+            agencies.postValue(Result.Loading)
             val res = guestLoginRepository.getFirstStepData()
             Log.v("rest",res.toString())
-            withContext(Main){
-                agencies.value = Result.Success(res.data)
-                for(option in res.data){
-                    Log.v("rest","name - ${option.name}")
-                }
-            }
+            agencies.postValue(Result.Success(res.data))
         }
+    }
+
+
+    override fun onCleared() {
+        super.onCleared()
     }
 
 
