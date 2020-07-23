@@ -5,3 +5,7 @@ import androidx.fragment.app.Fragment
 abstract class GuestInfoChildFragment: Fragment() {
     internal lateinit var guestTabChanger: GuestInfoTabChangeable
 }
+
+interface GuestInfoTabChangeable {
+    fun changeTab(tab: GuestLoginTab)
+}
