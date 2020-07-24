@@ -6,6 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
@@ -14,6 +15,7 @@ import androidx.lifecycle.Observer
 import com.myoptimind.lilo_xpress.R
 import com.myoptimind.lilo_xpress.api.GuestLoginService
 import com.myoptimind.lilo_xpress.data.Result
+import com.myoptimind.lilo_xpress.setUpDropDown
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_guest_login_info.*
 import javax.inject.Inject
@@ -53,19 +55,18 @@ class GuestLoginInfoFragment : GuestInfoChildFragment() {
             guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
         }
 
-        val agenciesPopupMenu = PopupMenu(requireContext(),til_agency,Gravity.FILL)
+//        val agenciesPopupMenu = PopupMenu(requireContext(),label_attached_agency,Gravity.START,android.R.attr.popupMenuStyle,R.style.Widget_AppCompat_Light_PopupMenu_Overflow)
 
-        et_agency.setOnClickListener{
-            agenciesPopupMenu.show()
-        }
 
-        viewModel.agencies.observe(viewLifecycleOwner, Observer {
+        viewModel.agencies.observe(viewLifecycleOwner, Observer { result ->
 
-            when(it){
+            when(result){
                 is Result.Success -> {
-                    for(option in it.data){
-                        agenciesPopupMenu.menu.add(option.name)
-
+                    et_agency.setUpDropDown(
+                        requireContext(),
+                        result.data.map { option -> option.name }
+                    ) {
+                        Log.v(TAG,"index is $it")
                     }
                 }
                 is Result.Error -> Toast.makeText(requireContext(),"yeoo",Toast.LENGTH_SHORT).show()

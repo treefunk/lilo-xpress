@@ -124,18 +124,22 @@
         app:layout_constraintLeft_toLeftOf="@id/label_agency"
         app:layout_constraintRight_toRightOf="@id/label_agency"
         app:layout_constraintBottom_toTopOf="@id/label_attached_agency"
-        style="@style/lilo_til1"
+        style="@style/lilo_til2"
         >
 
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/et_agency"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="15sp"
+            android:clickable="true"
+            android:focusable="false"
+
             />
 
     </com.google.android.material.textfield.TextInputLayout>
+
 
     <ImageView
         android:id="@+id/iv_toggle_agency"
