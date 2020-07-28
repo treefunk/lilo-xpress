@@ -84,7 +84,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_full_name"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/label_fullname"
         app:layout_constraintLeft_toLeftOf="@id/label_fullname"
         app:layout_constraintRight_toRightOf="@id/label_fullname"
@@ -134,7 +134,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_temperature"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/label_temperature"
         app:layout_constraintLeft_toLeftOf="@id/label_temperature"
         app:layout_constraintRight_toRightOf="@id/label_temperature"
@@ -182,7 +182,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_place_of_origin"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/label_place_of_origin"
         app:layout_constraintLeft_toLeftOf="@id/label_place_of_origin"
         app:layout_constraintRight_toRightOf="@id/label_temperature"
@@ -230,7 +230,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_health_condition"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/label_health_condition"
         app:layout_constraintLeft_toLeftOf="@id/label_health_condition"
         app:layout_constraintRight_toRightOf="@id/label_temperature"

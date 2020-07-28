@@ -1,6 +1,6 @@
 package com.myoptimind.lilo_xpress.guestlogin
 
-enum class GuestLoginTab {
+enum class GuestLoginTab{
     GUEST_INFO,
     PURPOSE,
     CIT,

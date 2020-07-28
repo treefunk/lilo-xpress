@@ -1,20 +1,25 @@
-package com.myoptimind.lilo_xpress.guestlogin
+package com.myoptimind.lilo_xpress.guestlogin.tabs
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.myoptimind.lilo_xpress.R
-import kotlinx.android.synthetic.main.fragment_guest_login_purpose.*
+import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
+import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
+import com.myoptimind.lilo_xpress.shared.TabChildFragment
 
-class GuestLoginPurposeFragment : GuestInfoChildFragment() {
+class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
+
+    val viewModel: GuestLoginViewModel by activityViewModels()
 
     companion object {
-        fun newInstance(): GuestLoginPurposeFragment {
+        fun newInstance(): GuestLoginPrintFragment {
             val args = Bundle()
-
+            
             val fragment =
-                GuestLoginPurposeFragment()
+                GuestLoginPrintFragment()
             fragment.arguments = args
             return fragment
         }
@@ -25,17 +30,10 @@ class GuestLoginPurposeFragment : GuestInfoChildFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_guest_login_purpose,container,false)
+        return inflater.inflate(R.layout.fragment_guest_login_print,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iv_guest_purpose_next.setOnClickListener {
-            guestTabChanger.changeTab(GuestLoginTab.CIT)
-        }
-
-        iv_guest_purpose_back.setOnClickListener {
-            guestTabChanger.changeTab(GuestLoginTab.GUEST_INFO)
-        }
     }
 }

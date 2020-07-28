@@ -72,7 +72,7 @@
 
 
     <RadioButton
-        android:id="@+id/iv_happy"
+        android:id="@+id/iv_good"
         android:layout_width="130dp"
         android:layout_height="130dp"
 
@@ -90,22 +90,22 @@
         />
 
     <TextView
-        android:id="@+id/tv_happy_label"
+        android:id="@+id/tv_good_label"
         style="@style/LiloTextLightHeader1"
         android:layout_width="wrap_content"
 
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:letterSpacing="0.06"
-
+        android:enabled="true"
         android:text="@string/label_good"
 
         android:textAllCaps="true"
         android:textColor="@drawable/selector_checkbox"
         android:textSize="25sp"
-        app:layout_constraintLeft_toLeftOf="@id/iv_happy"
-        app:layout_constraintRight_toRightOf="@id/iv_happy"
-        app:layout_constraintTop_toBottomOf="@id/iv_happy" />
+        app:layout_constraintLeft_toLeftOf="@id/iv_good"
+        app:layout_constraintRight_toRightOf="@id/iv_good"
+        app:layout_constraintTop_toBottomOf="@id/iv_good" />
 
     <RadioButton
         android:id="@+id/iv_okay"
@@ -113,8 +113,8 @@
         android:layout_height="130dp"
 
         app:layout_constraintBottom_toBottomOf="@id/guide_experience"
-        app:layout_constraintLeft_toRightOf="@id/iv_happy"
-        app:layout_constraintRight_toLeftOf="@id/iv_stressed"
+        app:layout_constraintLeft_toRightOf="@id/iv_good"
+        app:layout_constraintRight_toLeftOf="@id/iv_bad"
         app:layout_constraintTop_toBottomOf="@id/label_experience_header"
         android:layout_marginTop="8dp"
 
@@ -128,7 +128,6 @@
         android:id="@+id/tv_okay_label"
         style="@style/LiloTextLightHeader1"
         android:layout_width="wrap_content"
-
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:letterSpacing="0.06"
@@ -146,7 +145,7 @@
 
 
     <RadioButton
-        android:id="@+id/iv_stressed"
+        android:id="@+id/iv_bad"
         android:layout_width="130dp"
         android:layout_height="130dp"
 
@@ -162,7 +161,7 @@
         />
 
     <TextView
-        android:id="@+id/tv_stressed_label"
+        android:id="@+id/tv_bad_label"
         style="@style/LiloTextLightHeader1"
         android:layout_width="wrap_content"
 
@@ -175,9 +174,9 @@
         android:textAllCaps="true"
         android:textColor="@drawable/selector_checkbox"
         android:textSize="25sp"
-        app:layout_constraintLeft_toLeftOf="@id/iv_stressed"
-        app:layout_constraintRight_toRightOf="@id/iv_stressed"
-        app:layout_constraintTop_toBottomOf="@id/iv_stressed" />
+        app:layout_constraintLeft_toLeftOf="@id/iv_bad"
+        app:layout_constraintRight_toRightOf="@id/iv_bad"
+        app:layout_constraintTop_toBottomOf="@id/iv_bad" />
 
     <TextView
         android:id="@+id/label_feedback"

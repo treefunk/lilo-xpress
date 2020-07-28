@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.myoptimind.lilo_xpress.R
-import com.myoptimind.lilo_xpress.guestlogout.enterpincode.GuestLogoutEnterPinFragment
-import com.myoptimind.lilo_xpress.guestlogout.experience.GuestLogoutExperienceFragment
-import com.myoptimind.lilo_xpress.guestlogout.print.GuestLogoutPrintFragment
-import kotlinx.android.synthetic.main.fragment_guest_logout.*
+import com.myoptimind.lilo_xpress.guestlogout.tabs.GuestLogoutEnterPinFragment
+import com.myoptimind.lilo_xpress.guestlogout.tabs.GuestLogoutExperienceFragment
+import com.myoptimind.lilo_xpress.guestlogout.tabs.GuestLogoutPrintFragment
+import com.myoptimind.lilo_xpress.shared.TabHost
+import dagger.hilt.android.AndroidEntryPoint
 
-class GuestLogoutFragment : Fragment() {
+@AndroidEntryPoint
+class GuestLogoutFragment : Fragment(), TabHost<GuestLogoutTab> {
 
     companion object {
         fun newInstance(): GuestLogoutFragment {
@@ -28,7 +31,27 @@ class GuestLogoutFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container_post,GuestLogoutPrintFragment.newInstance())?.commit()
         return inflater.inflate(R.layout.fragment_guest_logout,container,false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        changeTab(GuestLogoutTab.ENTER_PIN)
+    }
+
+    override fun changeTab(tab: GuestLogoutTab) {
+        val fragment = when(tab){
+            GuestLogoutTab.ENTER_PIN -> GuestLogoutEnterPinFragment.newInstance()
+            GuestLogoutTab.EXPERIENCE -> GuestLogoutExperienceFragment.newInstance()
+            GuestLogoutTab.PRINT -> GuestLogoutPrintFragment.newInstance()
+        }
+        fragment.guestTabChanger = this
+
+        activity?.run{
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_container_post, fragment)
+                .commit()
+        }
     }
 }

@@ -5,7 +5,7 @@
     <string name="label_guest_info_header">STEP 1: GUEST INFORMATION</string>
     <string name="label_full_name">Full Name*</string>
     <string name="label_agency">Agency*</string>
-    <string name="text_confirm_receipt">I would like to receive an electronic copy of my\nAppearance Receipt</string>
+    <string name="text_confirm_receipt">I would like to receive an electronic copy of my Appearance Receipt</string>
     <string name="label_guest_purpose_header">STEP 2: PURPOSE OF VISIT</string>
     <string name="label_division_to_visit">Division to visit*</string>
     <string name="label_purpose_service">Purpose/Service*</string>

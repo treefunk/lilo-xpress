@@ -1,16 +1,75 @@
 package com.myoptimind.lilo_xpress.guestlogin
 
-import com.myoptimind.lilo_xpress.api.GuestFirstReponse
+
 import com.myoptimind.lilo_xpress.api.GuestLoginService
+import com.myoptimind.lilo_xpress.data.DropDownType
+import com.myoptimind.lilo_xpress.data.Option
+import com.myoptimind.lilo_xpress.shared.DropdownDataSource
+import com.myoptimind.lilo_xpress.shared.toRequestBody
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 
 class GuestLoginRepository
 @Inject
-constructor(val guestLoginService: GuestLoginService) {
+constructor(
+    val dropdownDataSource: DropdownDataSource,
+    val guestLoginService: GuestLoginService
+) {
 
-    suspend fun getFirstStepData(): GuestFirstReponse {
-        return guestLoginService.getFirstStepFields()
+    init {
+        dropdownDataSource.fetchGuestInfoStep1()
+        dropdownDataSource.fetchGuestInfoStep2()
+        dropdownDataSource.fetchGuestInfoStep3()
+    }
+
+    val agencies         = dropdownDataSource.agencies
+    val attachedAgencies = dropdownDataSource.attachedAgencies
+    val divisions        = dropdownDataSource.divisions
+    val purposes         = dropdownDataSource.purposes
+    val persons          = dropdownDataSource.persons
+    val placeOfOrigins   = dropdownDataSource.placeOfOrigin
+
+    fun getSelectedAgency(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.AGENCIES)
+    fun getSelectedAttachedAgency(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.ATTACHED_AGENCIES)
+    fun getSelectedDivision(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.DIVISIONS)
+    fun getSelectedPurpose(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.PURPOSES)
+    fun getSelectedPerson(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.PERSONS)
+    fun getSelectedPlaceOfOrigin(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.PLACE_OF_ORIGIN)
+
+
+    suspend fun guestLogin(
+        fullname: RequestBody,
+        agency: RequestBody,
+        attachedAgency: RequestBody,
+        emailAddress: RequestBody,
+        confirmReceipt: RequestBody,
+        uploadedPhoto: MultipartBody.Part,
+        divisionToVisit: RequestBody,
+        purpose: RequestBody,
+        personToVisit: RequestBody,
+        temperature: RequestBody,
+        placeOfOrigin: RequestBody,
+        mobileNumber: RequestBody,
+        healthCondition: RequestBody
+    ){
+        guestLoginService.loginGuest(
+            fullname,
+            agency,
+            attachedAgency,
+            emailAddress,
+            confirmReceipt,
+            uploadedPhoto,
+            divisionToVisit,
+            purpose,
+            personToVisit,
+            temperature,
+            placeOfOrigin,
+            mobileNumber,
+            healthCondition,
+            "11122".toRequestBody()
+        )
     }
 
 }

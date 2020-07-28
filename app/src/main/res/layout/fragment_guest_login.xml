@@ -28,6 +28,17 @@
         app:layout_constraintGuide_percent="0.15"
         />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintTop_toTopOf="@id/fragment_container_post"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_container_post"
+        app:layout_constraintRight_toRightOf="@id/fragment_container_post"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_container_post"
+        android:src="@drawable/ripple_loading"
+        />
+
     <FrameLayout
         android:id="@+id/fragment_container_post"
         android:layout_width="0dp"

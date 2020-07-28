@@ -32,7 +32,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        app:cardElevation="18dp"
+        app:cardElevation="8dp"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
 
-            android:padding="20dp"
+            android:padding="10dp"
             android:text="@string/guest_print_header"
 
             android:gravity="center"
@@ -305,10 +305,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
+                app:layout_constraintTop_toBottomOf="@id/tv_place_of_origin"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/tv_pin_code"
                 android:layout_marginTop="8dp"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintVertical_chainStyle="packed"
 
                 android:paddingTop="18dp"
                 android:background="@color/colorLightBlueHighlight"
@@ -323,12 +326,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
 
+                app:layout_constraintTop_toBottomOf="@id/label_pin_code"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="1"
 
 
-                android:paddingBottom="18dp"
+                android:paddingBottom="10dp"
                 android:gravity="center"
                 style="@style/LiloTextBody1"
                 android:background="@color/colorLightBlueHighlight"
@@ -350,6 +355,7 @@
        android:backgroundTint="@color/colorBlueTab"
        android:text="PRINT"
        android:textSize="24sp"
+       android:elevation="20dp"
 
        android:textColor="@android:color/white"
        />

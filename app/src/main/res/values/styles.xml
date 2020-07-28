@@ -13,8 +13,8 @@
     </style>
 
     <style name="LiloTextBody1">
-        <item name="android:textSize">25sp</item>
-        <item name="android:letterSpacing">0.08</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0.05</item>
         <item name="android:textColor">@android:color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -48,7 +48,11 @@
     <style name="lilo_et_box">
         <item name="android:maxLines">1</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
     </style>
 
 
