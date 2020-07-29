@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.myoptimind.lilo_xpress.R
+import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
 import com.myoptimind.lilo_xpress.shared.handleData
+import com.myoptimind.lilo_xpress.shared.initLoading
 import kotlinx.android.synthetic.main.fragment_guest_login_cit.*
 
 class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
@@ -35,6 +38,8 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loading.initLoading(requireContext())
 
         val viewModel: GuestLoginViewModel by activityViewModels()
 
@@ -71,7 +76,6 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         }
 
         iv_cit_save.setOnClickListener {
-            guestTabChanger.changeTab(GuestLoginTab.PRINT)
             viewModel.saveStep3(
                 et_temperature.text.toString(),
                 et_mobile_number.text.toString(),
@@ -79,6 +83,38 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
             )
             viewModel.loginGuest()
         }
+
+        viewModel.loginResult.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Result.Success -> {
+                    loading_components_cit.visibility = View.GONE
+                    enableInputs(true)
+                    guestTabChanger.changeTab(GuestLoginTab.PRINT)
+                }
+                is Result.Error -> {
+                    loading_components_cit.visibility = View.GONE
+                    enableInputs(true)
+                    Toast.makeText(
+                        requireContext(),
+                        result.error.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                Result.Loading -> {
+                    loading_components_cit.visibility = View.VISIBLE
+                    enableInputs(false)
+                }
+            }
+        })
+    }
+
+    private fun enableInputs(enabled: Boolean){
+        et_temperature.isEnabled = enabled
+        et_place_of_origin.isEnabled = enabled
+        et_mobile_number.isEnabled = enabled
+        et_health_condition.isEnabled = enabled
+        iv_cit_back.isEnabled = enabled
+        iv_cit_save.isEnabled = enabled
     }
     
 

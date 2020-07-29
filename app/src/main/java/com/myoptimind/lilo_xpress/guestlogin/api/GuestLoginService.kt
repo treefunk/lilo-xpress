@@ -1,4 +1,4 @@
-package com.myoptimind.lilo_xpress.api
+package com.myoptimind.lilo_xpress.guestlogin.api
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,8 +34,7 @@ interface GuestLoginService {
         @Part("temperature") temperature: RequestBody,
         @Part("place_of_origin") placeOfOrigin: RequestBody,
         @Part("mobile_number") mobileNumber: RequestBody,
-        @Part("health_condition") healthCondition: RequestBody,
-        @Part("pin_code") pinCode: RequestBody
+        @Part("health_condition") healthCondition: RequestBody
     ): GuestLoginResponse
 
 }

@@ -1,6 +1,7 @@
-package com.myoptimind.lilo_xpress.api
+package com.myoptimind.lilo_xpress.guestlogin.api
 
 import com.google.gson.annotations.SerializedName
+import com.myoptimind.lilo_xpress.data.Meta
 
 class GuestLoginResponse (
     val data: Data,
@@ -12,6 +13,9 @@ class GuestLoginResponse (
         val fullname: String,
 
         val agency: String,
+
+        @SerializedName("login_time_format")
+        val loginTimeFormat: String,
 
         @SerializedName("attached_agency")
         val attachedAgency: String,

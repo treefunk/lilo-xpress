@@ -1,4 +1,4 @@
-package com.myoptimind.lilo_xpress.api
+package com.myoptimind.lilo_xpress.data
 
 class Meta (
     val message: String,

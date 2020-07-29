@@ -1,16 +1,13 @@
 package com.myoptimind.lilo_xpress.di
 
-import android.os.Build
 import com.myoptimind.lilo_xpress.BuildConfig
-import com.myoptimind.lilo_xpress.api.GuestLoginService
+import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginService
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit

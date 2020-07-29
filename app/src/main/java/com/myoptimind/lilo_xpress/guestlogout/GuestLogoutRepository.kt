@@ -1,15 +1,15 @@
 package com.myoptimind.lilo_xpress.guestlogout
 
-import com.myoptimind.lilo_xpress.api.GuestLogoutCheckPinResponse
-import com.myoptimind.lilo_xpress.api.GuestLogoutService
-import com.myoptimind.lilo_xpress.data.Result
-import com.myoptimind.lilo_xpress.shared.DropdownDataSource
+import com.myoptimind.lilo_xpress.data.FeedbackExperience
+import com.myoptimind.lilo_xpress.guestlogout.api.GuestLogoutCheckPinResponse
+import com.myoptimind.lilo_xpress.guestlogout.api.GuestLogoutResponse
+import com.myoptimind.lilo_xpress.guestlogout.api.GuestLogoutService
 import javax.inject.Inject
 
 class GuestLogoutRepository
 @Inject
 constructor(
-    val guestLogoutService: GuestLogoutService
+    private val guestLogoutService: GuestLogoutService
 ){
     init {
 
@@ -18,6 +18,18 @@ constructor(
         pinCode: String
     ): GuestLogoutCheckPinResponse {
         return guestLogoutService.checkPinValidity(pinCode)
+    }
+
+    suspend fun guestLogout(
+        pinCode: String?,
+        experience: FeedbackExperience?,
+        feedback: String?
+    ): GuestLogoutResponse {
+        return guestLogoutService.logoutGuest(
+            pinCode,
+            experience?.id,
+            feedback
+        )
     }
 
 }

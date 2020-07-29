@@ -1,8 +1,7 @@
 package com.myoptimind.lilo_xpress.di
 
-import com.myoptimind.lilo_xpress.api.GuestLogoutService
+import com.myoptimind.lilo_xpress.guestlogout.api.GuestLogoutService
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutRepository
-import com.myoptimind.lilo_xpress.shared.DropdownDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

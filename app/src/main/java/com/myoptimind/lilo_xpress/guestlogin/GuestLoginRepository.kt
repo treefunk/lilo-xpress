@@ -1,9 +1,10 @@
 package com.myoptimind.lilo_xpress.guestlogin
 
 
-import com.myoptimind.lilo_xpress.api.GuestLoginService
+import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginService
 import com.myoptimind.lilo_xpress.data.DropDownType
 import com.myoptimind.lilo_xpress.data.Option
+import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import okhttp3.MultipartBody
@@ -19,10 +20,16 @@ constructor(
 ) {
 
     init {
+
         dropdownDataSource.fetchGuestInfoStep1()
+
         dropdownDataSource.fetchGuestInfoStep2()
-        dropdownDataSource.fetchGuestInfoStep3()
+
+        if(dropdownDataSource.placeOfOrigin.value == null){
+            dropdownDataSource.fetchGuestInfoStep3()
+        }
     }
+
 
     val agencies         = dropdownDataSource.agencies
     val attachedAgencies = dropdownDataSource.attachedAgencies
@@ -53,8 +60,8 @@ constructor(
         placeOfOrigin: RequestBody,
         mobileNumber: RequestBody,
         healthCondition: RequestBody
-    ){
-        guestLoginService.loginGuest(
+    ): GuestLoginResponse {
+        return guestLoginService.loginGuest(
             fullname,
             agency,
             attachedAgency,
@@ -67,8 +74,7 @@ constructor(
             temperature,
             placeOfOrigin,
             mobileNumber,
-            healthCondition,
-            "11122".toRequestBody()
+            healthCondition
         )
     }
 

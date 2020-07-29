@@ -58,6 +58,7 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.resetData()
 
 
         iv_take_photo.setOnClickListener {
@@ -103,10 +104,19 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         viewModel.uploadedPhoto.observe(viewLifecycleOwner, Observer { file ->
-            Glide.with(requireContext())
-                .load(file)
-                .centerCrop()
-                .into(iv_take_photo)
+
+            if(file != null){
+                Glide.with(requireContext())
+                    .load(file)
+                    .centerCrop()
+                    .into(iv_take_photo)
+            }else{
+                Glide.with(requireContext())
+                    .load(R.drawable.takephoto_nowhite)
+                    .into(iv_take_photo)
+            }
+
+
         })
 
         iv_guest_info_next.setOnClickListener {

@@ -14,6 +14,7 @@ import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutTab
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
+import com.myoptimind.lilo_xpress.shared.initLoading
 import kotlinx.android.synthetic.main.fragment_guest_logout_enter_pin.*
 
 class GuestLogoutEnterPinFragment : TabChildFragment<GuestLogoutTab>() {
@@ -41,22 +42,28 @@ class GuestLogoutEnterPinFragment : TabChildFragment<GuestLogoutTab>() {
         super.onViewCreated(view, savedInstanceState)
         val viewModel: GuestLogoutViewModel by activityViewModels()
 
-        Glide.with(requireContext())
-            .load(R.drawable.ripple_loading)
-            .into(loading)
+        loading.initLoading(requireContext())
+
+        viewModel.resetData()
 
         viewModel.enterPin.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Result.Success -> {
                     guestTabChanger.changeTab(GuestLogoutTab.EXPERIENCE)
                     loading_components.visibility = View.INVISIBLE
+                    et_pin_code.isEnabled = true
+                    iv_enterpin_next.isEnabled = true
                 }
                 is Result.Error -> {
                     Toast.makeText(requireContext(),result.error.message,Toast.LENGTH_LONG).show()
                     loading_components.visibility = View.INVISIBLE
+                    et_pin_code.isEnabled = true
+                    iv_enterpin_next.isEnabled = true
                 }
                 Result.Loading -> {
                     loading_components.visibility = View.VISIBLE
+                    et_pin_code.isEnabled = false
+                    iv_enterpin_next.isEnabled = false
                 }
             }
 //            loading_components.visibility = View.INVISIBLE

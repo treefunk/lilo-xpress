@@ -5,13 +5,16 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
+import com.myoptimind.lilo_xpress.data.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import timber.log.Timber
+
 import java.io.File
 
 
@@ -87,6 +90,12 @@ class GuestLoginViewModel
     // pre-populated fields
     val placeOfOrigins = guestLoginRepository.placeOfOrigins
 
+    /**
+     *  Result as livedata
+     */
+
+    val loginResult = MutableLiveData<Result<GuestLoginResponse>>()
+
     fun saveStep3(
         temperature: String,
         mobileNumber: String,
@@ -101,6 +110,7 @@ class GuestLoginViewModel
     fun loginGuest() {
 
         viewModelScope.launch(Dispatchers.IO) {
+            loginResult.postValue(Result.Loading)
             val uploaded = uploadedPhoto.value
             val requestBody: RequestBody = RequestBody.create(MediaType.parse("image/*"), uploaded)
             val multipart = MultipartBody.Part.createFormData(
@@ -109,7 +119,7 @@ class GuestLoginViewModel
                 requestBody
             )
             try{
-                guestLoginRepository.guestLogin(
+                val res = guestLoginRepository.guestLogin(
                     fullName.value?.toRequestBody()!!,
                     guestLoginRepository.getSelectedAgency(agencyIndex.value).id?.toRequestBody()!!,
                     guestLoginRepository.getSelectedAttachedAgency(attachedAgencyIndex.value).id?.toRequestBody()!!,
@@ -119,19 +129,44 @@ class GuestLoginViewModel
                         false -> "0".toRequestBody()
                     },
                     multipart,
-                    divisionToVisit.value?.toRequestBody()!!,
-                    purpose.value?.toRequestBody()!!,
-                    personToVisit.value?.toRequestBody()!!,
+                    guestLoginRepository.getSelectedDivision(divisionToVisitIndex.value).id?.toRequestBody()!!,
+                    guestLoginRepository.getSelectedPurpose(purposeIndex.value).id?.toRequestBody()!!,
+                    guestLoginRepository.getSelectedPerson(personToVisitIndex.value).id?.toRequestBody()!!,
                     temperature.value?.toRequestBody()!!,
                     placeOfOrigin.value?.toRequestBody()!!,
                     mobileNumber.value?.toRequestBody()!!,
                     healthCondition.value?.toRequestBody()!!
                 )
+                loginResult.postValue(Result.Success(res))
             }catch (exception: Exception){
                 Timber.e(exception)
+                loginResult.postValue(Result.Error(exception))
             }
 
         }
 
+    }
+
+    fun resetData(){
+        fullName.value = null
+        agency.value = null
+        agencyIndex.value = null
+        attachedAgency.value = null
+        attachedAgencyIndex.value = null
+        emailAddress.value = null
+        confirmReceipt.value = false
+        uploadedPhoto.value = null
+        divisionToVisit.value = null
+        divisionToVisitIndex.value = null
+        purpose.value = null
+        purposeIndex.value = null
+        personToVisit.value = null
+        personToVisitIndex.value = null
+        temperature.value = null
+        placeOfOrigin.value = null
+        placeOfOriginIndex.value = null
+        mobileNumber.value = null
+        healthCondition.value = null
+        loginResult.value = null
     }
 }

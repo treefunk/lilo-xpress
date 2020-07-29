@@ -6,7 +6,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.myoptimind.lilo_xpress.R
-import com.myoptimind.lilo_xpress.api.GuestLoginService
+import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginService
 import com.myoptimind.lilo_xpress.data.DropDownType
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.data.Result

@@ -38,18 +38,33 @@
         android:id="@+id/cesbieFragment"
         android:name="com.myoptimind.lilo_xpress.cesbie.CesbieFragment"
         android:label="CesbieFragment"
-        tools:layout="@layout/fragment_cesbie" />
+        tools:layout="@layout/fragment_cesbie" >
+        <action
+            android:id="@+id/action_cesbieFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
+        <action
+            android:id="@+id/action_cesbieFragment_to_selectUserFragment2"
+            app:destination="@id/selectUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/guestLoginFragment"
         android:name="com.myoptimind.lilo_xpress.guestlogin.GuestLoginFragment"
         android:label="GuestLoginFragment"
         tools:layout="@layout/fragment_guest_login"
-        />
+        >
+        <action
+            android:id="@+id/action_guestLoginFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
+    </fragment>
     <fragment
         android:id="@+id/guestLogoutFragment"
         android:name="com.myoptimind.lilo_xpress.guestlogout.GuestLogoutFragment"
         android:label="GuestLogoutFragment"
         tools:layout="@layout/fragment_guest_logout"
-        />
+        >
+        <action
+            android:id="@+id/action_guestLogoutFragment_to_selectUserFragment"
+            app:destination="@id/selectUserFragment" />
+    </fragment>
 
 </navigation>
