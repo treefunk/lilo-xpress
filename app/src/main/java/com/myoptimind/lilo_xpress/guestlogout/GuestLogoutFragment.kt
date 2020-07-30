@@ -39,7 +39,7 @@ class GuestLogoutFragment : Fragment(), TabHost<GuestLogoutTab> {
         changeTab(GuestLogoutTab.ENTER_PIN)
     }
 
-    override fun changeTab(tab: GuestLogoutTab) {
+    override fun changeTab(tab: GuestLogoutTab, initial: Boolean) {
         val fragment = when(tab){
             GuestLogoutTab.ENTER_PIN -> GuestLogoutEnterPinFragment.newInstance()
             GuestLogoutTab.EXPERIENCE -> GuestLogoutExperienceFragment.newInstance()

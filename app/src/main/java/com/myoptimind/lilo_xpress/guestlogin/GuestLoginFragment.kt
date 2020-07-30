@@ -27,19 +27,24 @@ class GuestLoginFragment : Fragment(R.layout.fragment_guest_login),
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        changeTab(GuestLoginTab.GUEST_INFO)
+        changeTab(GuestLoginTab.GUEST_INFO, true)
     }
 
-    override fun changeTab(tab: GuestLoginTab) {
+    override fun changeTab(tab: GuestLoginTab, initial: Boolean) {
 
         val fragment = when(tab){
-            GuestLoginTab.GUEST_INFO -> GuestLoginInfoFragment.newInstance()
+            GuestLoginTab.GUEST_INFO -> {
+                if(initial) GuestLoginInfoFragment.newInstance(true)
+                else GuestLoginInfoFragment.newInstance(false)
+            }
             GuestLoginTab.PURPOSE    -> GuestLoginPurposeFragment.newInstance()
             GuestLoginTab.CIT        -> GuestLoginCitFragment.newInstance()
             GuestLoginTab.PRINT      -> GuestLoginPrintFragment.newInstance()
         }
 
         fragment.guestTabChanger = this
+        fragment.parentFrag = this
+
 
         activity?.run{
             supportFragmentManager

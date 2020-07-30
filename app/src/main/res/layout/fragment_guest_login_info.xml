@@ -133,22 +133,11 @@
             style="@style/lilo_et_box"
             android:clickable="true"
             android:focusable="false"
-
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_toggle_agency"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        app:layout_constraintTop_toTopOf="@id/til_agency"
-        app:layout_constraintRight_toRightOf="@id/til_agency"
-        app:layout_constraintBottom_toBottomOf="@id/til_agency"
-        android:src="@drawable/ic_round_keyboard_arrow_down_40"
-        android:tint="@android:color/black"
-        />
 
     <TextView
         android:id="@+id/label_attached_agency"

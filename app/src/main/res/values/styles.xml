@@ -43,6 +43,8 @@
         <item name="boxCornerRadiusBottomEnd">0dp</item>
         <item name="boxCornerRadiusTopEnd">0dp</item>
         <item name="hintEnabled">false</item>
+        <item name="errorIconTint">@android:color/white</item>
+
     </style>
 
     <style name="lilo_et_box">

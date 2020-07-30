@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -27,6 +28,7 @@ import java.util.*
 
 private const val TAG = "GuestLoginFragment"
 private const val REQUEST_IMAGE_CAPTURE = 1
+private const val ARGS_INITIAL = "args_initial"
 
 @AndroidEntryPoint
 class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
@@ -37,12 +39,16 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
     val viewModel: GuestLoginViewModel by activityViewModels()
 
     companion object {
-        fun newInstance(): GuestLoginInfoFragment {
-            val args = Bundle()
-
+        fun newInstance(initial: Boolean = false): GuestLoginInfoFragment {
             val fragment =
                 GuestLoginInfoFragment()
-            fragment.arguments = args
+
+            if(initial){
+                val args = Bundle()
+                args.putBoolean(ARGS_INITIAL,true)
+                fragment.arguments = args
+            }
+
             return fragment
         }
     }
@@ -58,7 +64,11 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.resetData()
+        val bundle = arguments
+        if (bundle != null && bundle.containsKey(ARGS_INITIAL)) {
+            viewModel.resetData()
+        }
+
 
 
         iv_take_photo.setOnClickListener {
@@ -120,12 +130,20 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         iv_guest_info_next.setOnClickListener {
-            guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
-            viewModel.saveStep1(
+
+            if(viewModel.saveStep1(
                 et_full_name.text.toString(),
                 et_email_address.text.toString(),
                 cb_confirm_receipt.isChecked
-            )
+            )){
+                guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
+            }else{
+                Toast.makeText(
+                    requireContext(),
+                    "Please fill in all required fields.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
 
 
@@ -134,7 +152,6 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
 
 
     }
-
 
 
     private fun dispatchTakePictureIntent() {

@@ -24,6 +24,8 @@ class GuestLoginViewModel
     ): ViewModel() {
 
 
+
+
     /**
      * STEP 1
      */
@@ -40,18 +42,7 @@ class GuestLoginViewModel
     val agencies = guestLoginRepository.agencies
     val attachedAgencies = guestLoginRepository.attachedAgencies
 
-    fun saveStep1(
-        fullname: String,
-        emailAddress: String,
-        confirmReceipt: Boolean
-    ) {
-        this.fullName.value = fullname
-        this.agency.value = guestLoginRepository.getSelectedAgency(this.agencyIndex.value).name
-        this.attachedAgency.value =
-            guestLoginRepository.getSelectedAttachedAgency(this.attachedAgencyIndex.value).name
-        this.emailAddress.value = emailAddress
-        this.confirmReceipt.value = confirmReceipt
-    }
+
 
     /**
      * STEP 2
@@ -70,13 +61,6 @@ class GuestLoginViewModel
     val purposes = guestLoginRepository.purposes
     val persons = guestLoginRepository.persons
 
-    fun saveStep2(){
-        this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
-        this.purpose.value         = guestLoginRepository.getSelectedPurpose(this.purposeIndex.value).name
-        this.personToVisit.value   = guestLoginRepository.getSelectedPerson(this.personToVisitIndex.value).fullname
-        onCleared()
-    }
-
     /**
      * STEP 3
      */
@@ -91,10 +75,46 @@ class GuestLoginViewModel
     val placeOfOrigins = guestLoginRepository.placeOfOrigins
 
     /**
-     *  Result as livedata
+     *  Result as LiveData
      */
 
     val loginResult = MutableLiveData<Result<GuestLoginResponse>>()
+
+    init {
+        confirmReceipt.value = false
+    }
+
+    fun saveStep1(
+        fullname: String,
+        emailAddress: String,
+        confirmReceipt: Boolean
+    ): Boolean {
+        if (
+            fullname.isBlank() ||
+            this.agencyIndex.value.isNullOrBlank() ||
+            this.attachedAgencyIndex.value.isNullOrBlank() ||
+            emailAddress.isBlank() ||
+            this.uploadedPhoto.value == null
+        ) {
+            return false
+        }
+
+        this.fullName.value = fullname
+        this.agency.value = guestLoginRepository.getSelectedAgency(this.agencyIndex.value).name
+        this.attachedAgency.value =
+            guestLoginRepository.getSelectedAttachedAgency(this.attachedAgencyIndex.value).name
+        this.emailAddress.value = emailAddress
+        this.confirmReceipt.value = confirmReceipt
+        return true
+    }
+
+    fun saveStep2(){
+        this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
+        this.purpose.value         = guestLoginRepository.getSelectedPurpose(this.purposeIndex.value).name
+        this.personToVisit.value   = guestLoginRepository.getSelectedPerson(this.personToVisitIndex.value).fullname
+        onCleared()
+    }
+
 
     fun saveStep3(
         temperature: String,
@@ -106,6 +126,8 @@ class GuestLoginViewModel
         this.mobileNumber.value = mobileNumber
         this.healthCondition.value = healthCondition
     }
+
+
 
     fun loginGuest() {
 
