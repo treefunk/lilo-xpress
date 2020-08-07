@@ -95,6 +95,8 @@
             android:id="@+id/et_temperature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:imeOptions="actionNext"
             style="@style/lilo_et_box"
             />
 
@@ -137,7 +139,7 @@
         app:layout_constraintLeft_toLeftOf="@id/label_place_of_origin"
         app:layout_constraintRight_toRightOf="@id/label_temperature"
         app:layout_constraintBottom_toTopOf="@id/label_mobile_number"
-        style="@style/lilo_til2"
+        style="@style/lilo_til1"
         >
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -147,6 +149,8 @@
             style="@style/lilo_et_box"
             android:clickable="true"
             android:focusable="true"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -195,7 +199,9 @@
             android:id="@+id/et_mobile_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             style="@style/lilo_et_box"
+            android:imeOptions="actionNext"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -214,7 +220,7 @@
         android:layout_marginTop="20dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
-        android:text="Health Condition*"
+        android:text="Health Condition"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -234,6 +240,8 @@
         android:id="@+id/et_health_condition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
+        android:imeOptions="actionDone"
         style="@style/lilo_et_box"
         />
 
@@ -289,20 +297,10 @@
         android:id="@+id/loading_components_cit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="loading,loading_overlay"
+        app:constraint_referenced_ids="loading,loading_text"
         android:visibility="invisible"
         />
 
-    <View
-        android:id="@+id/loading_overlay"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/colorBlackAlpha50"
-        />
 
     <ImageView
         android:id="@+id/loading"
@@ -314,6 +312,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+
+    <TextView
+        android:id="@+id/loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logging in"
+        app:layout_constraintTop_toBottomOf="@id/loading"
+        app:layout_constraintLeft_toLeftOf="@id/loading"
+        app:layout_constraintRight_toRightOf="@id/loading"
+        android:textSize="30sp"
+        android:textColor="@color/colorAccent"
+        />
+
 
 
 

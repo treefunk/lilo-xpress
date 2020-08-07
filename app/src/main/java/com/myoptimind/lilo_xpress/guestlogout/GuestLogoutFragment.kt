@@ -31,12 +31,12 @@ class GuestLogoutFragment : Fragment(), TabHost<GuestLogoutTab> {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        changeTab(GuestLogoutTab.ENTER_PIN)
         return inflater.inflate(R.layout.fragment_guest_logout,container,false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        changeTab(GuestLogoutTab.ENTER_PIN)
     }
 
     override fun changeTab(tab: GuestLogoutTab, initial: Boolean) {

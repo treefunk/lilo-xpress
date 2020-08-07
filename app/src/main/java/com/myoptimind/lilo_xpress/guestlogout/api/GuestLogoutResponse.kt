@@ -42,6 +42,9 @@ class GuestLogoutResponse(
         @SerializedName("logout_time")
         val logoutTime: String,
 
+        @SerializedName("pin_code")
+        val pinCode: String,
+
         val duration: String
     )
 }

@@ -1,12 +1,15 @@
 package com.myoptimind.lilo_xpress.di
 
+import android.content.Context
 import com.myoptimind.lilo_xpress.BuildConfig
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginService
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
+import com.myoptimind.lilo_xpress.shared.LiloPrinter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -53,6 +56,14 @@ class AppModule {
     @Provides
     fun provideDropDownDataSource(guestLoginService: GuestLoginService): DropdownDataSource {
         return DropdownDataSource(guestLoginService)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLiloPrinter(
+        @ApplicationContext context: Context
+    ): LiloPrinter {
+        return LiloPrinter(context)
     }
 
 }

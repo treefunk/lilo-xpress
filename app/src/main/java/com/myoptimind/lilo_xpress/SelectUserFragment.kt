@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.myoptimind.lilo_xpress.data.UserType
 import kotlinx.android.synthetic.main.fragment_select_user.*
 
 class SelectUserFragment : Fragment() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +35,12 @@ class SelectUserFragment : Fragment() {
 
 
         ib_guest.setOnClickListener {
-            findNavController().navigate(R.id.action_selectUserFragment_to_selectLoginFragment)
+            findNavController().navigate(SelectUserFragmentDirections.actionSelectUserFragmentToSelectLoginFragment(SelectLoginFragment.GUEST_LOGIN))
         }
 
         ib_cesbie.setOnClickListener {
-            findNavController().navigate(R.id.action_selectUserFragment_to_cesbieFragment)
+            findNavController().navigate(SelectUserFragmentDirections.actionSelectUserFragmentToSelectLoginFragment(SelectLoginFragment.CESBIE_LOGIN))
+
         }
 
     }

@@ -15,6 +15,7 @@ import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutTab
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
+import com.myoptimind.lilo_xpress.shared.displayAlert
 import com.myoptimind.lilo_xpress.shared.initLoading
 import kotlinx.android.synthetic.main.fragment_guest_logout_experience.*
 
@@ -70,22 +71,17 @@ class GuestLogoutExperienceFragment : TabChildFragment<GuestLogoutTab>() {
                 is Result.Success -> {
                     loading_components_experience.visibility = View.GONE
                     enableInputs(true)
-                    Toast.makeText(
-                        requireContext(),
-                        "Success",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    requireContext().displayAlert("Success", result.data.meta.message)
                     guestTabChanger.changeTab(GuestLogoutTab.PRINT)
 
                 }
                 is Result.Error -> {
                     loading_components_experience.visibility = View.GONE
                     enableInputs(true)
-                    Toast.makeText(
-                        requireContext(),
-                        "Something went wrong",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    requireContext().displayAlert(
+                        "",
+                        result.error.message ?: "Something went wrong"
+                    )
                 }
                 Result.Loading -> {
                     loading_components_experience.visibility = View.VISIBLE

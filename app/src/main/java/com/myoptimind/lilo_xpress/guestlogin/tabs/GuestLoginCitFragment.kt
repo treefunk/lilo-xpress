@@ -11,9 +11,7 @@ import com.myoptimind.lilo_xpress.R
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
-import com.myoptimind.lilo_xpress.shared.TabChildFragment
-import com.myoptimind.lilo_xpress.shared.handleData
-import com.myoptimind.lilo_xpress.shared.initLoading
+import com.myoptimind.lilo_xpress.shared.*
 import kotlinx.android.synthetic.main.fragment_guest_login_cit.*
 
 class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
@@ -33,7 +31,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_guest_login_cit,container,false)
+        return inflater.inflate(R.layout.fragment_guest_login_cit, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,7 +53,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         viewModel.placeOfOrigin.observe(viewLifecycleOwner, Observer { placeOfOrigin ->
-            et_place_of_origin.setText(placeOfOrigin,false)
+            et_place_of_origin.setText(placeOfOrigin, false)
         })
 
         viewModel.mobileNumber.observe(viewLifecycleOwner, Observer { mobileNumber ->
@@ -71,21 +69,27 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
             viewModel.saveStep3(
                 et_temperature.text.toString(),
                 et_mobile_number.text.toString(),
+                et_place_of_origin.text.toString(),
                 et_health_condition.text.toString()
             )
         }
 
         iv_cit_save.setOnClickListener {
-            viewModel.saveStep3(
-                et_temperature.text.toString(),
-                et_mobile_number.text.toString(),
-                et_health_condition.text.toString()
-            )
-            viewModel.loginGuest()
+            if (viewModel.saveStep3(
+                    et_temperature.text.toString(),
+                    et_mobile_number.text.toString(),
+                    et_place_of_origin.text.toString(),
+                    et_health_condition.text.toString()
+                )
+            ) {
+                viewModel.loginGuest()
+            } else {
+                requireContext().displayGenericFormError()
+            }
         }
 
         viewModel.loginResult.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
+            when (result) {
                 is Result.Success -> {
                     loading_components_cit.visibility = View.GONE
                     enableInputs(true)
@@ -94,11 +98,10 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
                 is Result.Error -> {
                     loading_components_cit.visibility = View.GONE
                     enableInputs(true)
-                    Toast.makeText(
-                        requireContext(),
-                        result.error.message,
-                        Toast.LENGTH_LONG
-                    ).show()
+                    requireContext().displayAlert(
+                        "",
+                        result.error.message!!
+                    )
                 }
                 Result.Loading -> {
                     loading_components_cit.visibility = View.VISIBLE
@@ -108,7 +111,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         })
     }
 
-    private fun enableInputs(enabled: Boolean){
+    private fun enableInputs(enabled: Boolean) {
         et_temperature.isEnabled = enabled
         et_place_of_origin.isEnabled = enabled
         et_mobile_number.isEnabled = enabled
@@ -116,6 +119,6 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         iv_cit_back.isEnabled = enabled
         iv_cit_save.isEnabled = enabled
     }
-    
+
 
 }

@@ -21,13 +21,7 @@ constructor(
 
     init {
 
-        dropdownDataSource.fetchGuestInfoStep1()
 
-        dropdownDataSource.fetchGuestInfoStep2()
-
-        if(dropdownDataSource.placeOfOrigin.value == null){
-            dropdownDataSource.fetchGuestInfoStep3()
-        }
     }
 
 
@@ -76,6 +70,15 @@ constructor(
             mobileNumber,
             healthCondition
         )
+    }
+
+    fun fetchDropdownData() {
+        dropdownDataSource.fetchGuestInfoStep1()
+        dropdownDataSource.fetchGuestInfoStep2()
+
+        if(dropdownDataSource.placeOfOrigin.value == null){
+            dropdownDataSource.fetchGuestInfoStep3()
+        }
     }
 
 }

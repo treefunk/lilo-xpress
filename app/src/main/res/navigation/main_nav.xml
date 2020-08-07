@@ -20,6 +20,9 @@
         <action
             android:id="@+id/action_selectUserFragment_to_cesbieFragment"
             app:destination="@id/cesbieFragment" />
+        <action
+            android:id="@+id/action_selectUserFragment_to_selectLoginFragment3"
+            app:destination="@id/selectLoginFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectLoginFragment"
@@ -33,6 +36,12 @@
         <action
             android:id="@+id/action_selectLoginFragment_to_guestLogoutFragment"
             app:destination="@id/guestLogoutFragment" />
+        <argument
+            android:name="user_type"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_selectLoginFragment_to_cesbieFragment"
+            app:destination="@id/cesbieFragment" />
     </fragment>
     <fragment
         android:id="@+id/cesbieFragment"
@@ -41,9 +50,6 @@
         tools:layout="@layout/fragment_cesbie" >
         <action
             android:id="@+id/action_cesbieFragment_to_selectUserFragment"
-            app:destination="@id/selectUserFragment" />
-        <action
-            android:id="@+id/action_cesbieFragment_to_selectUserFragment2"
             app:destination="@id/selectUserFragment" />
     </fragment>
     <fragment

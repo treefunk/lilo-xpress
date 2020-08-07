@@ -6,11 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.myoptimind.lilo_xpress.cesbie.CesbieFragment
 import kotlinx.android.synthetic.main.fragment_select_login.*
 
 private const val TAG = "SelectLoginFragment"
 
+
+
 class SelectLoginFragment : Fragment() {
+
+    companion object {
+        const val GUEST_LOGIN  = "guest_login"
+        const val CESBIE_LOGIN = "cesbie_login"
+    }
+
+    val args: SelectLoginFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +35,22 @@ class SelectLoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         ib_login.setOnClickListener {
-            findNavController().navigate(R.id.action_selectLoginFragment_to_guestLoginFragment)
+            if(args.userType == GUEST_LOGIN){
+                findNavController().navigate(R.id.action_selectLoginFragment_to_guestLoginFragment)
+            }else if(args.userType == CESBIE_LOGIN){
+                findNavController().navigate(R.id.action_selectLoginFragment_to_cesbieFragment,
+                    Bundle().also { it.putString(CesbieFragment.TYPE,CesbieFragment.LOGIN) }
+                )
+            }
         }
         ib_logout.setOnClickListener {
-            findNavController().navigate(R.id.action_selectLoginFragment_to_guestLogoutFragment)
+            if(args.userType == GUEST_LOGIN){
+                findNavController().navigate(R.id.action_selectLoginFragment_to_guestLogoutFragment)
+            }else if(args.userType == CESBIE_LOGIN){
+                findNavController().navigate(R.id.action_selectLoginFragment_to_cesbieFragment,
+                    Bundle().also { it.putString(CesbieFragment.TYPE,CesbieFragment.LOGOUT) }
+                )
+            }
         }
     }
 }

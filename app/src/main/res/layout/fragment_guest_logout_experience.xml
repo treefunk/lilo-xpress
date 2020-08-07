@@ -209,7 +209,7 @@
             android:minHeight="180dp"
             android:gravity="start"
             style="@style/lilo_et_box"
-            android:text="test"
+            android:text=""
             android:maxLines="8"
             />
 
@@ -250,12 +250,12 @@
         android:id="@+id/loading_components_experience"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="loading,loading_overlay"
+        app:constraint_referenced_ids="loading"
         android:visibility="invisible"
 
         />
 
-    <View
+<!--    <View
         android:id="@+id/loading_overlay"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -264,7 +264,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:background="@color/colorBlackAlpha50"
-        />
+        />-->
 
     <ImageView
         android:id="@+id/loading"

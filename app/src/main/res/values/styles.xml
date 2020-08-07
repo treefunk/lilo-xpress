@@ -34,6 +34,8 @@
         <item name="boxCornerRadiusBottomEnd">0dp</item>
         <item name="boxCornerRadiusTopEnd">0dp</item>
         <item name="hintEnabled">false</item>
+        <item name="errorIconDrawable">@null</item>
+        <item name="errorTextAppearance">@style/errorstyle</item>
     </style>
 
     <style name="lilo_til2" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -43,8 +45,13 @@
         <item name="boxCornerRadiusBottomEnd">0dp</item>
         <item name="boxCornerRadiusTopEnd">0dp</item>
         <item name="hintEnabled">false</item>
-        <item name="errorIconTint">@android:color/white</item>
+        <item name="errorTextAppearance">@style/errorstyle</item>
+    </style>
 
+    <style name="errorstyle" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:padding">0dp</item>
+        <item name="android:textSize">0sp</item>
+        <item name="android:layout_margin">0dp</item>
     </style>
 
     <style name="lilo_et_box">

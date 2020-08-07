@@ -88,7 +88,7 @@
         app:layout_constraintLeft_toLeftOf="@id/label_division_to_visit"
         app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
         app:layout_constraintBottom_toTopOf="@id/label_purpose_service"
-        style="@style/lilo_til2"
+        style="@style/lilo_til1"
         >
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -98,6 +98,8 @@
             style="@style/lilo_et_box"
             android:clickable="true"
             android:focusable="false"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -138,7 +140,7 @@
         app:layout_constraintLeft_toLeftOf="@id/label_purpose_service"
         app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
         app:layout_constraintBottom_toTopOf="@id/label_person_to_visit"
-        style="@style/lilo_til2"
+        style="@style/lilo_til1"
         >
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -148,6 +150,8 @@
             style="@style/lilo_et_box"
             android:clickable="true"
             android:focusable="false"
+            android:inputType="text"
+            android:imeOptions="actionNext"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -188,7 +192,7 @@
         app:layout_constraintLeft_toLeftOf="@id/label_person_to_visit"
         app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
         app:layout_constraintBottom_toTopOf="@id/iv_guest_purpose_back"
-        style="@style/lilo_til2"
+        style="@style/lilo_til1"
         app:hintEnabled="false"
         >
 
@@ -199,6 +203,8 @@
             style="@style/lilo_et_box"
             android:clickable="true"
             android:focusable="false"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:hint="Search Nickname/Full name"
             />
 

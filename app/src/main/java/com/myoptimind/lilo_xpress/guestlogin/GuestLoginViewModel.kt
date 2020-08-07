@@ -5,10 +5,13 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.epson.epos2.Epos2Exception
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import com.myoptimind.lilo_xpress.data.Result
+import com.myoptimind.lilo_xpress.shared.LiloPrinter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -20,7 +23,9 @@ import java.io.File
 
 class GuestLoginViewModel
     @ViewModelInject
-    constructor(val guestLoginRepository: GuestLoginRepository
+    constructor(
+        val guestLoginRepository: GuestLoginRepository,
+        val liloPrinter: LiloPrinter
     ): ViewModel() {
 
 
@@ -79,6 +84,8 @@ class GuestLoginViewModel
      */
 
     val loginResult = MutableLiveData<Result<GuestLoginResponse>>()
+    val printResult = MutableLiveData<Result<String>>()
+
 
     init {
         confirmReceipt.value = false
@@ -93,7 +100,6 @@ class GuestLoginViewModel
             fullname.isBlank() ||
             this.agencyIndex.value.isNullOrBlank() ||
             this.attachedAgencyIndex.value.isNullOrBlank() ||
-            emailAddress.isBlank() ||
             this.uploadedPhoto.value == null
         ) {
             return false
@@ -108,24 +114,47 @@ class GuestLoginViewModel
         return true
     }
 
-    fun saveStep2(){
+    fun saveStep2(): Boolean {
+
+        if (
+            this.divisionToVisitIndex.value.isNullOrBlank() ||
+            this.purposeIndex.value.isNullOrBlank() ||
+            this.personToVisitIndex.value.isNullOrBlank()
+        ) {
+            return false
+        }
+
         this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
         this.purpose.value         = guestLoginRepository.getSelectedPurpose(this.purposeIndex.value).name
         this.personToVisit.value   = guestLoginRepository.getSelectedPerson(this.personToVisitIndex.value).fullname
-        onCleared()
+        return true
     }
 
 
     fun saveStep3(
         temperature: String,
         mobileNumber: String,
+        placeOfOrigin: String,
         healthCondition: String
-    ){
+    ): Boolean {
+
+        if (
+            temperature.isBlank() ||
+            placeOfOrigin.isBlank()
+        ) {
+            return false
+        }
+
+
         this.temperature.value = temperature
-        this.placeOfOrigin.value = guestLoginRepository.getSelectedPlaceOfOrigin(this.placeOfOriginIndex.value).name
+//        this.placeOfOrigin.value = guestLoginRepository.getSelectedPlaceOfOrigin(this.placeOfOriginIndex.value).name
+        this.placeOfOrigin.value = placeOfOrigin
         this.mobileNumber.value = mobileNumber
         this.healthCondition.value = healthCondition
+        return true
     }
+
+
 
 
 
@@ -169,7 +198,45 @@ class GuestLoginViewModel
 
     }
 
+
+    fun printData(
+        guestLoginResponse: GuestLoginResponse
+    ){
+        val data = guestLoginResponse.data
+        viewModelScope.launch(IO) {
+            printResult.postValue(Result.Loading)
+            try{
+                liloPrinter.printReceipt(
+                    "CESB LETTERHEAD",
+                    data.loginTimeFormat,
+                    data.fullname,
+                    data.agency,
+                    data.attachedAgency,
+                    data.emailAddress,
+                    data.divisionToVisit,
+                    data.personToVisit,
+                    data.purpose,
+                    data.temperature,
+                    data.placeOfOrigin,
+                    data.pinCode,
+                    data.loginTimeFormat
+                )
+
+                printResult.postValue(Result.Success("Successfully printed receipt"))
+            }catch (exception: Exception){
+                printResult.postValue(Result.Error(exception))
+            }
+        }
+    }
+
+
+
+
     fun resetData(){
+
+        guestLoginRepository.fetchDropdownData()
+
+
         fullName.value = null
         agency.value = null
         agencyIndex.value = null
@@ -190,5 +257,7 @@ class GuestLoginViewModel
         mobileNumber.value = null
         healthCondition.value = null
         loginResult.value = null
+        printResult.value = null
+
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.myoptimind.lilo_xpress.R
@@ -11,6 +12,8 @@ import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
+import com.myoptimind.lilo_xpress.shared.displayAlert
+import com.myoptimind.lilo_xpress.shared.displayGenericFormError
 import com.myoptimind.lilo_xpress.shared.handleData
 import kotlinx.android.synthetic.main.fragment_guest_login_purpose.*
 
@@ -78,8 +81,11 @@ class GuestLoginPurposeFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         iv_guest_purpose_next.setOnClickListener {
-            guestTabChanger.changeTab(GuestLoginTab.CIT)
-            viewModel.saveStep2()
+            if(viewModel.saveStep2()){
+                guestTabChanger.changeTab(GuestLoginTab.CIT)
+            }else{
+                requireContext().displayGenericFormError()
+            }
         }
 
         iv_guest_purpose_back.setOnClickListener {

@@ -139,9 +139,10 @@ fun Result<List<Any>>.handleData(context: Context,
                 is UnknownHostException -> "No internet connection."
                 else -> "Something went wrong"
             }
-            Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show()
+            context.displayAlert("",errorMessage)
         }
-        Result.Loading -> Toast.makeText(context, "retrieving...",
-            Toast.LENGTH_SHORT).show()
+        Result.Loading -> {
+            // nothing
+        }
     }
 }

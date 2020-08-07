@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        android:background="@drawable/shape_rectangle"
+        android:backgroundTint="@color/colorBlueTab"
+        tools:visibility="visible"
+        />
+
+    <ImageView
+        android:id="@+id/background_paper"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/paperbg"
+        style="@style/paperStyle"
+        />
+
+
+    <TextView
+        android:id="@+id/label_select_cesbie"
+        style="@style/LiloTextBody1"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Cesbie Log-out"
+
+        app:layout_constraintLeft_toLeftOf="@id/background_paper"
+        app:layout_constraintRight_toRightOf="@id/background_paper"
+
+        app:layout_constraintTop_toTopOf="@id/background_paper" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.11"
+        />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.91"
+        />
+
+
+
+    <TextView
+        android:id="@+id/label_fullname"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toRightOf="@id/left_guide"
+        app:layout_constraintRight_toLeftOf="@id/right_guide"
+        app:layout_constraintTop_toBottomOf="@id/label_select_cesbie"
+        app:layout_constraintBottom_toTopOf="@id/til_full_name"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
+
+
+        android:layout_marginTop="25dp"
+        style="@style/LiloTextBody1"
+        android:text="@string/label_full_name"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_full_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/label_fullname"
+        app:layout_constraintLeft_toLeftOf="@id/label_fullname"
+        app:layout_constraintRight_toRightOf="@id/label_fullname"
+        app:layout_constraintBottom_toTopOf="@id/iv_logout_cesbie_save"
+        style="@style/lilo_til1"
+        >
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/et_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/lilo_et_box"
+            android:clickable="true"
+            android:focusable="false"
+            android:inputType="text"
+            android:imeOptions="actionDone"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_logout_cesbie_save"
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintRight_toLeftOf="@id/right_guide"
+        app:layout_constraintTop_toBottomOf="@id/til_full_name"
+        app:layout_constraintBottom_toBottomOf="@id/background_paper"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"
+
+        android:layout_marginTop="18dp"
+        app:layout_constraintDimensionRatio="W,0.3:1"
+
+
+
+        android:src="@drawable/save"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/loading_components"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="loading,loading_text"
+        android:visibility="invisible"
+
+        />
+
+<!--    <View
+        android:id="@+id/loading_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/colorBlackAlpha50"
+        />-->
+
+    <ImageView
+        android:id="@+id/loading"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/loading_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Verifying Pin Code.."
+        app:layout_constraintTop_toBottomOf="@id/loading"
+        app:layout_constraintLeft_toLeftOf="@id/loading"
+        app:layout_constraintRight_toRightOf="@id/loading"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

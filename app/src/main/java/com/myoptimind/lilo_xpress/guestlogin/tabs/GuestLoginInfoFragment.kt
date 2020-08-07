@@ -14,9 +14,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.myoptimind.lilo_xpress.R
+import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
+import com.myoptimind.lilo_xpress.shared.displayGenericFormError
 import com.myoptimind.lilo_xpress.shared.handleData
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_guest_login_info.*
@@ -34,8 +36,6 @@ private const val ARGS_INITIAL = "args_initial"
 class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
 
     lateinit var currentPhotoPath: String
-
-
     val viewModel: GuestLoginViewModel by activityViewModels()
 
     companion object {
@@ -76,9 +76,12 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
         }
 
         viewModel.agencies.observe(viewLifecycleOwner, Observer { result ->
+
             result.handleData(requireContext(),
                 et_agency,
-                onSelectItem = { index -> viewModel.agencyIndex.value = index.toString() }
+                onSelectItem = { index ->
+                    viewModel.agencyIndex.value = index.toString()
+                }
             )
         })
 
@@ -138,11 +141,7 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
             )){
                 guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
             }else{
-                Toast.makeText(
-                    requireContext(),
-                    "Please fill in all required fields.",
-                    Toast.LENGTH_LONG
-                ).show()
+                requireContext().displayGenericFormError()
             }
         }
 

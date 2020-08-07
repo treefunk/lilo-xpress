@@ -14,6 +14,7 @@ import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutTab
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
+import com.myoptimind.lilo_xpress.shared.displayAlert
 import com.myoptimind.lilo_xpress.shared.initLoading
 import kotlinx.android.synthetic.main.fragment_guest_logout_enter_pin.*
 
@@ -55,7 +56,10 @@ class GuestLogoutEnterPinFragment : TabChildFragment<GuestLogoutTab>() {
                     iv_enterpin_next.isEnabled = true
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(),result.error.message,Toast.LENGTH_LONG).show()
+                    requireContext().displayAlert(
+                        "",
+                        result.error.message!!
+                    )
                     loading_components.visibility = View.INVISIBLE
                     et_pin_code.isEnabled = true
                     iv_enterpin_next.isEnabled = true
@@ -70,7 +74,14 @@ class GuestLogoutEnterPinFragment : TabChildFragment<GuestLogoutTab>() {
         })
 
         iv_enterpin_next.setOnClickListener {
-            viewModel.validatePin(et_pin_code.text.toString())
+            if(et_pin_code.text.toString().isNotBlank()){
+                viewModel.validatePin(et_pin_code.text.toString())
+            }else{
+                requireContext().displayAlert(
+                    "",
+                    "Please enter a pin"
+                )
+            }
         }
 
 
