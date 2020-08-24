@@ -1,6 +1,7 @@
 package com.myoptimind.lilo_xpress.guestlogin.tabs
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
 
         val viewModel: GuestLoginViewModel by activityViewModels()
 
+        et_temperature.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(3,2) )
+
         viewModel.temperature.observe(viewLifecycleOwner, Observer { temperature ->
             et_temperature.setText(temperature)
         })
@@ -65,13 +68,13 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         iv_cit_back.setOnClickListener {
-            guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
             viewModel.saveStep3(
                 et_temperature.text.toString(),
                 et_mobile_number.text.toString(),
                 et_place_of_origin.text.toString(),
                 et_health_condition.text.toString()
             )
+            guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
         }
 
         iv_cit_save.setOnClickListener {

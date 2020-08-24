@@ -104,7 +104,7 @@ class GuestLogoutPrintFragment : TabChildFragment<GuestLogoutTab>() {
                         })
                         .setNegativeButton("Continue Without Receipt", DialogInterface.OnClickListener{ dialog, _ ->
                             dialog.dismiss()
-                            findNavController().navigate(R.id.action_guestLoginFragment_to_selectUserFragment)
+                            findNavController().navigate(R.id.action_guestLogoutFragment_to_selectUserFragment)
                         }).create().show()
                     btn_print_logout.isEnabled = true
                     loading_components_logout_print.visibility = View.GONE

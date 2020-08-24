@@ -220,7 +220,7 @@
         android:layout_marginTop="20dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
-        android:text="Health Condition"
+        android:text="Health Condition*"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -287,6 +287,7 @@
         app:layout_constraintBottom_toBottomOf="@id/background_paper"
 
         android:layout_marginTop="30dp"
+        android:translationX="15dp"
         app:layout_constraintDimensionRatio="W,0.7:1"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintVertical_bias="0"
@@ -297,7 +298,7 @@
         android:id="@+id/loading_components_cit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="loading,loading_text"
+        app:constraint_referenced_ids="loading"
         android:visibility="invisible"
         />
 
@@ -313,17 +314,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
-    <TextView
-        android:id="@+id/loading_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logging in"
-        app:layout_constraintTop_toBottomOf="@id/loading"
-        app:layout_constraintLeft_toLeftOf="@id/loading"
-        app:layout_constraintRight_toRightOf="@id/loading"
-        android:textSize="30sp"
-        android:textColor="@color/colorAccent"
-        />
 
 
 

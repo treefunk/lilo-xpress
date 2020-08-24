@@ -54,7 +54,12 @@ class CesbieLogoutFragment: Fragment() {
                 list = { res ->
                     (res.data as List<Option>).map{ o -> o.fullname!! }
                 },
-                onSelectItem = { index -> viewModel.personIndex.value = index.toString() }
+                onSelectItem = { index -> viewModel.personIndex.value = index.toString() },
+                onFetchFail = { _ ->
+                    if(findNavController().currentDestination?.id == R.id.cesbieFragment){
+                        findNavController().navigate(R.id.action_cesbieFragment_to_selectUserFragment)
+                    }
+                }
             )
         })
 

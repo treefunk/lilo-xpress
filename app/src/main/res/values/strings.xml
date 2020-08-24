@@ -11,12 +11,12 @@
     <string name="label_purpose_service">Purpose/Service*</string>
     <string name="label_person_to_visit">Person to visit*</string>
     <string name="label_place_of_origin">Place of Origin*</string>
-    <string name="label_mobile_number">Mobile Number</string>
+    <string name="label_mobile_number">Mobile Number*</string>
     <string name="guest_print_header">CESB LETTERHEAD</string>
     <string name="full_name_">Full Name</string>
     <string name="label_agency_and_attached_agency">Agency / Attached Agency</string>
     <string name="label_email_address">Email Address</string>
-    <string name="label_division_person_visited">Division/Person Visited</string>
+    <string name="label_division_person_visited">Division / Person Visited</string>
     <string name="label_purpose_of_visit">Purpose of Visit</string>
     <string name="label_temperature_">Temperature</string>
     <string name="label_place_of_origin_">Place of Origin</string>

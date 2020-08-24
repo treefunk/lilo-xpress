@@ -10,6 +10,7 @@ import com.epson.epos2.linedisplay.LineDisplay
 import com.epson.epos2.printer.Printer
 import com.epson.epos2.printer.PrinterStatusInfo
 import com.epson.epos2.printer.ReceiveListener
+import com.epson.eposprint.Print
 import com.myoptimind.lilo_xpress.R
 import timber.log.Timber
 import javax.inject.Inject
@@ -69,13 +70,20 @@ constructor(
                         "BT:$address",
                         Printer.PARAM_DEFAULT
                     )
+                    return true
+                }else if(mPrinter?.status?.connection == LineDisplay.TRUE){
+                    return true
+                }else{
+                    throw Exception("Unable to connect to printer.")
+
                 }
-                true
             } catch (e: Exception) {
                 Timber.e(e.message)
-                false
+                throw Exception("Printer is offline.")
             }
 
+        }else{
+            throw Exception("Printer is offline.")
         }
         return false
     }
@@ -103,6 +111,7 @@ constructor(
 
         val logoData = BitmapFactory.decodeResource(context.resources, R.drawable.logo)
         val textData = StringBuilder()
+
 
         printer.addTextFont(Printer.FONT_D)
         printer.addTextAlign(Printer.ALIGN_CENTER)
@@ -141,10 +150,10 @@ constructor(
         printer.addFeedLine(1)
         printer.addTextSize(1,1)
         textData.append("Guest : $fullname\n")
-        textData.append("Department/Agency: $agency\n")
-        textData.append("Attached Agency: $attachedAgency\n")
-        textData.append("Person to Visit: $personVisited\n")
-        textData.append("Purpose of Visit: $purposeOfVisit\n")
+        textData.append("Agency: $agency\n")
+        textData.append("Attached Agency: $attachedAgency\n".wordWrapped())
+        textData.append("Person to Visit: $personVisited\n".wordWrapped())
+        textData.append("Purpose of Visit: $purposeOfVisit\n".wordWrapped())
         printer.addAndClear(textData)
         if(pinCode != null){
             printer.addFeedLine(1)
@@ -174,6 +183,9 @@ constructor(
         printer.addText(getFooter())
         printer.addFeedLine(1)
         printer.addCut(Printer.CUT_FEED)
+        printer.addSound(Printer.PATTERN_C,5,Printer.PARAM_DEFAULT)
+
+
 
         if(connectPrinter()){
             try{
@@ -196,6 +208,27 @@ constructor(
         """.trimIndent()
     }
 
+    fun String.wordWrapped(): String {
+        val words = this.split(' ')
+        val sb = StringBuilder(words[0])
+        val lineWidth = 38
+        var spaceLeft = lineWidth - words[0].length
+        for (word in words.drop(1)) {
+            val len = word.length
+            if (len + 1 > spaceLeft) {
+                sb.append("\n").append(word)
+                spaceLeft = lineWidth - len
+            }
+            else {
+                sb.append(" ").append(word)
+                spaceLeft -= (len + 1)
+            }
+        }
+        return sb.toString()
+    }
+
+
+
 
     private fun getFooter(): String {
         return """
@@ -217,5 +250,6 @@ constructor(
     override fun onPtrReceive(p0: Printer?, p1: Int, p2: PrinterStatusInfo?, p3: String?) {
 //        TODO("Not yet implemented")
         Timber.e("on pointer receive")
+        // not needed
     }
 }

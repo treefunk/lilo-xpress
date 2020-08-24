@@ -12,12 +12,14 @@ import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.myoptimind.lilo_xpress.R
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
+import com.myoptimind.lilo_xpress.shared.displayAlert
 import com.myoptimind.lilo_xpress.shared.displayGenericFormError
 import com.myoptimind.lilo_xpress.shared.handleData
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,7 +73,7 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
 
 
 
-        iv_take_photo.setOnClickListener {
+        card_take_a_photo.setOnClickListener {
             dispatchTakePictureIntent()
         }
 
@@ -81,16 +83,37 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
                 et_agency,
                 onSelectItem = { index ->
                     viewModel.agencyIndex.value = index.toString()
+                },
+                onFetchFail = { _ ->
+                    if(findNavController().currentDestination?.id == R.id.guestLoginFragment){
+                        findNavController().navigate(R.id.action_guestLoginFragment_to_selectUserFragment)
+                    }
                 }
             )
         })
 
 
+        et_attached_agency.isEnabled = false
         viewModel.attachedAgencies.observe(viewLifecycleOwner, Observer { result ->
-            result.handleData(requireContext(),
-                et_attached_agency,
-                onSelectItem = { index -> viewModel.attachedAgencyIndex.value = index.toString() }
-            )
+            when(result){
+                is Result.Success -> {
+                    if(result != null){
+                        et_attached_agency.isEnabled = true
+                        result.handleData(requireContext(),
+                            et_attached_agency,
+                            onSelectItem = { index -> viewModel.attachedAgencyIndex.value = index.toString() }
+                        )
+                    }
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Result.Loading -> {
+                    et_attached_agency.isEnabled = false
+                }
+            }
+
         })
 
         viewModel.fullName.observe(viewLifecycleOwner, Observer { fullName ->
@@ -133,6 +156,12 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         iv_guest_info_next.setOnClickListener {
+            val email = et_email_address.text.toString()
+            if(email.isNotBlank() &&
+                    !validateEmail(email)){
+                requireContext().displayAlert("","Invalid E-mail Address Format.")
+                return@setOnClickListener
+            }
 
             if(viewModel.saveStep1(
                 et_full_name.text.toString(),
@@ -145,10 +174,11 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
             }
         }
 
+    }
 
-
-
-
+    private fun validateEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+".toRegex()
+        return email.matches(emailPattern)
 
     }
 

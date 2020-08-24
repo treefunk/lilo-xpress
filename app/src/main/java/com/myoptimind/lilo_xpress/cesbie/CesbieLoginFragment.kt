@@ -1,6 +1,7 @@
 package com.myoptimind.lilo_xpress.cesbie
 
 import android.os.Bundle
+import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.myoptimind.lilo_xpress.R
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.data.Result
+import com.myoptimind.lilo_xpress.shared.DecimalDigitsInputFilter
 import com.myoptimind.lilo_xpress.shared.displayAlert
 import com.myoptimind.lilo_xpress.shared.handleData
 import com.myoptimind.lilo_xpress.shared.initLoading
@@ -44,14 +46,23 @@ class CesbieLoginFragment : Fragment () {
 
         viewModel.resetData()
 
+        et_temperature.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(5,2))
+
+
         viewModel.persons.observe(viewLifecycleOwner, Observer { result ->
-            result.handleData(requireContext(),
-                et_full_name,
-                list = { res ->
-                    (res.data as List<Option>).map{ o -> o.fullname!! }
-                },
-                onSelectItem = { index -> viewModel.personIndex.value = index.toString() }
-            )
+                    et_full_name.isEnabled = true
+                    result.handleData(requireContext(),
+                        et_full_name,
+                        list = { res ->
+                            (res.data as List<Option>).map{ o -> o.fullname!! }
+                        },
+                        onSelectItem = { index -> viewModel.personIndex.value = index.toString() },
+                        onFetchFail = { _ ->
+                            if(findNavController().currentDestination?.id == R.id.cesbieFragment){
+                                findNavController().navigate(R.id.action_cesbieFragment_to_selectUserFragment)
+                            }
+                        }
+                    )
         })
 
         viewModel.placeOfOrigins.observe(viewLifecycleOwner, Observer { origins ->

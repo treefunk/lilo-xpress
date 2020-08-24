@@ -50,7 +50,8 @@
         tools:layout="@layout/fragment_cesbie" >
         <action
             android:id="@+id/action_cesbieFragment_to_selectUserFragment"
-            app:destination="@id/selectUserFragment" />
+            app:destination="@id/selectUserFragment"
+            app:popUpTo="@id/selectUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/guestLoginFragment"
@@ -60,7 +61,8 @@
         >
         <action
             android:id="@+id/action_guestLoginFragment_to_selectUserFragment"
-            app:destination="@id/selectUserFragment" />
+            app:destination="@id/selectUserFragment"
+            app:popUpTo="@id/selectUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/guestLogoutFragment"
@@ -70,7 +72,8 @@
         >
         <action
             android:id="@+id/action_guestLogoutFragment_to_selectUserFragment"
-            app:destination="@id/selectUserFragment" />
+            app:destination="@id/selectUserFragment"
+            app:popUpTo="@id/selectUserFragment"/>
     </fragment>
 
 </navigation>

@@ -35,10 +35,13 @@
         app:cardElevation="18dp"
         >
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             >
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guide"
@@ -98,6 +101,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_date_and_time"
+                app:layout_constraintBottom_toTopOf="@id/tv_fullname"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -113,9 +117,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_fullname"
+                app:layout_constraintBottom_toTopOf="@id/label_agency"
+
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
 
                 android:text="Jhondee Diaz"
                 />
@@ -128,6 +134,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_fullname"
+                app:layout_constraintBottom_toTopOf="@id/tv_agency_name"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -143,9 +150,10 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_agency"
+                app:layout_constraintBottom_toTopOf="@id/label_email_address"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
 
                 android:text="Agency Name\nAttached Agency Name"
                 />
@@ -158,6 +166,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_agency_name"
+                app:layout_constraintBottom_toTopOf="@id/tv_email_address"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -173,9 +182,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_email_address"
+                app:layout_constraintBottom_toTopOf="@id/label_divison_person_visited"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
+
 
                 android:text="fjanib@myoptimind.com"
                 />
@@ -188,6 +199,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_email_address"
+                app:layout_constraintBottom_toTopOf="@id/tv_division_person_visited"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -203,11 +215,13 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_divison_person_visited"
+                app:layout_constraintBottom_toTopOf="@id/label_purpose_of_visit"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
 
                 android:text="Division Name / Person Visited"
+
                 />
 
             <TextView
@@ -218,6 +232,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_division_person_visited"
+                app:layout_constraintBottom_toTopOf="@id/tv_purpose_of_visit"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -233,11 +248,13 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_purpose_of_visit"
+                app:layout_constraintBottom_toTopOf="@id/label_temperature"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
 
                 android:text="Meeting"
+
                 />
 
             <TextView
@@ -248,6 +265,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_purpose_of_visit"
+                app:layout_constraintBottom_toTopOf="@id/tv_temperature"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -263,9 +281,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_temperature"
+                app:layout_constraintBottom_toTopOf="@id/label_place_of_origin"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
+
 
                 android:text="34.3 C"
                 />
@@ -278,6 +298,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_temperature"
+                app:layout_constraintBottom_toTopOf="@id/tv_place_of_origin"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -293,9 +314,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_place_of_origin"
+                app:layout_constraintBottom_toTopOf="@id/label_duration_of_visit"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
+
 
                 android:text="Quezon City"
                 />
@@ -308,6 +331,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_place_of_origin"
+                app:layout_constraintBottom_toTopOf="@id/tv_duration_of_visit"
                 android:layout_marginTop="8dp"
 
                 style="@style/LiloTextLightHeader1"
@@ -323,15 +347,17 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/label_duration_of_visit"
+                app:layout_constraintBottom_toBottomOf="parent"
 
                 android:gravity="center"
-                style="@style/LiloTextBody1"
+                style="@style/LiloTextPrintBody"
 
                 android:text="1 hour"
                 />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </com.google.android.material.card.MaterialCardView>
 

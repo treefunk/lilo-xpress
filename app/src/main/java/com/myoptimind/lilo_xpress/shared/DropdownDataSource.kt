@@ -80,6 +80,7 @@ constructor(val guestLoginService: GuestLoginService)
                 persons.postValue(Result.Success(res.data.personsToVisit))
             }catch (exception: Exception){
                 agencies.postValue(Result.Error(exception))
+                persons.postValue(Result.Error(exception))
             }
         }
     }
@@ -122,7 +123,8 @@ fun Result<List<Any>>.handleData(context: Context,
                                      (res.data as List<Option>).map{ o -> o.name!! }
                                  },
                                  onFetchSuccess: () -> Unit = { Timber.v("Successfully fetched") },
-                                 onSelectItem: (index: Int) -> Unit = { Timber.v("Selected index $it")}
+                                 onSelectItem: (index: Int) -> Unit = { Timber.v("Selected index $it")},
+                                 onFetchFail: (errorMessage: String) -> Unit = { Timber.v("Failed fetching") }
 ){
     when(this){
         is Result.Success -> {
@@ -136,10 +138,11 @@ fun Result<List<Any>>.handleData(context: Context,
         }
         is Result.Error -> {
             val errorMessage = when (this.error) {
-                is UnknownHostException -> "No internet connection."
+                is UnknownHostException -> "Internet Connection is required. Please try again.."
                 else -> "Something went wrong"
             }
             context.displayAlert("",errorMessage)
+            onFetchFail(errorMessage)
         }
         Result.Loading -> {
             // nothing

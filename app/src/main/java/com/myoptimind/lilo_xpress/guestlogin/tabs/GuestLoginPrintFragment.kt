@@ -18,6 +18,7 @@ import com.myoptimind.lilo_xpress.shared.LiloPrinter
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
 import com.myoptimind.lilo_xpress.shared.initLoading
 import dagger.hilt.android.AndroidEntryPoint
+
 import kotlinx.android.synthetic.main.fragment_guest_login_print.*
 import javax.inject.Inject
 
@@ -57,11 +58,19 @@ class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
         viewModel.loginResult.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Result.Success -> {
+
                     val data = result.data.data
+
+                    if(data.emailAddress.isEmpty()){
+                        tv_email_address.visibility = View.GONE
+                        label_email_address.visibility = View.GONE
+                    }
+
+
                     tv_date_and_time.setText(data.loginTimeFormat)
                     tv_fullname.setText(data.fullname)
                     tv_agency_name.setText("${data.agency}\n${data.attachedAgency}")
-                    tv_email_address.setText(data.emailAddress)
+                    tv_email_address?.setText(data.emailAddress)
                     tv_division_person_visited.setText("${data.divisionToVisit} / ${data.personToVisit}")
                     tv_purpose_of_visit.setText(data.purpose)
                     tv_temperature.setText(data.temperature)

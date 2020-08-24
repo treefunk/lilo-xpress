@@ -221,7 +221,7 @@
         android:layout_marginTop="10dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
-        android:text="Email Address"
+        android:text="Email Address*"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -248,7 +248,7 @@
 
     <com.google.android.material.checkbox.MaterialCheckBox
         android:id="@+id/cb_confirm_receipt"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/til_email_address"
         app:layout_constraintLeft_toLeftOf="@id/til_email_address"
@@ -256,16 +256,37 @@
         app:layout_constraintBottom_toTopOf="@id/iv_guest_info_next"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintVertical_bias="0"
-        android:text="@string/text_confirm_receipt"
         app:buttonTint="@android:color/black"
-        android:maxLines="2"
         android:textSize="18sp"
         android:gravity="top"
         android:layout_marginTop="10dp"
         android:letterSpacing="0.09"
         android:textColor="@android:color/black"
         android:paddingLeft="0dp"
+        android:scaleX="1.4"
+        android:scaleY="1.4"
         />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+
+        android:layout_marginLeft="10dp"
+
+
+        android:text="@string/text_confirm_receipt"
+        app:layout_constraintLeft_toRightOf="@id/cb_confirm_receipt"
+        app:layout_constraintRight_toLeftOf="@id/right_guide"
+        app:layout_constraintBottom_toTopOf="@id/card_take_a_photo"
+        app:layout_constraintTop_toBottomOf="@id/til_email_address"
+        app:layout_constraintBaseline_toBaselineOf="@id/cb_confirm_receipt"
+
+        app:layout_constraintVertical_bias="0"
+        />
+
+
 
 
 
@@ -295,6 +316,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/takephoto_nowhite"
+                android:elevation="40dp"
                 />
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -320,6 +342,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
         app:layout_constraintTop_toTopOf="@id/card_take_a_photo"
+        android:translationX="15dp"
 
 
 

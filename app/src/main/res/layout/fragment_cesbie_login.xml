@@ -232,7 +232,7 @@
         android:layout_marginTop="20dp"
         style="@style/LiloTextBody1"
         app:layout_constraintHorizontal_bias="0"
-        android:text="Health Condition"
+        android:text="Health Condition*"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -285,6 +285,7 @@
         android:layout_marginTop="30dp"
         app:layout_constraintDimensionRatio="W,0.7:1"
         android:scaleType="fitStart"
+        android:translationX="15dp"
         app:layout_constraintHorizontal_bias="1"
         android:src="@drawable/save"
         />
@@ -293,7 +294,7 @@
         android:id="@+id/loading_components_cesbielogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="loading,loading_text"
+        app:constraint_referenced_ids="loading"
         android:visibility="invisible"
         />
 
@@ -311,17 +312,6 @@
         android:elevation="8dp"
         />
 
-    <TextView
-        android:id="@+id/loading_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logging in..."
-        app:layout_constraintTop_toBottomOf="@id/loading"
-        app:layout_constraintLeft_toLeftOf="@id/loading"
-        app:layout_constraintRight_toRightOf="@id/loading"
-        android:textSize="30sp"
-        android:textColor="@color/colorAccent"
-        />
 
 
 

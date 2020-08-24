@@ -2,16 +2,20 @@ package com.myoptimind.lilo_xpress.guestlogin
 
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.epson.epos2.Epos2Exception
+import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.shared.LiloPrinter
+import com.myoptimind.lilo_xpress.shared.MutableOptionList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -19,6 +23,7 @@ import okhttp3.RequestBody
 import timber.log.Timber
 
 import java.io.File
+import java.net.UnknownHostException
 
 
 class GuestLoginViewModel
@@ -45,7 +50,11 @@ class GuestLoginViewModel
 
     // pre-populated fields
     val agencies = guestLoginRepository.agencies
-    val attachedAgencies = guestLoginRepository.attachedAgencies
+//    val attachedAgencies = guestLoginRepository.attachedAgencies
+    val attachedAgencies = MediatorLiveData<Result<List<Option>>>()
+    var attachedAgencies_ : List<Option>? = null
+
+
 
 
 
@@ -89,6 +98,43 @@ class GuestLoginViewModel
 
     init {
         confirmReceipt.value = false
+
+        /**
+         *  For attached agencies dropdown
+         *  fires when agency is changed
+         */
+        attachedAgencies.addSource(agencyIndex) { index ->
+            if(index != null){
+                initAttachedAgency(index)
+            }
+        }
+    }
+
+    private fun initAttachedAgency(index : String){
+        val option = guestLoginRepository.getSelectedAttachedAgency(index)
+        Timber.v("chosen is ${option.name}")
+        if (!option.id.equals("0") && option.id != null) {
+            Timber.v("Fetching attached agencies for ${option.name}..")
+            attachedAgencies.postValue(Result.Loading)
+            viewModelScope.launch(IO) {
+                try{
+                    val response = guestLoginRepository.fetchAttachedAgencies(option.id)
+                    attachedAgencies.postValue(Result.Success(response.data))
+                    attachedAgencies_ = response.data
+                }catch (exception: Exception){
+                    Timber.e("Failed fetching attached agency\nError: ${exception.message}")
+                    if(exception is UnknownHostException){
+                        attachedAgencies.postValue(Result.Error(Exception("No Internet Connection, Unable fetching attached agencies..")))
+                    }else{
+                        attachedAgencies.postValue(Result.Error(exception))
+                    }
+                    delay(5000)
+                    initAttachedAgency(index)
+                }
+                attachedAgency.postValue(null)
+                attachedAgencyIndex.postValue(null)
+            }
+        }
     }
 
     fun saveStep1(
@@ -100,21 +146,30 @@ class GuestLoginViewModel
             fullname.isBlank() ||
             this.agencyIndex.value.isNullOrBlank() ||
             this.attachedAgencyIndex.value.isNullOrBlank() ||
+            emailAddress.isBlank() ||
             this.uploadedPhoto.value == null
         ) {
             return false
         }
 
+
+
+
+
         this.fullName.value = fullname
         this.agency.value = guestLoginRepository.getSelectedAgency(this.agencyIndex.value).name
-        this.attachedAgency.value =
-            guestLoginRepository.getSelectedAttachedAgency(this.attachedAgencyIndex.value).name
+        this.attachedAgency.value = this.attachedAgencies_?.get(this.attachedAgencyIndex.value!!.toInt())?.name
         this.emailAddress.value = emailAddress
         this.confirmReceipt.value = confirmReceipt
         return true
     }
 
     fun saveStep2(): Boolean {
+
+        this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
+        this.purpose.value         = guestLoginRepository.getSelectedPurpose(this.purposeIndex.value).name
+        this.personToVisit.value   = guestLoginRepository.getSelectedPerson(this.personToVisitIndex.value).fullname
+
 
         if (
             this.divisionToVisitIndex.value.isNullOrBlank() ||
@@ -124,9 +179,7 @@ class GuestLoginViewModel
             return false
         }
 
-        this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
-        this.purpose.value         = guestLoginRepository.getSelectedPurpose(this.purposeIndex.value).name
-        this.personToVisit.value   = guestLoginRepository.getSelectedPerson(this.personToVisitIndex.value).fullname
+
         return true
     }
 
@@ -138,19 +191,22 @@ class GuestLoginViewModel
         healthCondition: String
     ): Boolean {
 
+        this.temperature.value = temperature
+        this.placeOfOrigin.value = placeOfOrigin
+        this.mobileNumber.value = mobileNumber
+        this.healthCondition.value = healthCondition
+
         if (
             temperature.isBlank() ||
-            placeOfOrigin.isBlank()
+            placeOfOrigin.isBlank() ||
+                    mobileNumber.isBlank() ||
+                    healthCondition.isBlank()
         ) {
             return false
         }
 
 
-        this.temperature.value = temperature
-//        this.placeOfOrigin.value = guestLoginRepository.getSelectedPlaceOfOrigin(this.placeOfOriginIndex.value).name
-        this.placeOfOrigin.value = placeOfOrigin
-        this.mobileNumber.value = mobileNumber
-        this.healthCondition.value = healthCondition
+
         return true
     }
 
@@ -173,7 +229,7 @@ class GuestLoginViewModel
                 val res = guestLoginRepository.guestLogin(
                     fullName.value?.toRequestBody()!!,
                     guestLoginRepository.getSelectedAgency(agencyIndex.value).id?.toRequestBody()!!,
-                    guestLoginRepository.getSelectedAttachedAgency(attachedAgencyIndex.value).id?.toRequestBody()!!,
+                    this@GuestLoginViewModel.attachedAgencies_?.get(this@GuestLoginViewModel.attachedAgencyIndex.value!!.toInt())?.id?.toRequestBody()!!,
                     emailAddress.value?.toRequestBody()!!,
                     when(confirmReceipt.value!!){
                         true -> "1".toRequestBody()

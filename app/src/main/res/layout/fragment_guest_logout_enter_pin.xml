@@ -112,6 +112,7 @@
         app:layout_constraintBottom_toBottomOf="@id/background_paper"
         app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="1"
+        android:translationX="15dp"
 
         android:layout_marginTop="18dp"
         app:layout_constraintDimensionRatio="W,0.3:1"
@@ -126,7 +127,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="loading,loading_text"
-        android:visibility="visible"
+        android:visibility="invisible"
 
         />
 

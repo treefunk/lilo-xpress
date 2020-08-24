@@ -16,6 +16,9 @@ interface GuestLoginService {
     @GET("visitors/guest-login/step-3")
     suspend fun getLoginThirdStep(): LoginThirdResponse
 
+    @GET("visitors/attached-agency/{agencyId}")
+    suspend fun getAttachedAgencies(@Path("agencyId") agencyId : String): AttachedAgenciesResponse
+
     /**
      * Upload image for single item
      */

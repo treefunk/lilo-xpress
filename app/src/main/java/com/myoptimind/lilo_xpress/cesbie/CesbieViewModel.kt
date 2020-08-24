@@ -38,7 +38,8 @@ constructor(
 
         if(personIndex.value.isNullOrBlank() ||
                 temperature.isBlank() ||
-                placeOfOrigin.isBlank()){
+                placeOfOrigin.isBlank() ||
+                healthCondition.isBlank()){
             return false
         }
 
