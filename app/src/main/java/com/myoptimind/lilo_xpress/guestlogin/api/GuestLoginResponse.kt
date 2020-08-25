@@ -36,8 +36,11 @@ class GuestLoginResponse (
 
         val temperature: String,
 
-        @SerializedName("place_of_origin")
-        val placeOfOrigin: String,
+        @SerializedName("region")
+        val region: String,
+
+        @SerializedName("city")
+        val city: String,
 
         @SerializedName("mobile_number")
         val mobileNumber: String,

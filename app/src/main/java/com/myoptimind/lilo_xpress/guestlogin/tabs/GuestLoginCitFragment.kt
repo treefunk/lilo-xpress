@@ -14,8 +14,11 @@ import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.*
 import kotlinx.android.synthetic.main.fragment_guest_login_cit.*
+import kotlinx.android.synthetic.main.fragment_guest_login_info.*
 
 class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
+
+    val viewModel: GuestLoginViewModel by activityViewModels()
 
     companion object {
         fun newInstance(): GuestLoginCitFragment {
@@ -40,7 +43,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
 
         loading.initLoading(requireContext())
 
-        val viewModel: GuestLoginViewModel by activityViewModels()
+
 
         et_temperature.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(3,2) )
 
@@ -48,15 +51,42 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
             et_temperature.setText(temperature)
         })
 
-        viewModel.placeOfOrigins.observe(viewLifecycleOwner, Observer { origins ->
-            origins.handleData(requireContext(),
-                et_place_of_origin,
-                onSelectItem = { index -> viewModel.placeOfOriginIndex.value = index.toString() }
+        viewModel.regions.observe(viewLifecycleOwner, Observer { regions ->
+            regions.handleData(requireContext(),
+                et_region,
+                onSelectItem = { index -> viewModel.regionIndex.value = index.toString() }
             )
         })
 
-        viewModel.placeOfOrigin.observe(viewLifecycleOwner, Observer { placeOfOrigin ->
-            et_place_of_origin.setText(placeOfOrigin, false)
+        viewModel.region.observe(viewLifecycleOwner, Observer { placeOfOrigin ->
+            et_region.setText(placeOfOrigin, false)
+        })
+
+        et_city.isEnabled = false
+        viewModel.cities.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Result.Success -> {
+                    if(result != null){
+                        et_city.isEnabled = true
+                        result.handleData(requireContext(),
+                            et_city,
+                            onSelectItem = { _ -> viewModel.city.value = et_city.text.toString() }
+                        )
+                    }
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Result.Loading -> {
+                    et_city.isEnabled = false
+                }
+            }
+
+        })
+
+        viewModel.city.observe(viewLifecycleOwner, Observer { city ->
+            et_city.setText(city,false)
         })
 
         viewModel.mobileNumber.observe(viewLifecycleOwner, Observer { mobileNumber ->
@@ -71,7 +101,8 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
             viewModel.saveStep3(
                 et_temperature.text.toString(),
                 et_mobile_number.text.toString(),
-                et_place_of_origin.text.toString(),
+                et_region.text.toString(),
+                et_city.text.toString(),
                 et_health_condition.text.toString()
             )
             guestTabChanger.changeTab(GuestLoginTab.PURPOSE)
@@ -81,7 +112,8 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
             if (viewModel.saveStep3(
                     et_temperature.text.toString(),
                     et_mobile_number.text.toString(),
-                    et_place_of_origin.text.toString(),
+                    et_region.text.toString(),
+                    et_city.text.toString(),
                     et_health_condition.text.toString()
                 )
             ) {
@@ -116,7 +148,8 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
 
     private fun enableInputs(enabled: Boolean) {
         et_temperature.isEnabled = enabled
-        et_place_of_origin.isEnabled = enabled
+        et_region.isEnabled = enabled
+        et_city.isEnabled = enabled
         et_mobile_number.isEnabled = enabled
         et_health_condition.isEnabled = enabled
         iv_cit_back.isEnabled = enabled

@@ -6,5 +6,5 @@ enum class DropDownType {
     DIVISIONS,
     PURPOSES,
     PERSONS,
-    PLACE_OF_ORIGIN
+    REGION
 }

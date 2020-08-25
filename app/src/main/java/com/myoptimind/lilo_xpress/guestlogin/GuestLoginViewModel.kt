@@ -50,13 +50,8 @@ class GuestLoginViewModel
 
     // pre-populated fields
     val agencies = guestLoginRepository.agencies
-//    val attachedAgencies = guestLoginRepository.attachedAgencies
     val attachedAgencies = MediatorLiveData<Result<List<Option>>>()
     var attachedAgencies_ : List<Option>? = null
-
-
-
-
 
     /**
      * STEP 2
@@ -80,13 +75,16 @@ class GuestLoginViewModel
      */
 
     val temperature = MutableLiveData<String>()
-    val placeOfOrigin = MutableLiveData<String>()
-    val placeOfOriginIndex = MutableLiveData<String>()
+    val region = MutableLiveData<String>()
+    val regionIndex = MutableLiveData<String>()
+    val city   = MutableLiveData<String>()
     val mobileNumber = MutableLiveData<String>()
     val healthCondition = MutableLiveData<String>()
 
     // pre-populated fields
-    val placeOfOrigins = guestLoginRepository.placeOfOrigins
+    val regions = guestLoginRepository.regions
+    val cities  = MediatorLiveData<Result<List<Option>>>()
+    var cities_ : List<Option>? = null
 
     /**
      *  Result as LiveData
@@ -108,6 +106,36 @@ class GuestLoginViewModel
                 initAttachedAgency(index)
             }
         }
+
+        cities.addSource(regionIndex){ index ->
+            if(index != null){
+                initCities(index)
+            }
+        }
+    }
+
+    private fun initCities(index: String) {
+        val option = guestLoginRepository.getSelectedRegion(index)
+        Timber.v("chosen is ${option.name}")
+            Timber.v("Fetching cities for ${option.name}..")
+            cities.postValue(Result.Loading)
+            viewModelScope.launch(IO) {
+                try{
+                    val response = guestLoginRepository.fetchCities(option.name!!)
+                    cities.postValue(Result.Success(response.data.cities))
+                    cities_ = response.data.cities
+                }catch (exception: Exception){
+                    Timber.e("Failed fetching cities\nError: ${exception.message}")
+                    if(exception is UnknownHostException){
+                        cities.postValue(Result.Error(Exception("No Internet Connection, Unable fetching cities..")))
+                    }else{
+                        cities.postValue(Result.Error(exception))
+                    }
+                    delay(5000)
+                    initCities(option.name!!)
+                }
+                city.postValue(null)
+            }
     }
 
     private fun initAttachedAgency(index : String){
@@ -187,18 +215,21 @@ class GuestLoginViewModel
     fun saveStep3(
         temperature: String,
         mobileNumber: String,
-        placeOfOrigin: String,
+        region: String,
+        city: String,
         healthCondition: String
     ): Boolean {
 
         this.temperature.value = temperature
-        this.placeOfOrigin.value = placeOfOrigin
+        this.region.value = region
         this.mobileNumber.value = mobileNumber
+        this.city.value = city
         this.healthCondition.value = healthCondition
 
         if (
             temperature.isBlank() ||
-            placeOfOrigin.isBlank() ||
+            region.isBlank() ||
+            city.isBlank() ||
                     mobileNumber.isBlank() ||
                     healthCondition.isBlank()
         ) {
@@ -240,7 +271,8 @@ class GuestLoginViewModel
                     guestLoginRepository.getSelectedPurpose(purposeIndex.value).id?.toRequestBody()!!,
                     guestLoginRepository.getSelectedPerson(personToVisitIndex.value).id?.toRequestBody()!!,
                     temperature.value?.toRequestBody()!!,
-                    placeOfOrigin.value?.toRequestBody()!!,
+                    region.value?.toRequestBody()!!,
+                    city.value?.toRequestBody()!!,
                     mobileNumber.value?.toRequestBody()!!,
                     healthCondition.value?.toRequestBody()!!
                 )
@@ -273,7 +305,8 @@ class GuestLoginViewModel
                     data.personToVisit,
                     data.purpose,
                     data.temperature,
-                    data.placeOfOrigin,
+                    data.region,
+                    data.city,
                     data.pinCode,
                     data.loginTimeFormat
                 )
@@ -308,8 +341,9 @@ class GuestLoginViewModel
         personToVisit.value = null
         personToVisitIndex.value = null
         temperature.value = null
-        placeOfOrigin.value = null
-        placeOfOriginIndex.value = null
+        region.value = null
+        regionIndex.value = null
+        city.value = null
         mobileNumber.value = null
         healthCondition.value = null
         loginResult.value = null

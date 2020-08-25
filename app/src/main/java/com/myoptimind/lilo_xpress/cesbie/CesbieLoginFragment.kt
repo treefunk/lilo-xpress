@@ -18,6 +18,11 @@ import com.myoptimind.lilo_xpress.shared.displayAlert
 import com.myoptimind.lilo_xpress.shared.handleData
 import com.myoptimind.lilo_xpress.shared.initLoading
 import kotlinx.android.synthetic.main.fragment_cesbie_login.*
+import kotlinx.android.synthetic.main.fragment_cesbie_login.et_city
+import kotlinx.android.synthetic.main.fragment_cesbie_login.et_health_condition
+import kotlinx.android.synthetic.main.fragment_cesbie_login.et_region
+import kotlinx.android.synthetic.main.fragment_cesbie_login.et_temperature
+import kotlinx.android.synthetic.main.fragment_cesbie_login.loading
 
 class CesbieLoginFragment : Fragment () {
 
@@ -65,10 +70,42 @@ class CesbieLoginFragment : Fragment () {
                     )
         })
 
-        viewModel.placeOfOrigins.observe(viewLifecycleOwner, Observer { origins ->
-            origins.handleData(requireContext(),
-                et_place_of_origin
+        viewModel.regions.observe(viewLifecycleOwner, Observer { regions ->
+            regions.handleData(requireContext(),
+                et_region,
+                onSelectItem = { index -> viewModel.regionIndex.value = index.toString() }
             )
+        })
+
+        viewModel.region.observe(viewLifecycleOwner, Observer { placeOfOrigin ->
+            et_region.setText(placeOfOrigin, false)
+        })
+
+        et_city.isEnabled = false
+        viewModel.cities.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Result.Success -> {
+                    if(result != null){
+                        et_city.isEnabled = true
+                        result.handleData(requireContext(),
+                            et_city,
+                            onSelectItem = { _ -> viewModel.city.value = et_city.text.toString() }
+                        )
+                    }
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Result.Loading -> {
+                    et_city.isEnabled = false
+                }
+            }
+
+        })
+
+        viewModel.city.observe(viewLifecycleOwner, Observer { city ->
+            et_city.setText(city,false)
         })
 
 
@@ -76,7 +113,8 @@ class CesbieLoginFragment : Fragment () {
         iv_cesbie_info_save.setOnClickListener {
             if(!viewModel.loginCesbie(
                     et_temperature.text.toString(),
-                    et_place_of_origin.text.toString(),
+                    et_region.text.toString(),
+                    et_city.text.toString(),
                     et_health_condition.text.toString()
                 )){
                 requireContext().displayAlert(

@@ -1,5 +1,6 @@
 package com.myoptimind.lilo_xpress.guestlogin.api
 
+import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -19,6 +20,9 @@ interface GuestLoginService {
     @GET("visitors/attached-agency/{agencyId}")
     suspend fun getAttachedAgencies(@Path("agencyId") agencyId : String): AttachedAgenciesResponse
 
+    @GET("get-cities/{region}")
+    suspend fun getCities(@Path("region") region: String): CitiesResponse
+
     /**
      * Upload image for single item
      */
@@ -35,7 +39,8 @@ interface GuestLoginService {
         @Part("purpose") purpose: RequestBody,
         @Part("person_to_visit") personToVisit: RequestBody,
         @Part("temperature") temperature: RequestBody,
-        @Part("place_of_origin") placeOfOrigin: RequestBody,
+        @Part("region") region: RequestBody,
+        @Part("city") city: RequestBody,
         @Part("mobile_number") mobileNumber: RequestBody,
         @Part("health_condition") healthCondition: RequestBody
     ): GuestLoginResponse

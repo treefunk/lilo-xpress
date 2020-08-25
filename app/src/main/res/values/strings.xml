@@ -49,4 +49,6 @@
     <string name="handlingmsg_err_battery_real_end">Please connect AC adapter or change the battery.\nBattery of printer is almost empty.\n</string>
     <string name="handlingmsg_err_offline">Printer is offline.\n</string>
     <string name="success_login_msg">Successfully Logged in.</string>
+    <string name="label_region">Region*</string>
+    <string name="label_city">City*</string>
 </resources>

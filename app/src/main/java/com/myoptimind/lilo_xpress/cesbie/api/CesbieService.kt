@@ -13,8 +13,10 @@ interface CesbieService {
         staffId: String,
         @Field("temperature")
         temperature: String,
-        @Field("place_of_origin")
-        placeOfOrigin: String,
+        @Field("region")
+        region: String,
+        @Field("city")
+        city: String,
         @Field("health_condition")
         healthCondition: String
     ): CesbieLoginResponse

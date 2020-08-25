@@ -10,6 +10,7 @@ import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginService
 import com.myoptimind.lilo_xpress.data.DropDownType
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.data.Result
+import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import timber.log.Timber
@@ -30,8 +31,8 @@ constructor(val guestLoginService: GuestLoginService)
     val divisions:        MutableOptionList = MutableLiveData()
     val purposes:         MutableOptionList = MutableLiveData()
     val persons:          MutableOptionList = MutableLiveData()
-    val placeOfOrigin:    MutableOptionList = MutableLiveData()
-    
+    val regions:          MutableOptionList = MutableLiveData()
+
     init {
     }
 
@@ -42,7 +43,7 @@ constructor(val guestLoginService: GuestLoginService)
             DropDownType.DIVISIONS -> divisions.value
             DropDownType.PURPOSES -> purposes.value
             DropDownType.PERSONS -> persons.value
-            DropDownType.PLACE_OF_ORIGIN -> placeOfOrigin.value
+            DropDownType.REGION -> regions.value
         }
         return if(index != null){
             when (res) {
@@ -90,11 +91,15 @@ constructor(val guestLoginService: GuestLoginService)
             agencies.postValue(Result.Loading)
             try {
                 val res = guestLoginService.getLoginThirdStep()
-                placeOfOrigin.postValue(Result.Success(res.data.placeOfOrigins))
+                regions.postValue(Result.Success(res.data.placeOfOrigins))
             }catch (exception: Exception){
-                agencies.postValue(Result.Error(exception))
+                regions.postValue(Result.Error(exception))
             }
         }
+    }
+
+    suspend fun getCities(region: String): CitiesResponse {
+        return guestLoginService.getCities(region)
     }
 }
 

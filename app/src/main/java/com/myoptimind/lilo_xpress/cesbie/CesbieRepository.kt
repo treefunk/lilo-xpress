@@ -5,6 +5,7 @@ import com.myoptimind.lilo_xpress.cesbie.api.CesbieService
 import com.myoptimind.lilo_xpress.data.DropDownType
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
+import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
 import javax.inject.Inject
 
 class CesbieRepository
@@ -15,7 +16,7 @@ constructor(
 )
 {
 
-    val placeOfOrigins   = dropdownDataSource.placeOfOrigin
+    val regions   = dropdownDataSource.regions
     val persons          = dropdownDataSource.persons
 
 
@@ -27,6 +28,9 @@ constructor(
         return dropdownDataSource.getSelected(index,DropDownType.PERSONS)
     }
 
+    fun getSelectedRegion(index: String?): Option = dropdownDataSource.getSelected(index,DropDownType.REGION)
+
+
     fun fetchStaff() {
         dropdownDataSource.fetchGuestInfoStep2()
     }
@@ -34,13 +38,15 @@ constructor(
     suspend fun cesbieLogin(
         staffId: String,
         temperature: String,
-        placeOfOrigin: String,
+        region: String,
+        city: String,
         healthCondition: String
     ): CesbieLoginResponse {
         return cesbieService.loginCesbie(
             staffId,
             temperature,
-            placeOfOrigin,
+            region,
+            city,
             healthCondition
         )
     }
@@ -49,6 +55,10 @@ constructor(
         staffId: String
     ): CesbieLoginResponse {
         return cesbieService.logoutCesbie(staffId)
+    }
+
+    suspend fun fetchCities(region: String): CitiesResponse {
+        return dropdownDataSource.getCities(region)
     }
 
 

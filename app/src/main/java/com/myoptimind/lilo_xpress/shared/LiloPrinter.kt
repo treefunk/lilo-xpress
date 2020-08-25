@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.text.format.DateFormat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.epson.epos2.Epos2Exception
 import com.epson.epos2.linedisplay.LineDisplay
@@ -13,6 +14,7 @@ import com.epson.epos2.printer.ReceiveListener
 import com.epson.eposprint.Print
 import com.myoptimind.lilo_xpress.R
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,6 +22,8 @@ import javax.inject.Singleton
 private const val DEVICE_ADDRESS = "BT:00:01:90:76:B8:08"
 
 private const val PRINTER_ERROR_404 = "Printer is offline."
+
+private const val PRINTER_LINE_WIDTH = 38
 
 @Singleton
 class LiloPrinter
@@ -99,7 +103,8 @@ constructor(
         personVisited: String,
         purposeOfVisit: String,
         temperature: String,
-        placeOfOrigin: String,
+        region: String,
+        city: String,
         pinCode: String? = null,
         loginString: String,
         logoutString: String? = null,
@@ -150,7 +155,7 @@ constructor(
         printer.addFeedLine(1)
         printer.addTextSize(1,1)
         textData.append("Guest : $fullname\n")
-        textData.append("Agency: $agency\n")
+        textData.append("Department/Agency: ${agency.wordWrapped(5)}\n")
         textData.append("Attached Agency: $attachedAgency\n".wordWrapped())
         textData.append("Person to Visit: $personVisited\n".wordWrapped())
         textData.append("Purpose of Visit: $purposeOfVisit\n".wordWrapped())
@@ -208,16 +213,15 @@ constructor(
         """.trimIndent()
     }
 
-    fun String.wordWrapped(): String {
+    fun String.wordWrapped(lineWidth: Int = PRINTER_LINE_WIDTH): String {
         val words = this.split(' ')
         val sb = StringBuilder(words[0])
-        val lineWidth = 38
-        var spaceLeft = lineWidth - words[0].length
+        var spaceLeft = PRINTER_LINE_WIDTH - words[0].length
         for (word in words.drop(1)) {
             val len = word.length
             if (len + 1 > spaceLeft) {
                 sb.append("\n").append(word)
-                spaceLeft = lineWidth - len
+                spaceLeft = PRINTER_LINE_WIDTH - len
             }
             else {
                 sb.append(" ").append(word)
@@ -234,6 +238,9 @@ constructor(
         return """
             THIS SERVES AS YOUR CERTIFICATE
             OF APPEARANCE.
+            
+            Date Printed: ${DateFormat.format("d MMMM yyyy", Date())}
+              ${DateFormat.format("hh:mmaa", Date())}
             
             For compliments or suggestions, please
             email us at feedback@cesboard.gov.ph

@@ -152,7 +152,7 @@
         app:layout_constraintRight_toRightOf="@id/til_agency"
         android:src="@drawable/ic_round_keyboard_arrow_down_40"
         android:tint="@android:color/black"
-        />
+        android:contentDescription="TODO" />
 
 
 
