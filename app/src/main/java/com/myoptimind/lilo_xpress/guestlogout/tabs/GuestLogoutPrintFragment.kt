@@ -71,7 +71,7 @@ class GuestLogoutPrintFragment : TabChildFragment<GuestLogoutTab>() {
                     tv_division_person_visited.setText("${data.division} / ${data.personVisited}")
                     tv_purpose_of_visit.setText(data.purpose)
                     tv_temperature.setText(data.temperature)
-                    tv_place_of_origin.setText(data.city)
+                    tv_place_of_origin.setText("${data.region} - ${data.city}")
                     tv_duration_of_visit.setText(data.duration)
 
                     btn_print_logout.setOnClickListener {
