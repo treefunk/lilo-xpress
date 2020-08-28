@@ -20,8 +20,12 @@ interface GuestLoginService {
     @GET("visitors/attached-agency/{agencyId}")
     suspend fun getAttachedAgencies(@Path("agencyId") agencyId : String): AttachedAgenciesResponse
 
-    @GET("get-cities/{region}")
-    suspend fun getCities(@Path("region") region: String): CitiesResponse
+    @POST("get-cities")
+    @FormUrlEncoded
+    suspend fun getCities(
+        @Field("region")
+        region: String
+    ): CitiesResponse
 
     /**
      * Upload image for single item

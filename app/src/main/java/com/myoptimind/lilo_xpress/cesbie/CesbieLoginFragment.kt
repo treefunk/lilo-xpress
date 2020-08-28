@@ -87,6 +87,7 @@ class CesbieLoginFragment : Fragment () {
                 is Result.Success -> {
                     if(result != null){
                         et_city.isEnabled = true
+                        iv_cesbie_info_save.isEnabled = true
                         result.handleData(requireContext(),
                             et_city,
                             onSelectItem = { _ -> viewModel.city.value = et_city.text.toString() }
@@ -94,11 +95,13 @@ class CesbieLoginFragment : Fragment () {
                     }
                 }
                 is Result.Error -> {
+                    iv_cesbie_info_save.isEnabled = true
                     Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
                         .show()
                 }
                 Result.Loading -> {
                     et_city.isEnabled = false
+                    iv_cesbie_info_save.isEnabled = false
                 }
             }
 
