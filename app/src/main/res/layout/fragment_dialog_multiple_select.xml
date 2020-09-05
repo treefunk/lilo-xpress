@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/tv_select_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:gravity="center"
+        android:text="SELECT"
+        style="@style/LiloTextBody1"
+        android:padding="30dp"
+        />
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_selections"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_select_header"
+        tools:listitem="@layout/list_item_selection"
+        />
+
+</RelativeLayout>

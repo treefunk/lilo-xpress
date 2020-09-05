@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="20dp">
+
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/toggleButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Button 1"
+            app:backgroundTint="@color/colorBlueTab"
+            app:iconTint="@color/colorRedTab"
+            style="?attr/materialButtonOutlinedStyle"
+            />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+</RelativeLayout>

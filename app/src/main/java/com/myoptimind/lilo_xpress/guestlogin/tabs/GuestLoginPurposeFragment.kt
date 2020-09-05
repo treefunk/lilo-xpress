@@ -9,6 +9,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.myoptimind.lilo_xpress.R
 import com.myoptimind.lilo_xpress.data.Option
+import com.myoptimind.lilo_xpress.guestlogin.DialogMultipleSelectFragment
+import com.myoptimind.lilo_xpress.guestlogin.DialogMultipleServices
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
@@ -54,13 +56,21 @@ class GuestLoginPurposeFragment : TabChildFragment<GuestLoginTab>() {
             et_division_to_visit.setText(division,false)
         })
 
+        et_purpose_service.setOnClickListener {
+            val fm = activity?.supportFragmentManager
+            val dialog = DialogMultipleServices()
+            if(fm != null) {
+                dialog.show(fm,"test")
+            }
+        }
 
-        viewModel.purposes.observe(viewLifecycleOwner, Observer { result ->
-            result.handleData(requireContext(),
-                et_purpose_service,
-                onSelectItem = { index -> viewModel.purposeIndex.value = index.toString() }
-            )
-        })
+
+//        viewModel.purposes.observe(viewLifecycleOwner, Observer { result ->
+//            result.handleData(requireContext(),
+//                et_purpose_service,
+//                onSelectItem = { index -> viewModel.purposeIndex.value = index.toString() }
+//            )
+//        })
 
         viewModel.purpose.observe(viewLifecycleOwner, Observer { purpose ->
             et_purpose_service.setText(purpose,false)
