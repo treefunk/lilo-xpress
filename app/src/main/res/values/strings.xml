@@ -6,7 +6,7 @@
     <string name="label_full_name">Full Name*</string>
     <string name="label_agency">Agency*</string>
     <string name="text_confirm_receipt">I would like to receive an electronic copy of my Appearance Receipt</string>
-    <string name="label_guest_purpose_header">STEP 2: PURPOSE OF VISIT</string>
+    <string name="label_guest_purpose_header">STEP 2: SELECT PURPOSE OF VISIT</string>
     <string name="label_division_to_visit">Division to visit*</string>
     <string name="label_purpose_service">Purpose/Service*</string>
     <string name="label_person_to_visit">Person to visit*</string>
@@ -51,4 +51,22 @@
     <string name="success_login_msg">Successfully Logged in.</string>
     <string name="label_region">Region*</string>
     <string name="label_city">City*</string>
+
+    <string name="text_declaration">
+        I hereby authorize CESB to collect and process data indicated herein support of the
+        government\'s effort to control the spread of COVID-19 infection. Furthermore, I
+        understand that my personal information is protected by RA 10173 s. 2012 (Data Privacy
+        Act) and that I am required by RA 11469 s. 2020 (Bayanihan to Heal as One Act) to
+        provide true, correct and complete information.\n\nI understand that failure to answer any question or provide false information can be
+        penalized in accordance with the law.
+    </string>
+
+    <string name="text_any_contact">
+        Have had any contact with any PUI / PUM in the last 14 days?
+    </string>
+
+    <string name="text_travel">
+        Have you travelled locally / internationally in the last 14 days?
+    </string>
+    <string name="label_mobile_telephone">Mobile No. / Telephone No.*</string>
 </resources>

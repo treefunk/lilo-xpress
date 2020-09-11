@@ -1,13 +1,12 @@
 package com.myoptimind.lilo_xpress.guestlogin
 
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.epson.epos2.Epos2Exception
 import com.myoptimind.lilo_xpress.data.Option
+import com.myoptimind.lilo_xpress.data.PurposeType
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import com.myoptimind.lilo_xpress.data.Result
@@ -44,6 +43,7 @@ class GuestLoginViewModel
     val agencyIndex = MutableLiveData<String>()
     val attachedAgency = MutableLiveData<String>()
     val attachedAgencyIndex = MutableLiveData<String>()
+    val mobileNo = MutableLiveData<String>()
     val emailAddress = MutableLiveData<String>()
     val confirmReceipt = MutableLiveData<Boolean>()
     val uploadedPhoto = MutableLiveData<File>()
@@ -56,14 +56,22 @@ class GuestLoginViewModel
     /**
      * STEP 2
      */
+    val purposeType = MutableLiveData<PurposeType>()
+
+
     val divisionToVisit = MutableLiveData<String>()
     val divisionToVisitIndex = MutableLiveData<String>()
 
     val purpose = MutableLiveData<String>()
     val purposeIndex = MutableLiveData<String>()
 
+    val selectedPurposes = MutableLiveData<List<Option>>()
+
     val personToVisit = MutableLiveData<String>()
     val personToVisitIndex = MutableLiveData<String>()
+
+    val selectedPersons = MutableLiveData<List<Option>>()
+
 
     // pre-populated fields
     val divisions = guestLoginRepository.divisions
@@ -75,11 +83,20 @@ class GuestLoginViewModel
      */
 
     val temperature = MutableLiveData<String>()
+    val homeAddress = MutableLiveData<String>()
     val region = MutableLiveData<String>()
     val regionIndex = MutableLiveData<String>()
     val city   = MutableLiveData<String>()
+    val experiencing = MutableLiveData<String>()
+    val anyContact = MutableLiveData<Boolean>()
+    val anyContactDetails = MutableLiveData<String>()
+    val haveTravel = MutableLiveData<Boolean>()
+    val haveTravelDetails = MutableLiveData<String>()
+    val declaration = MutableLiveData<Boolean>()
+/*
     val mobileNumber = MutableLiveData<String>()
     val healthCondition = MutableLiveData<String>()
+*/
 
     // pre-populated fields
     val regions = guestLoginRepository.regions
@@ -111,6 +128,16 @@ class GuestLoginViewModel
             if(index != null){
                 initCities(index)
             }
+        }
+
+
+    }
+
+    fun listenPurposeType(){
+        Transformations.map(purposeType) { _ ->
+            Timber.v("purpose type is transformed..")
+            selectedPurposes.value = ArrayList()
+            selectedPersons.value = ArrayList()
         }
     }
 
@@ -167,6 +194,7 @@ class GuestLoginViewModel
 
     fun saveStep1(
         fullname: String,
+        mobileNo: String,
         emailAddress: String,
         confirmReceipt: Boolean
     ): Boolean {
@@ -175,18 +203,16 @@ class GuestLoginViewModel
             this.agencyIndex.value.isNullOrBlank() ||
             this.attachedAgencyIndex.value.isNullOrBlank() ||
             emailAddress.isBlank() ||
+            mobileNo.isBlank() ||
             this.uploadedPhoto.value == null
         ) {
             return false
         }
 
-
-
-
-
         this.fullName.value = fullname
         this.agency.value = guestLoginRepository.getSelectedAgency(this.agencyIndex.value).name
         this.attachedAgency.value = this.attachedAgencies_?.get(this.attachedAgencyIndex.value!!.toInt())?.name
+        this.mobileNo.value = mobileNo
         this.emailAddress.value = emailAddress
         this.confirmReceipt.value = confirmReceipt
         return true
@@ -194,17 +220,20 @@ class GuestLoginViewModel
 
     fun saveStep2(): Boolean {
 
-        this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
-        this.purpose.value         = guestLoginRepository.getSelectedPurpose(this.purposeIndex.value).name
-        this.personToVisit.value   = guestLoginRepository.getSelectedPerson(this.personToVisitIndex.value).fullname
+        Timber.v("Selected Services: \n${selectedPurposes.value?.map { "${it.name}" }}")
+        Timber.v("Selected Persons: \n${selectedPersons.value?.map { "${it.fullname}" }}")
 
-
-        if (
-            this.divisionToVisitIndex.value.isNullOrBlank() ||
-            this.purposeIndex.value.isNullOrBlank() ||
-            this.personToVisitIndex.value.isNullOrBlank()
-        ) {
-            return false
+        when(purposeType.value){
+            PurposeType.SERVICES -> {
+                this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
+                this.purpose.value         = selectedPurposes.value?.map { it.id }?.joinToString(",")
+                if(this.purpose.value.isNullOrBlank() || this.divisionToVisitIndex.value.isNullOrBlank()){ return false }
+            }
+            PurposeType.PERSON -> {
+                this.personToVisit.value   = selectedPersons.value?.map { it.id }?.joinToString(",")
+                if(this.personToVisit.value.isNullOrBlank()){ return false }
+            }
+            null -> { return false }
         }
 
 
@@ -214,25 +243,42 @@ class GuestLoginViewModel
 
     fun saveStep3(
         temperature: String,
-        mobileNumber: String,
+        homeAddress: String,
         region: String,
         city: String,
-        healthCondition: String
+        anyContactDetails: String,
+        haveTravelDetails: String,
+        cbDeclration: Boolean
     ): Boolean {
 
         this.temperature.value = temperature
+        this.homeAddress.value = homeAddress
         this.region.value = region
-        this.mobileNumber.value = mobileNumber
         this.city.value = city
-        this.healthCondition.value = healthCondition
+
+        if(this.anyContact.value == true){
+            this.anyContactDetails.value = anyContactDetails
+        }
+
+        if(this.haveTravel.value == true){
+            this.haveTravelDetails.value = haveTravelDetails
+        }
 
         if (
             temperature.isBlank() ||
+            homeAddress.isBlank() ||
             region.isBlank() ||
-            city.isBlank() ||
-                    mobileNumber.isBlank() ||
-                    healthCondition.isBlank()
+            city.isBlank()
         ) {
+            return false
+        }
+
+        if((this.anyContact.value == true && anyContactDetails.isBlank()) ||
+            (this.haveTravel.value == true && haveTravelDetails.isBlank())){
+            return false
+        }
+
+        if(!cbDeclration){
             return false
         }
 
@@ -273,8 +319,8 @@ class GuestLoginViewModel
                     temperature.value?.toRequestBody()!!,
                     region.value?.toRequestBody()!!,
                     city.value?.toRequestBody()!!,
-                    mobileNumber.value?.toRequestBody()!!,
-                    healthCondition.value?.toRequestBody()!!
+                    "".toRequestBody(),
+                    "".toRequestBody()
                 )
                 loginResult.postValue(Result.Success(res))
             }catch (exception: Exception){
@@ -331,21 +377,27 @@ class GuestLoginViewModel
         agencyIndex.value = null
         attachedAgency.value = null
         attachedAgencyIndex.value = null
+        mobileNo.value = null
         emailAddress.value = null
         confirmReceipt.value = false
         uploadedPhoto.value = null
+        purposeType.value = null
         divisionToVisit.value = null
         divisionToVisitIndex.value = null
         purpose.value = null
-        purposeIndex.value = null
+        selectedPurposes.value = ArrayList()
+        selectedPersons.value = ArrayList()
         personToVisit.value = null
-        personToVisitIndex.value = null
         temperature.value = null
+        homeAddress.value = null
+        anyContact.value = null
+        anyContactDetails.value = null
+        haveTravel.value = null
+        haveTravelDetails.value = null
+        declaration.value = null
         region.value = null
         regionIndex.value = null
         city.value = null
-        mobileNumber.value = null
-        healthCondition.value = null
         loginResult.value = null
         printResult.value = null
 

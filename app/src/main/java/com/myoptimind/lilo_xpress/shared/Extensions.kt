@@ -21,6 +21,15 @@ fun String.toRequestBody(): RequestBody {
         MediaType.parse("text/plain"), this)
 }
 
+fun List<String>.toRequestBody(): List<RequestBody> {
+    return map { value ->
+        RequestBody.create(
+            MediaType.parse("text/plain"),
+            value
+        )
+    }
+}
+
 fun ImageView.initLoading(context: Context) {
     Glide.with(context)
         .load(R.drawable.ripple_loading)

@@ -62,6 +62,51 @@
         app:layout_constraintGuide_percent="0.91"
         />
 
+    <RadioGroup
+        android:id="@+id/radiogroup_purposetype"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_purpose_header"
+        app:layout_constraintBottom_toTopOf="@id/label_division_to_visit"
+        app:layout_constraintLeft_toLeftOf="@id/left_guide"
+        app:layout_constraintRight_toRightOf="@id/right_guide"
+        android:gravity="center"
+        app:singleSelection="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+
+        >
+
+        <RadioButton
+            android:id="@+id/services_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ServiceS"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:padding="20dp"
+            android:letterSpacing="0.5"
+            android:textAllCaps="true"
+            android:textColor="@android:color/black"
+            />
+
+        <RadioButton
+            android:id="@+id/person_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Person"
+            android:padding="20dp"
+            android:letterSpacing="0.5"
+            android:textAllCaps="true"
+
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textColor="@android:color/black"
+
+            />
+    </RadioGroup>
+
+
+
     <TextView
         android:id="@+id/label_division_to_visit"
         android:layout_width="0dp"
@@ -89,6 +134,7 @@
         app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
         app:layout_constraintBottom_toTopOf="@id/label_purpose_service"
         style="@style/lilo_til1"
+        android:layout_marginBottom="24dp"
         >
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -114,6 +160,7 @@
         android:src="@drawable/ic_round_keyboard_arrow_down_40"
         android:tint="@android:color/black"
         />
+
 
     <TextView
         android:id="@+id/label_purpose_service"
@@ -141,6 +188,7 @@
         app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
         app:layout_constraintBottom_toTopOf="@id/label_person_to_visit"
         style="@style/lilo_til1"
+
         >
 
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
@@ -190,7 +238,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/label_person_to_visit"
         app:layout_constraintLeft_toLeftOf="@id/label_person_to_visit"
-        app:layout_constraintRight_toRightOf="@id/label_division_to_visit"
+        app:layout_constraintRight_toRightOf="@id/right_guide"
         app:layout_constraintBottom_toTopOf="@id/iv_guest_purpose_back"
         style="@style/lilo_til1"
         app:hintEnabled="false"
@@ -256,6 +304,29 @@
 
 
 
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_purpose_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="label_purpose_service,
+        til_purpose_service,
+        iv_toggle_purpose_service,
+        label_division_to_visit,
+        til_division_to_visit,
+        iv_toggle_division_to_visit"
+        />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_person_to_visit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="label_person_to_visit,
+        til_person_to_visit,
+        iv_toggle_person_to_visit"
+        />
 
 
 

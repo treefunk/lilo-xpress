@@ -77,8 +77,8 @@
         app:layout_constraintVertical_chainStyle="packed"
         app:layout_constraintVertical_bias="0"
 
-        android:layout_marginTop="25dp"
-        style="@style/LiloTextBody1"
+        android:layout_marginTop="10dp"
+        style="@style/LiloTextBody_guestinformation"
         android:text="@string/label_full_name"
         />
 
@@ -115,7 +115,7 @@
         app:layout_constraintBottom_toTopOf="@id/til_agency"
 
         android:layout_marginTop="10dp"
-        style="@style/LiloTextBody1"
+        style="@style/LiloTextBody_guestinformation"
         app:layout_constraintHorizontal_bias="0"
         android:text="@string/label_agency"
         />
@@ -169,7 +169,7 @@
 
 
         android:layout_marginTop="10dp"
-        style="@style/LiloTextBody1"
+        style="@style/LiloTextBody_guestinformation"
         app:layout_constraintHorizontal_bias="0"
         android:text="Attached Agency*"
         />
@@ -208,18 +208,60 @@
         />
 
     <TextView
+        android:id="@+id/label_contact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+
+        app:layout_constraintLeft_toRightOf="@id/left_guide"
+        app:layout_constraintRight_toLeftOf="@id/right_guide"
+        app:layout_constraintTop_toBottomOf="@id/til_attached_agency"
+        app:layout_constraintBottom_toTopOf="@id/til_contact"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintVertical_bias="0"
+
+        android:layout_marginTop="10dp"
+        style="@style/LiloTextBody_guestinformation"
+        android:text="@string/label_mobile_telephone"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_contact"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/label_contact"
+        app:layout_constraintLeft_toLeftOf="@id/label_contact"
+        app:layout_constraintRight_toRightOf="@id/label_contact"
+        app:layout_constraintBottom_toTopOf="@id/label_email_address"
+        style="@style/lilo_til1"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text|phone"
+            android:imeOptions="actionNext"
+            style="@style/lilo_et_box"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+
+    <TextView
         android:id="@+id/label_email_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
 
         app:layout_constraintLeft_toLeftOf="@id/left_guide"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
-        app:layout_constraintTop_toBottomOf="@id/til_attached_agency"
+        app:layout_constraintTop_toBottomOf="@id/til_contact"
         app:layout_constraintBottom_toTopOf="@id/til_email_address"
 
 
         android:layout_marginTop="10dp"
-        style="@style/LiloTextBody1"
+        style="@style/LiloTextBody_guestinformation"
         app:layout_constraintHorizontal_bias="0"
         android:text="Email Address*"
         />
@@ -282,7 +324,6 @@
         app:layout_constraintBottom_toTopOf="@id/card_take_a_photo"
         app:layout_constraintTop_toBottomOf="@id/til_email_address"
         app:layout_constraintBaseline_toBaselineOf="@id/cb_confirm_receipt"
-
         app:layout_constraintVertical_bias="0"
         />
 

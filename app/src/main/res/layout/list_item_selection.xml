@@ -3,22 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="20dp">
+    android:padding="8dp">
+        
 
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <com.google.android.material.button.MaterialButton
+        <CheckBox
             android:id="@+id/btn_select"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Button 1"
-            app:backgroundTint="@color/colorBlueTab"
-            app:iconTint="@color/colorRedTab"
-            style="?attr/materialButtonOutlinedStyle"
+            android:layout_height="wrap_content"
+            android:text="Button 1fdsfsdfsdfdsfsdfsdfsfdsfsdffdsfsdfsdfsdfsdfsdfsdfsdfdsfsdfsdfsfdsfsdffdsfsdffdsfdsf"
+            android:button="@android:color/transparent"
+            android:background="@drawable/selector_select_box"
+            android:textColor="@drawable/selector_black_off_white_on"
+            android:padding="8dp"
+            android:gravity="center"
+            android:layout_centerInParent="true"
             />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </RelativeLayout>

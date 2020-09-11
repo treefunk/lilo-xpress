@@ -131,6 +131,10 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
             et_attached_agency.setText(attachedAgency,false)
         })
 
+        viewModel.mobileNo.observe(viewLifecycleOwner, Observer { contact ->
+            et_contact.setText(contact)
+        })
+
         viewModel.emailAddress.observe(viewLifecycleOwner, Observer { email ->
             et_email_address.setText(email)
         })
@@ -157,14 +161,15 @@ class GuestLoginInfoFragment : TabChildFragment<GuestLoginTab>() {
 
         iv_guest_info_next.setOnClickListener {
             val email = et_email_address.text.toString()
-            if(email.isNotBlank() &&
+/*            if(email.isNotBlank() &&
                     !validateEmail(email)){
                 requireContext().displayAlert("","Invalid E-mail Address Format.")
                 return@setOnClickListener
-            }
+            }*/
 
             if(viewModel.saveStep1(
                 et_full_name.text.toString(),
+                    et_contact.text.toString(),
                 et_email_address.text.toString(),
                 cb_confirm_receipt.isChecked
             )){
