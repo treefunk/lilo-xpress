@@ -1,17 +1,15 @@
 package com.myoptimind.lilo_xpress.guestlogin
 
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.epson.epos2.Epos2Exception
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.data.PurposeType
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.shared.LiloPrinter
-import com.myoptimind.lilo_xpress.shared.MutableOptionList
+import com.myoptimind.lilo_xpress.shared.api.ProvincesCitiesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
@@ -86,6 +84,7 @@ class GuestLoginViewModel
     val homeAddress = MutableLiveData<String>()
     val region = MutableLiveData<String>()
     val regionIndex = MutableLiveData<String>()
+    val province = MutableLiveData<String>()
     val city   = MutableLiveData<String>()
     val experiencing = MutableLiveData<String>()
     val anyContact = MutableLiveData<Boolean>()
@@ -99,9 +98,11 @@ class GuestLoginViewModel
 */
 
     // pre-populated fields
-    val regions = guestLoginRepository.regions
-    val cities  = MediatorLiveData<Result<List<Option>>>()
-    var cities_ : List<Option>? = null
+    val regions   = guestLoginRepository.regions
+//    val cities    = MediatorLiveData<Result<List<Option>>>()
+//    val provinces = MutableLiveData<Result<List<Option>>>()
+
+    val provincesAndCities = MediatorLiveData<Result<ProvincesCitiesResponse>>()
 
     /**
      *  Result as LiveData
@@ -124,9 +125,9 @@ class GuestLoginViewModel
             }
         }
 
-        cities.addSource(regionIndex){ index ->
+        provincesAndCities.addSource(regionIndex){ index ->
             if(index != null){
-                initCities(index)
+                initProvincesCities(index)
             }
         }
 
@@ -141,27 +142,33 @@ class GuestLoginViewModel
         }
     }
 
-    private fun initCities(index: String) {
+    private fun initProvincesCities(index: String) {
         val option = guestLoginRepository.getSelectedRegion(index)
         Timber.v("chosen is ${option.name}")
-            Timber.v("Fetching cities for ${option.name}..")
-            cities.postValue(Result.Loading)
+            Timber.v("Fetching provinces & cities for ${option.name}..")
+            provincesAndCities.postValue(Result.Loading)
             viewModelScope.launch(IO) {
                 try{
-                    val response = guestLoginRepository.fetchCities(option.name!!)
-                    cities.postValue(Result.Success(response.data.cities))
-                    cities_ = response.data.cities
+                    val response = guestLoginRepository.fetchProvincesCities(option.name!!)
+//                    cities.postValue(Result.Success(response.data.cities))
+//                    provinces.postValue(Result.Success(response.data.provinces))
+                    provincesAndCities.postValue(Result.Success(response))
                 }catch (exception: Exception){
                     Timber.e("Failed fetching cities\nError: ${exception.message}")
                     if(exception is UnknownHostException){
-                        cities.postValue(Result.Error(Exception("No Internet Connection, Unable fetching cities..")))
+//                        cities.postValue(Result.Error(Exception("No Internet Connection, Unable fetching cities..")))
+//                        provinces.postValue(Result.Error(Exception("No Internet Connection, Unable fetching provinces...")))
+                        provincesAndCities.postValue(Result.Error(Exception("No Internet Connection, Unable to fetch cities and provinces")))
                     }else{
-                        cities.postValue(Result.Error(exception))
+//                        cities.postValue(Result.Error(exception))
+//                        provinces.postValue(Result.Error(exception))
+                        provincesAndCities.postValue(Result.Error(exception))
                     }
                     delay(5000)
-                    initCities(option.name!!)
+                    initProvincesCities(option.name!!)
                 }
                 city.postValue(null)
+                province.postValue(null)
             }
     }
 
@@ -225,18 +232,20 @@ class GuestLoginViewModel
 
         when(purposeType.value){
             PurposeType.SERVICES -> {
+                this.selectedPersons.value = listOf()
                 this.divisionToVisit.value = guestLoginRepository.getSelectedDivision(this.divisionToVisitIndex.value).name
                 this.purpose.value         = selectedPurposes.value?.map { it.id }?.joinToString(",")
                 if(this.purpose.value.isNullOrBlank() || this.divisionToVisitIndex.value.isNullOrBlank()){ return false }
             }
             PurposeType.PERSON -> {
+                this.divisionToVisit.value = null
+                this.divisionToVisitIndex.value = null
+                this.selectedPurposes.value = listOf()
                 this.personToVisit.value   = selectedPersons.value?.map { it.id }?.joinToString(",")
                 if(this.personToVisit.value.isNullOrBlank()){ return false }
             }
             null -> { return false }
         }
-
-
         return true
     }
 
@@ -291,6 +300,7 @@ class GuestLoginViewModel
 
 
 
+
     fun loginGuest() {
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -314,13 +324,18 @@ class GuestLoginViewModel
                     },
                     multipart,
                     guestLoginRepository.getSelectedDivision(divisionToVisitIndex.value).id?.toRequestBody()!!,
-                    guestLoginRepository.getSelectedPurpose(purposeIndex.value).id?.toRequestBody()!!,
-                    guestLoginRepository.getSelectedPerson(personToVisitIndex.value).id?.toRequestBody()!!,
+                    getSelected(selectedPurposes.value),
+                    getSelected(selectedPersons.value),
                     temperature.value?.toRequestBody()!!,
                     region.value?.toRequestBody()!!,
+                    if(province.value.isNullOrBlank()) "".toRequestBody() else province.value!!.toRequestBody(),
                     city.value?.toRequestBody()!!,
-                    "".toRequestBody(),
-                    "".toRequestBody()
+                    mobileNo.value!!.toRequestBody(),
+                    (if(anyContact.value == true) "1" else "0").toRequestBody(),
+                    if(anyContactDetails.value.isNullOrBlank()) "".toRequestBody() else anyContactDetails.value!!.toRequestBody(),
+                    (if(haveTravel.value == true) "1" else "0").toRequestBody(),
+                    if(haveTravelDetails.value.isNullOrBlank()) "".toRequestBody() else haveTravelDetails.value!!.toRequestBody(),
+                    experiencing.value!!.toRequestBody()
                 )
                 loginResult.postValue(Result.Success(res))
             }catch (exception: Exception){
@@ -329,7 +344,15 @@ class GuestLoginViewModel
             }
 
         }
+    }
 
+    private fun getSelected(options: List<Option>?): List<RequestBody> {
+        if(options != null){
+            return options.map{ option ->
+                "${option.id}"
+            }.toRequestBody()
+        }
+        return listOf()
     }
 
 
@@ -397,6 +420,7 @@ class GuestLoginViewModel
         declaration.value = null
         region.value = null
         regionIndex.value = null
+        province.value = null
         city.value = null
         loginResult.value = null
         printResult.value = null

@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.myoptimind.lilo_xpress.R
+import com.myoptimind.lilo_xpress.data.PurposeType
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
@@ -59,7 +60,10 @@ class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
             when(result){
                 is Result.Success -> {
 
+
+
                     val data = result.data.data
+                    val purposeType = if(data.divisionToVisit.isNullOrBlank()) PurposeType.PERSON else PurposeType.SERVICES
 
                     if(data.emailAddress.isEmpty()){
                         tv_email_address.visibility = View.GONE
@@ -71,8 +75,18 @@ class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
                     tv_fullname.setText(data.fullname)
                     tv_agency_name.setText("${data.agency}\n${data.attachedAgency}")
                     tv_email_address?.setText(data.emailAddress)
-                    tv_division_person_visited.setText("${data.divisionToVisit} / ${data.personToVisit}")
-                    tv_purpose_of_visit.setText(data.purpose)
+
+                    if(purposeType == PurposeType.SERVICES){
+                        label_divison_person_visited.setText("Division")
+                        tv_division_person_visited.setText(data.divisionToVisit)
+                        tv_purpose_of_visit.setText(data.purpose)
+                    }else{
+                        label_divison_person_visited.setText("Person Visited")
+                        tv_division_person_visited.setText(data.personToVisit)
+                        tv_purpose_of_visit.visibility          = View.GONE
+                        label_purpose_of_visit.visibility       = View.GONE
+                    }
+//                    tv_division_person_visited.setText("${data.divisionToVisit} / ${data.personToVisit}")
                     tv_temperature.setText(data.temperature)
                     tv_place_of_origin.setText("${data.region}\n${data.city}")
                     tv_pin_code.setText(data.pinCode)

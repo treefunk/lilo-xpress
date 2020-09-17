@@ -15,7 +15,9 @@ import com.myoptimind.lilo_xpress.guestlogin.GuestLoginTab
 import com.myoptimind.lilo_xpress.guestlogin.GuestLoginViewModel
 import com.myoptimind.lilo_xpress.shared.*
 import kotlinx.android.synthetic.main.fragment_guest_login_cit.*
+import kotlinx.android.synthetic.main.fragment_guest_login_cit.loading
 import kotlinx.android.synthetic.main.fragment_guest_login_info.*
+import kotlinx.android.synthetic.main.fragment_guest_login_print.*
 import timber.log.Timber
 
 class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
@@ -47,6 +49,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
 
 
 
+
         et_temperature.filters = arrayOf<InputFilter>(DecimalDigitsInputFilter(3,2) )
 
         viewModel.temperature.observe(viewLifecycleOwner, Observer { temperature ->
@@ -65,15 +68,33 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         })
 
         et_city.isEnabled = false
-        viewModel.cities.observe(viewLifecycleOwner, Observer { result ->
+        et_province.isEnabled = false
+        val provinceHint = et_province.hint
+        viewModel.provincesAndCities.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Result.Success -> {
                     if(result != null){
                         et_city.isEnabled = true
                         iv_cit_save.isEnabled = true
-                        result.handleData(requireContext(),
+                        val data = result.data.data
+                        val citiesResult = Result.Success(data.cities)
+
+                        citiesResult.handleData(requireContext(),
                             et_city,
                             onSelectItem = { _ -> viewModel.city.value = et_city.text.toString() }
+                        )
+
+                        val provincesResult = Result.Success(data.provinces)
+                        if(provincesResult.data.isNotEmpty()){
+                            et_province.isEnabled = true
+                            et_province.hint = "Select Province"
+                        }else{
+                            et_province.hint = "None"
+                        }
+
+                        provincesResult.handleData(requireContext(),
+                            et_province,
+                            onSelectItem = { _ -> viewModel.province.value = et_province.text.toString() }
                         )
                     }
                 }
@@ -84,14 +105,18 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
                 }
                 Result.Loading -> {
                     et_city.isEnabled = false
+                    et_province.isEnabled = false
                     iv_cit_save.isEnabled = false
                 }
             }
-
         })
 
         viewModel.city.observe(viewLifecycleOwner, Observer { city ->
             et_city.setText(city,false)
+        })
+
+        viewModel.province.observe(viewLifecycleOwner, Observer { province ->
+            et_province.setText(province,false)
         })
 
         viewModel.homeAddress.observe(viewLifecycleOwner, Observer { homeAddress ->
@@ -214,6 +239,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
 
 
         iv_cit_back.setOnClickListener {
+            iv_cit_back.requestFocusFromTouch()
             viewModel.saveStep3(
                 et_temperature.text.toString(),
                 et_home_address.text.toString(),
@@ -227,6 +253,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         }
 
         iv_cit_save.setOnClickListener {
+            iv_cit_back.isFocusable = true
             if (viewModel.saveStep3(
                     et_temperature.text.toString(),
                     et_home_address.text.toString(),
@@ -270,6 +297,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         et_temperature.isEnabled = enabled
         et_region.isEnabled = enabled
         et_city.isEnabled = enabled
+        et_province.isEnabled = enabled
         et_home_address.isEnabled = enabled
         et_are_you_experiencing.isEnabled = enabled
         et_any_contact_details.isEnabled = enabled

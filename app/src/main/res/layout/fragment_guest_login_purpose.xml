@@ -316,16 +316,20 @@
         label_division_to_visit,
         til_division_to_visit,
         iv_toggle_division_to_visit"
+
+        tools:visibility="visible"
         />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_person_to_visit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         app:constraint_referenced_ids="label_person_to_visit,
         til_person_to_visit,
         iv_toggle_person_to_visit"
+
+        tools:visibility="visible"
         />
 
 

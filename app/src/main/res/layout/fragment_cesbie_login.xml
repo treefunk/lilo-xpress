@@ -334,19 +334,19 @@
 
     <ImageView
         android:id="@+id/iv_cesbie_info_save"
-        android:layout_width="170dp"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/left_guide"
         app:layout_constraintRight_toLeftOf="@id/right_guide"
         app:layout_constraintTop_toBottomOf="@id/til_health_condition"
         app:layout_constraintBottom_toBottomOf="@id/background_paper"
 
-        android:layout_marginTop="30dp"
-        app:layout_constraintDimensionRatio="W,0.7:1"
+        android:layout_marginTop="100dp"
+        app:layout_constraintDimensionRatio="W,1:1"
         android:scaleType="fitStart"
-        android:translationX="15dp"
+        android:translationX="5dp"
         app:layout_constraintHorizontal_bias="1"
-        android:src="@drawable/save"
+        android:src="@drawable/confirm_save"
         />
 
     <androidx.constraintlayout.widget.Group

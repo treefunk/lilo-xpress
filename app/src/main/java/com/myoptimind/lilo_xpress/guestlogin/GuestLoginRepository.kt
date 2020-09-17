@@ -8,6 +8,7 @@ import com.myoptimind.lilo_xpress.guestlogin.api.AttachedAgenciesResponse
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
 import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
+import com.myoptimind.lilo_xpress.shared.api.ProvincesCitiesResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -49,12 +50,17 @@ constructor(
         confirmReceipt: RequestBody,
         uploadedPhoto: MultipartBody.Part,
         divisionToVisit: RequestBody,
-        purpose: RequestBody,
-        personToVisit: RequestBody,
+        purpose: List<RequestBody>,
+        personToVisit: List<RequestBody>,
         temperature: RequestBody,
         region: RequestBody,
+        province: RequestBody,
         city: RequestBody,
         mobileNumber: RequestBody,
+        anyContact: RequestBody,
+        anyContactDetails: RequestBody,
+        haveTravel: RequestBody,
+        haveTravelDetails: RequestBody,
         healthCondition: RequestBody
     ): GuestLoginResponse {
         return guestLoginService.loginGuest(
@@ -69,8 +75,13 @@ constructor(
             personToVisit,
             temperature,
             region,
+            province,
             city,
             mobileNumber,
+            anyContact,
+            anyContactDetails,
+            haveTravel,
+            haveTravelDetails,
             healthCondition
         )
     }
@@ -90,6 +101,10 @@ constructor(
 
     suspend fun fetchCities(region: String): CitiesResponse {
         return dropdownDataSource.getCities(region)
+    }
+
+    suspend fun fetchProvincesCities(region: String): ProvincesCitiesResponse {
+        return dropdownDataSource.getProvincesCities(region)
     }
 
 }

@@ -11,6 +11,7 @@ import com.myoptimind.lilo_xpress.data.DropDownType
 import com.myoptimind.lilo_xpress.data.Option
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
+import com.myoptimind.lilo_xpress.shared.api.ProvincesCitiesResponse
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import timber.log.Timber
@@ -101,6 +102,10 @@ constructor(val guestLoginService: GuestLoginService)
     suspend fun getCities(region: String): CitiesResponse {
         return guestLoginService.getCities(region)
     }
+
+    suspend fun getProvincesCities(region: String): ProvincesCitiesResponse {
+        return guestLoginService.getProvincesCities(region)
+    }
 }
 
 /**
@@ -120,6 +125,8 @@ fun AutoCompleteTextView.setUpDropDown(context: Context, values: List<String>, o
     }
     this.setOnItemClickListener { _, _, i, _ -> onItemClickListener(i) }
 }
+
+
 
 // Set Event Listeners to Dropdown
 fun Result<List<Any>>.handleData(context: Context,

@@ -217,6 +217,7 @@
                 app:layout_constraintBottom_toTopOf="@id/tv_division_person_visited"
                 android:layout_marginTop="8dp"
 
+
                 style="@style/LiloTextLightHeader1"
 
                 android:text="@string/label_division_person_visited"

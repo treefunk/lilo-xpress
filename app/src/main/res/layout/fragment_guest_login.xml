@@ -96,7 +96,7 @@
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintDimensionRatio="H,1:1.65"
         android:scaleType="fitEnd"
-        android:src="@drawable/cit"
+        android:src="@drawable/cti"
         />
 
 

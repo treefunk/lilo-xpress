@@ -157,8 +157,11 @@ constructor(
         textData.append("Guest : $fullname\n")
         textData.append("Department/Agency: ${agency.wordWrapped(5)}\n")
         textData.append("Attached Agency: $attachedAgency\n".wordWrapped())
-        textData.append("Person to Visit: $personVisited\n".wordWrapped())
-        textData.append("Purpose of Visit: $purposeOfVisit\n".wordWrapped())
+        if(personVisited.isBlank()){
+            textData.append("Purpose of Visit: $purposeOfVisit\n".wordWrapped())
+        }else{
+            textData.append("Person to Visit: $personVisited\n".wordWrapped())
+        }
         printer.addAndClear(textData)
         if(pinCode != null){
             printer.addFeedLine(1)

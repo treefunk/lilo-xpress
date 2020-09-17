@@ -59,7 +59,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.91" />
 
-    <androidx.core.widget.NestedScrollView
+    <com.myoptimind.lilo_xpress.shared.NestedScrollViewNonFocus
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingBottom="70dp"
@@ -70,9 +70,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            >
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/label_temperature"
@@ -170,10 +168,11 @@
                 style="@style/lilo_til1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/label_city"
+                app:layout_constraintBottom_toTopOf="@id/label_province"
                 app:layout_constraintLeft_toLeftOf="@id/label_region"
                 app:layout_constraintRight_toRightOf="@id/label_temperature"
-                app:layout_constraintTop_toBottomOf="@id/label_region">
+                app:layout_constraintTop_toBottomOf="@id/label_region"
+                >
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/et_region"
@@ -182,9 +181,9 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="false"
+                    android:hint="Select Region"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:hint="Select Region"/>
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,6 +202,58 @@
             />
 
             <TextView
+                android:id="@+id/label_province"
+                style="@style/LiloTextBody1"
+                android:layout_width="0dp"
+
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Province"
+                android:visibility="gone"
+
+
+                app:layout_constraintBottom_toTopOf="@id/til_province"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_region" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_province"
+                style="@style/lilo_til1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/label_city"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_province">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/et_province"
+                    style="@style/lilo_et_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
+                    android:hint="Select Province"
+                    android:textColorHint="?android:textColorHint"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <ImageView
+                android:id="@+id/iv_toggle_province"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_round_keyboard_arrow_down_40"
+                android:tint="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@id/til_province"
+                app:layout_constraintRight_toRightOf="@id/til_province"
+                app:layout_constraintTop_toTopOf="@id/til_province" />
+
+            <TextView
                 android:id="@+id/label_city"
                 style="@style/LiloTextBody1"
                 android:layout_width="0dp"
@@ -217,7 +268,7 @@
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_region" />
+                app:layout_constraintTop_toBottomOf="@id/til_province" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_city"
@@ -236,9 +287,9 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="false"
+                    android:hint="Select City"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:hint="Select City"/>
+                    android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -252,6 +303,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/til_city"
                 app:layout_constraintRight_toRightOf="@id/til_city"
                 app:layout_constraintTop_toTopOf="@id/til_city" />
+
+
 
 
             <TextView
@@ -280,15 +333,16 @@
                 app:layout_constraintBottom_toTopOf="@id/label_any_contact"
                 app:layout_constraintLeft_toLeftOf="@id/label_are_you_experiencing"
                 app:layout_constraintRight_toRightOf="@id/label_temperature"
-                app:layout_constraintTop_toBottomOf="@id/label_are_you_experiencing">
+                app:layout_constraintTop_toBottomOf="@id/label_are_you_experiencing"
+                >
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/et_are_you_experiencing"
                     style="@style/lilo_et_box"
-                    android:clickable="true"
-                    android:focusable="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="false"
                     android:imeOptions="actionNext"
                     android:inputType="text" />
 
@@ -311,52 +365,50 @@
 
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/text_any_contact"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
+                android:justificationMode="inter_word"
+                android:text="@string/text_any_contact"
                 app:layout_constraintBottom_toTopOf="@id/toggle_contact"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:justificationMode="inter_word"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintTop_toBottomOf="@id/til_are_you_experiencing" />
+                app:layout_constraintTop_toBottomOf="@id/til_are_you_experiencing"
+                />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggle_contact"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/label_any_contact"
+                android:gravity="center"
+                app:layout_constraintBottom_toTopOf="@id/til_any_contact_details"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/til_any_contact_details"
-                android:gravity="center"
-                app:singleSelection="true"
-                >
+                app:layout_constraintTop_toBottomOf="@id/label_any_contact"
+                app:singleSelection="true">
 
                 <Button
                     android:id="@+id/contact_yes"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="YES"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:padding="20dp"
                     android:letterSpacing="0.5"
+                    android:padding="20dp"
+                    android:text="YES"
                     android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/contact_no"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NO"
-                    android:padding="20dp"
                     android:letterSpacing="0.5"
+                    android:padding="20dp"
+                    android:text="NO"
+
                     android:textAllCaps="true"
-
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:textColor="@android:color/black"
-
                     />
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -366,20 +418,20 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:visibility="gone"
                 app:hintEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/toggle_contact"
                 app:layout_constraintBottom_toTopOf="@id/label_travel"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:visibility="gone">
+                app:layout_constraintTop_toBottomOf="@id/toggle_contact">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_any_contact_details"
                     style="@style/lilo_et_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
                     android:hint="Please provide details..."
+                    android:imeOptions="actionNext"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -391,51 +443,48 @@
 
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/text_travel"
+                android:layout_marginBottom="8dp"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/til_any_contact_details"
+                android:justificationMode="inter_word"
+                android:text="@string/text_travel"
                 app:layout_constraintBottom_toTopOf="@id/toggle_travel"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:justificationMode="inter_word"
-                android:layout_marginBottom="8dp"
-                 />
+                app:layout_constraintTop_toBottomOf="@id/til_any_contact_details" />
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/toggle_travel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/label_travel"
+                android:gravity="center"
+                app:layout_constraintBottom_toTopOf="@id/tv_declaration"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tv_declaration"
-                android:gravity="center"
-                app:singleSelection="true"
-                >
+                app:layout_constraintTop_toBottomOf="@id/label_travel"
+                app:singleSelection="true">
 
                 <Button
                     android:id="@+id/travel_yes"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="YES"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:padding="20dp"
                     android:letterSpacing="0.5"
+                    android:padding="20dp"
+                    android:text="YES"
                     android:textAllCaps="true"
-                    android:textColor="@android:color/black"
-                    />
+                    android:textColor="@android:color/black" />
 
                 <Button
                     android:id="@+id/travel_no"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NO"
-                    android:padding="20dp"
                     android:letterSpacing="0.5"
-                    android:textAllCaps="true"
+                    android:padding="20dp"
+                    android:text="NO"
 
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:textAllCaps="true"
                     android:textColor="@android:color/black"
 
                     />
@@ -447,25 +496,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
+                android:visibility="gone"
                 app:hintEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/toggle_travel"
                 app:layout_constraintBottom_toTopOf="@id/tv_declaration"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:visibility="gone">
+                app:layout_constraintTop_toBottomOf="@id/toggle_travel">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_travel_details"
                     style="@style/lilo_et_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="actionNext"
                     android:hint="Please provide details..."
+                    android:imeOptions="actionNext"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
             <com.google.android.material.checkbox.MaterialCheckBox
@@ -492,10 +539,10 @@
                 android:id="@+id/tv_declaration"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
                 android:gravity="top"
                 android:justificationMode="inter_word"
-                android:layout_marginTop="18dp"
-
+                android:visibility="gone"
                 android:lineHeight="40dp"
                 android:text="@string/text_declaration"
                 android:textColor="@android:color/black"
@@ -524,11 +571,11 @@
 
             <ImageView
                 android:id="@+id/iv_cit_save"
-                android:layout_width="170dp"
+                android:layout_width="190dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/save"
-                android:translationX="15dp"
+                android:src="@drawable/confirm"
+                android:translationX="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
 
                 app:layout_constraintDimensionRatio="W,0.7:1"
@@ -539,7 +586,7 @@
                 app:layout_constraintVertical_bias="0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </com.myoptimind.lilo_xpress.shared.NestedScrollViewNonFocus>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/loading_components_cit"

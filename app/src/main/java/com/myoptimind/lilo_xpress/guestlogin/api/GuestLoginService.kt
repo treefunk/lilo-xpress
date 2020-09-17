@@ -1,6 +1,7 @@
 package com.myoptimind.lilo_xpress.guestlogin.api
 
 import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
+import com.myoptimind.lilo_xpress.shared.api.ProvincesCitiesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -27,9 +28,17 @@ interface GuestLoginService {
         region: String
     ): CitiesResponse
 
+    @POST("get-provinces-cities")
+    @FormUrlEncoded
+    suspend fun getProvincesCities(
+        @Field("region")
+        region: String
+    ): ProvincesCitiesResponse
+
     /**
      * Upload image for single item
      */
+    @JvmSuppressWildcards
     @Multipart
     @POST("visitors/guest-login")
     suspend fun loginGuest(
@@ -44,8 +53,13 @@ interface GuestLoginService {
         @Part("person_to_visit[]") personToVisit: List<RequestBody>,
         @Part("temperature") temperature: RequestBody,
         @Part("region") region: RequestBody,
+        @Part("province") province: RequestBody,
         @Part("city") city: RequestBody,
         @Part("mobile_number") mobileNumber: RequestBody,
+        @Part("is_recent_contact") anyContact: RequestBody,
+        @Part("recent_contact_details") anyContactDetails: RequestBody,
+        @Part("is_travelled_locally") haveTravelLocally: RequestBody,
+        @Part("travelled_locally_details") haveTravelDetails: RequestBody,
         @Part("health_condition") healthCondition: RequestBody
     ): GuestLoginResponse
 

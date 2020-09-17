@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.myoptimind.lilo_xpress.R
+import com.myoptimind.lilo_xpress.data.PurposeType
 import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.guestlogout.GuestLogoutTab
@@ -19,7 +20,11 @@ import com.myoptimind.lilo_xpress.shared.LiloPrinter
 import com.myoptimind.lilo_xpress.shared.TabChildFragment
 import com.myoptimind.lilo_xpress.shared.initLoading
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_guest_login_print.*
 import kotlinx.android.synthetic.main.fragment_guest_logout_print.*
+import kotlinx.android.synthetic.main.fragment_guest_logout_print.label_divison_person_visited
+import kotlinx.android.synthetic.main.fragment_guest_logout_print.label_purpose_of_visit
+import kotlinx.android.synthetic.main.fragment_guest_logout_print.loading
 import kotlinx.android.synthetic.main.fragment_guest_logout_print.tv_agency_name
 import kotlinx.android.synthetic.main.fragment_guest_logout_print.tv_date_and_time
 import kotlinx.android.synthetic.main.fragment_guest_logout_print.tv_division_person_visited
@@ -64,12 +69,26 @@ class GuestLogoutPrintFragment : TabChildFragment<GuestLogoutTab>() {
             when(result){
                 is Result.Success -> {
                     val data = result.data.data
+
+                    val purposeType = if(data.division.isNullOrBlank()) PurposeType.PERSON else PurposeType.SERVICES
                     tv_date_and_time.setText(data.logoutTimeFormat)
                     tv_fullname.setText(data.fullname)
                     tv_agency_name.setText("${data.agency}\n${data.attachedAgency}")
                     tv_email_address.setText(data.emailAddress)
-                    tv_division_person_visited.setText("${data.division} / ${data.personVisited}")
-                    tv_purpose_of_visit.setText(data.purpose)
+
+                    if(purposeType == PurposeType.SERVICES){
+                        label_divison_person_visited.setText("Division")
+                        tv_division_person_visited.setText(data.division)
+                        tv_purpose_of_visit.setText(data.purpose)
+                    }else{
+                        label_divison_person_visited.setText("Person Visited")
+                        tv_division_person_visited.setText(data.personVisited)
+                        tv_purpose_of_visit.visibility          = View.GONE
+                        label_purpose_of_visit.visibility       = View.GONE
+                    }
+//                    tv_division_person_visited.setText("${data.division} / ${data.personVisited}")
+//                    tv_purpose_of_visit.setText(data.purpose)
+
                     tv_temperature.setText(data.temperature)
                     tv_place_of_origin.setText("${data.region}\n${data.city}")
                     tv_duration_of_visit.setText(data.duration)
