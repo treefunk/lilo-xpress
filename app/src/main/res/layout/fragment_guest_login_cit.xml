@@ -542,7 +542,6 @@
                 android:layout_marginTop="18dp"
                 android:gravity="top"
                 android:justificationMode="inter_word"
-                android:visibility="gone"
                 android:lineHeight="40dp"
                 android:text="@string/text_declaration"
                 android:textColor="@android:color/black"

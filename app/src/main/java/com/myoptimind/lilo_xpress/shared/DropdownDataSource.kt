@@ -83,6 +83,8 @@ constructor(val guestLoginService: GuestLoginService)
             }catch (exception: Exception){
                 agencies.postValue(Result.Error(exception))
                 persons.postValue(Result.Error(exception))
+                delay(5000)
+                fetchGuestInfoStep2()
             }
         }
     }
@@ -95,6 +97,8 @@ constructor(val guestLoginService: GuestLoginService)
                 regions.postValue(Result.Success(res.data.placeOfOrigins))
             }catch (exception: Exception){
                 regions.postValue(Result.Error(exception))
+                delay(5000)
+                fetchGuestInfoStep3()
             }
         }
     }
