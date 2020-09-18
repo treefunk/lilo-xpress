@@ -35,6 +35,7 @@ interface GuestLoginService {
         region: String
     ): ProvincesCitiesResponse
 
+
     /**
      * Upload image for single item
      */

@@ -88,7 +88,7 @@ class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
                     }
 //                    tv_division_person_visited.setText("${data.divisionToVisit} / ${data.personToVisit}")
                     tv_temperature.setText(data.temperature)
-                    tv_place_of_origin.setText("${data.region}\n${data.city}")
+                    tv_place_of_origin.setText(data.placeOfOrigin)
                     tv_pin_code.setText(data.pinCode)
                     btn_print_login.setOnClickListener {
                        viewModel.printData(result.data)

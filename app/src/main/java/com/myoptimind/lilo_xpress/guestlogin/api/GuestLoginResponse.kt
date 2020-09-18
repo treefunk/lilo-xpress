@@ -49,6 +49,9 @@ class GuestLoginResponse (
         val healthCondition: String,
 
         @SerializedName("pin_code")
-        val pinCode: String
+        val pinCode: String,
+
+        @SerializedName("place_of_origin")
+        val placeOfOrigin: String
     )
 }

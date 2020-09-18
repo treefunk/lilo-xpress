@@ -48,6 +48,9 @@ class GuestLogoutResponse(
         @SerializedName("pin_code")
         val pinCode: String,
 
-        val duration: String
+        val duration: String,
+
+        @SerializedName("place_of_origin")
+        val placeOfOrigin: String
     )
 }
