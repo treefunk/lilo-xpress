@@ -424,6 +424,7 @@ class GuestLoginViewModel
         city.value = null
         loginResult.value = null
         printResult.value = null
+        experiencing.value = null
 
     }
 }

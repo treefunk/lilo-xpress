@@ -51,6 +51,8 @@ class GuestLoginResponse (
         @SerializedName("pin_code")
         val pinCode: String,
 
+        val province: String,
+
         @SerializedName("place_of_origin")
         val placeOfOrigin: String
     )

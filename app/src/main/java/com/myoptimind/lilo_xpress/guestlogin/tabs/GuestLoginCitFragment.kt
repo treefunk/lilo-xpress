@@ -275,6 +275,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
                 is Result.Success -> {
                     loading_components_cit.visibility = View.GONE
                     enableInputs(true)
+                    requireContext().displayAlert("",result.data.meta.message)
                     guestTabChanger.changeTab(GuestLoginTab.PRINT)
                 }
                 is Result.Error -> {

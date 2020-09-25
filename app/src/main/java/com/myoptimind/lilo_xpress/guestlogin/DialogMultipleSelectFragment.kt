@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -35,7 +36,9 @@ abstract class DialogMultipleSelectFragment: BottomSheetDialogFragment() {
         }
 
         val rv = v?.findViewById<RecyclerView>(R.id.rv_selections)
-        rv?.layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
+//        rv?.layoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
+        rv?.layoutManager = GridLayoutManager(requireContext(),3)
+
         selectAdapter = MultipleSelectAdapter(ArrayList(), selectListener)
         rv?.adapter = selectAdapter
         return v

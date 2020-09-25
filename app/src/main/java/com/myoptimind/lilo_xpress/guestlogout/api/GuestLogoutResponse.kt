@@ -50,6 +50,8 @@ class GuestLogoutResponse(
 
         val duration: String,
 
+        val province: String,
+
         @SerializedName("place_of_origin")
         val placeOfOrigin: String
     )

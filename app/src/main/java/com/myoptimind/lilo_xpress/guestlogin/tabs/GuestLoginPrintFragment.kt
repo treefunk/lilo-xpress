@@ -21,6 +21,19 @@ import com.myoptimind.lilo_xpress.shared.initLoading
 import dagger.hilt.android.AndroidEntryPoint
 
 import kotlinx.android.synthetic.main.fragment_guest_login_print.*
+import kotlinx.android.synthetic.main.fragment_guest_login_print.label_divison_person_visited
+import kotlinx.android.synthetic.main.fragment_guest_login_print.label_email_address
+import kotlinx.android.synthetic.main.fragment_guest_login_print.label_purpose_of_visit
+import kotlinx.android.synthetic.main.fragment_guest_login_print.loading
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_agency_name
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_date_and_time
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_division_person_visited
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_email_address
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_fullname
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_place_of_origin
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_purpose_of_visit
+import kotlinx.android.synthetic.main.fragment_guest_login_print.tv_temperature
+import kotlinx.android.synthetic.main.fragment_guest_logout_print.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -88,7 +101,13 @@ class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
                     }
 //                    tv_division_person_visited.setText("${data.divisionToVisit} / ${data.personToVisit}")
                     tv_temperature.setText(data.temperature)
-                    tv_place_of_origin.setText(data.placeOfOrigin)
+                    val sb = StringBuilder()
+                    sb.append(data.region)
+                    if(data.province.isNotEmpty()){
+                        sb.append(",${data.province}")
+                    }
+                    sb.append("\n${data.city}")
+                    tv_place_of_origin.setText(sb.toString())
                     tv_pin_code.setText(data.pinCode)
                     btn_print_login.setOnClickListener {
                        viewModel.printData(result.data)

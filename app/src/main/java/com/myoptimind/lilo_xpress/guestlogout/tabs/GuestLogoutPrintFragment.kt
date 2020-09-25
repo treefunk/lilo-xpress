@@ -90,7 +90,14 @@ class GuestLogoutPrintFragment : TabChildFragment<GuestLogoutTab>() {
 //                    tv_purpose_of_visit.setText(data.purpose)
 
                     tv_temperature.setText(data.temperature)
-                    tv_place_of_origin.setText(data.placeOfOrigin)
+
+                    val sb = StringBuilder()
+                    sb.append(data.region)
+                    if(data.province.isNotEmpty()){
+                        sb.append(",${data.province}")
+                    }
+                    sb.append("\n${data.city}")
+                    tv_place_of_origin.setText(sb.toString())
                     tv_duration_of_visit.setText(data.duration)
 
                     btn_print_logout.setOnClickListener {
