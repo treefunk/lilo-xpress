@@ -327,6 +327,7 @@ class GuestLoginViewModel
                     getSelected(selectedPurposes.value),
                     getSelected(selectedPersons.value),
                     temperature.value?.toRequestBody()!!,
+                    homeAddress.value?.toRequestBody()!!,
                     region.value?.toRequestBody()!!,
                     if(province.value.isNullOrBlank()) "".toRequestBody() else province.value!!.toRequestBody(),
                     city.value?.toRequestBody()!!,

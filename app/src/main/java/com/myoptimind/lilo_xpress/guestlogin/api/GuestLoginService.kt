@@ -53,6 +53,7 @@ interface GuestLoginService {
         @Part("purpose[]") purpose: List<RequestBody>,
         @Part("person_to_visit[]") personToVisit: List<RequestBody>,
         @Part("temperature") temperature: RequestBody,
+        @Part("home_address") homeAddress: RequestBody,
         @Part("region") region: RequestBody,
         @Part("province") province: RequestBody,
         @Part("city") city: RequestBody,
