@@ -85,6 +85,7 @@ class GuestLoginViewModel
     val region = MutableLiveData<String>()
     val regionIndex = MutableLiveData<String>()
     val province = MutableLiveData<String>()
+    val provinceIndex= MutableLiveData<String>()
     val city   = MutableLiveData<String>()
     val experiencing = MutableLiveData<String>()
     val anyContact = MutableLiveData<Boolean>()
@@ -99,8 +100,9 @@ class GuestLoginViewModel
 
     // pre-populated fields
     val regions   = guestLoginRepository.regions
-//    val cities    = MediatorLiveData<Result<List<Option>>>()
-//    val provinces = MutableLiveData<Result<List<Option>>>()
+    val cities    = MediatorLiveData<Result<List<Option>>>()
+    val provinces = MediatorLiveData<Result<List<Option>>>()
+    var provinces_: List<Option>? = null
 
     val provincesAndCities = MediatorLiveData<Result<ProvincesCitiesResponse>>()
 
@@ -125,9 +127,18 @@ class GuestLoginViewModel
             }
         }
 
-        provincesAndCities.addSource(regionIndex){ index ->
+        provinces.addSource(regionIndex){ index ->
             if(index != null){
-                initProvincesCities(index)
+                initProvinces(index)
+            }
+        }
+
+        cities.addSource(provinceIndex){ index ->
+/*            cities.value = null
+            city.value = null*/
+            if(index != null){
+                province.value = provinces_!![index.toInt()].name
+                initCities(index)
             }
         }
 
@@ -142,35 +153,59 @@ class GuestLoginViewModel
         }
     }
 
-    private fun initProvincesCities(index: String) {
+    private fun initProvinces(index: String){
         val option = guestLoginRepository.getSelectedRegion(index)
         Timber.v("chosen is ${option.name}")
-            Timber.v("Fetching provinces & cities for ${option.name}..")
-            provincesAndCities.postValue(Result.Loading)
-            viewModelScope.launch(IO) {
-                try{
-                    val response = guestLoginRepository.fetchProvincesCities(option.name!!)
-//                    cities.postValue(Result.Success(response.data.cities))
-//                    provinces.postValue(Result.Success(response.data.provinces))
-                    provincesAndCities.postValue(Result.Success(response))
-                }catch (exception: Exception){
-                    Timber.e("Failed fetching cities\nError: ${exception.message}")
-                    if(exception is UnknownHostException){
-//                        cities.postValue(Result.Error(Exception("No Internet Connection, Unable fetching cities..")))
-//                        provinces.postValue(Result.Error(Exception("No Internet Connection, Unable fetching provinces...")))
-                        provincesAndCities.postValue(Result.Error(Exception("No Internet Connection, Unable to fetch cities and provinces")))
-                    }else{
-//                        cities.postValue(Result.Error(exception))
-//                        provinces.postValue(Result.Error(exception))
-                        provincesAndCities.postValue(Result.Error(exception))
-                    }
-                    delay(5000)
-                    initProvincesCities(option.name!!)
+        Timber.v("Fetching provinces for ${option.name}..")
+        provinces.postValue(Result.Loading)
+        viewModelScope.launch(IO) {
+            try {
+                val response = guestLoginRepository.fetchProvinces(option.name!!)
+                provinces.postValue(Result.Success(response.data.provinces))
+                provinces_ = response.data.provinces
+            }catch (exception: Exception){
+                Timber.e("Failed fetching cities\nError: ${exception.message}")
+                if(exception is UnknownHostException){
+                    provinces.postValue(Result.Error(Exception("No Internet Connection, Unable to fetch cities and provinces")))
+                }else{
+                    provinces.postValue(Result.Error(exception))
                 }
-                city.postValue(null)
-                province.postValue(null)
+                delay(5000)
+                initProvinces(index)
             }
+            province.postValue(null)
+            city.postValue(null)
+            cities.postValue(null)
+        }
     }
+
+    private fun initCities(index: String){
+        if(provinces_ == null){
+            return
+        }
+        val option = provinces_!![index.toInt()]
+
+        Timber.v("chosen is ${option.name}")
+        Timber.v("Fetching provinces & cities for ${option.name}..")
+        cities.postValue(Result.Loading)
+        viewModelScope.launch(IO) {
+            try {
+                val response = guestLoginRepository.fetchCities(option.name!!)
+                cities.postValue(Result.Success(response.data.cities))
+            }catch (exception: Exception){
+                Timber.e("Failed fetching cities\nError: ${exception.message}")
+                if(exception is UnknownHostException){
+                    cities.postValue(Result.Error(Exception("No Internet Connection, Unable to fetch cities and cities")))
+                }else{
+                    cities.postValue(Result.Error(exception))
+                }
+                delay(5000)
+                initCities(index)
+            }
+            city.postValue(null)
+        }
+    }
+
 
     private fun initAttachedAgency(index : String){
         val option = guestLoginRepository.getSelectedAttachedAgency(index)
@@ -426,6 +461,10 @@ class GuestLoginViewModel
         loginResult.value = null
         printResult.value = null
         experiencing.value = null
+        provinces.value = null
+        provinces_ = null
+        cities.value = null
+
 
     }
 }

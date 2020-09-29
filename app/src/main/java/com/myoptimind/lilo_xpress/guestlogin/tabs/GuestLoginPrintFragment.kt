@@ -104,7 +104,7 @@ class GuestLoginPrintFragment : TabChildFragment<GuestLoginTab>() {
                     val sb = StringBuilder()
                     sb.append(data.region)
                     if(data.province.isNotEmpty()){
-                        sb.append(",${data.province}")
+                        sb.append(", ${data.province}")
                     }
                     sb.append("\n${data.city}")
                     tv_place_of_origin.setText(sb.toString())

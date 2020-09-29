@@ -70,7 +70,73 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
         et_city.isEnabled = false
         et_province.isEnabled = false
         val provinceHint = et_province.hint
-        viewModel.provincesAndCities.observe(viewLifecycleOwner, Observer { result ->
+
+        viewModel.provinces.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Result.Success -> {
+                    if(result != null){
+                        et_city.isEnabled = true
+                        et_province.isEnabled = true
+                        iv_cit_save.isEnabled = true
+                        result.handleData(requireContext(),
+                            et_province,
+                            onSelectItem = { i -> viewModel.provinceIndex.value = i.toString() }
+                            )
+
+                        if(result.data.isNotEmpty()){
+                            et_province.isEnabled = true
+                            et_province.hint = "Select Province"
+                        }else{
+                            et_province.hint = "None"
+                        }
+                    }
+                }
+                is Result.Error -> {
+                    iv_cit_save.isEnabled = true
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Result.Loading -> {
+                    et_province.isEnabled = false
+                    iv_cit_save.isEnabled = false
+                    et_city.isEnabled = false
+                }
+                null -> {
+                    et_city.isEnabled = false
+                    et_province.isEnabled = false
+                }
+            }
+        })
+
+        viewModel.cities.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Result.Success -> {
+                    if(result != null){
+                        et_city.isEnabled = true
+                        iv_cit_save.isEnabled = true
+                        result.handleData(requireContext(),
+                            et_city,
+                            onSelectItem = { _ -> viewModel.city.value = et_city.text.toString() }
+                        )
+                    }
+                }
+                is Result.Error -> {
+                    iv_cit_save.isEnabled = true
+                    Toast.makeText(requireContext(), result.error.message, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                Result.Loading -> {
+                    iv_cit_save.isEnabled = false
+                    et_city.isEnabled = false
+                }
+                null -> {
+                    et_city.isEnabled = false
+                }
+            }
+        })
+
+
+/*        viewModel.provincesAndCities.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Result.Success -> {
                     if(result != null){
@@ -109,7 +175,7 @@ class GuestLoginCitFragment : TabChildFragment<GuestLoginTab>() {
                     iv_cit_save.isEnabled = false
                 }
             }
-        })
+        })*/
 
         viewModel.city.observe(viewLifecycleOwner, Observer { city ->
             et_city.setText(city,false)

@@ -9,6 +9,7 @@ import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
 import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
 import com.myoptimind.lilo_xpress.shared.api.ProvincesCitiesResponse
+import com.myoptimind.lilo_xpress.shared.api.ProvincesResponse
 import com.myoptimind.lilo_xpress.shared.toRequestBody
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -101,8 +102,12 @@ constructor(
         return guestLoginService.getAttachedAgencies(agencyId)
     }
 
-    suspend fun fetchCities(region: String): CitiesResponse {
-        return dropdownDataSource.getCities(region)
+    suspend fun fetchProvinces(region: String): ProvincesResponse {
+        return dropdownDataSource.getProvinces(region)
+    }
+
+    suspend fun fetchCities(province: String): CitiesResponse {
+        return dropdownDataSource.getCities(province)
     }
 
     suspend fun fetchProvincesCities(region: String): ProvincesCitiesResponse {

@@ -2,6 +2,7 @@ package com.myoptimind.lilo_xpress.guestlogin.api
 
 import com.myoptimind.lilo_xpress.shared.api.CitiesResponse
 import com.myoptimind.lilo_xpress.shared.api.ProvincesCitiesResponse
+import com.myoptimind.lilo_xpress.shared.api.ProvincesResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -24,9 +25,16 @@ interface GuestLoginService {
     @POST("get-cities")
     @FormUrlEncoded
     suspend fun getCities(
-        @Field("region")
+        @Field("province")
         region: String
     ): CitiesResponse
+
+    @POST("get-provinces")
+    @FormUrlEncoded
+    suspend fun getProvinces(
+        @Field("region")
+        region: String
+    ): ProvincesResponse
 
     @POST("get-provinces-cities")
     @FormUrlEncoded
