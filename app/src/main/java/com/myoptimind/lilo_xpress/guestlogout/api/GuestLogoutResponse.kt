@@ -1,7 +1,6 @@
 package com.myoptimind.lilo_xpress.guestlogout.api
 
 import com.google.gson.annotations.SerializedName
-import com.myoptimind.lilo_xpress.data.Meta
 
 class GuestLogoutResponse(
     val data: Data,
@@ -24,7 +23,7 @@ class GuestLogoutResponse(
         @SerializedName("email_address")
         val emailAddress: String,
 
-        val division: String,
+        val division: String? = null,
 
         @SerializedName("person_visited")
         val personVisited: String,
@@ -53,6 +52,27 @@ class GuestLogoutResponse(
         val province: String,
 
         @SerializedName("place_of_origin")
-        val placeOfOrigin: String
+        val placeOfOrigin: String,
+
+        @SerializedName("person_to_visit")
+        val personToVisit: String
+    )
+
+    class Meta(
+        val post: Post,
+        val ecopy: String,
+        val message: String,
+        val status: String
+    )
+
+    class Post(
+        @SerializedName("pin_code")
+        val pinCode: String,
+
+        @SerializedName("overall_experience")
+        val overallExperience: String,
+
+        val feedback: String
+
     )
 }

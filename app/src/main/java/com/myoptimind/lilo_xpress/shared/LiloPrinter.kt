@@ -63,6 +63,7 @@ constructor(
         pairedDevices?.forEach { device ->
             val deviceName = device.name
             if(deviceName.toUpperCase().contains("TM-P20")){
+                Timber.v("DETECTED $deviceName")
                 address = device.address // MAC address
             }
         }
@@ -99,7 +100,7 @@ constructor(
         agency: String,
         attachedAgency: String,
         email: String,
-        divisionName: String,
+        divisionName: String? = null,
         personVisited: String,
         purposeOfVisit: String,
         temperature: String,
@@ -114,7 +115,7 @@ constructor(
 
         printer.clearCommandBuffer()
 
-        val logoData = BitmapFactory.decodeResource(context.resources, R.drawable.logo)
+
         val textData = StringBuilder()
 
 
@@ -126,11 +127,18 @@ constructor(
         textData.append("No. 3 Marcelino St., Isidora Hills\n")
         textData.append("Brgy. Holy Spirit, Diliman\n")
         textData.append("Quezon City 1127, Philippines\n")
+        textData.append("Tel. Nos. +632 89514981 to 85\n")
         textData.append("www.cesboard.gov.ph\n")
+        textData.append("TUV NORD, ISO 9001\n")
+        textData.append("Certificate Registration No.\n")
+        textData.append("44100102375\n")
 
         textData.append("------------------------------\n")
         printer.addAndClear(textData)
 
+
+/*        val logoData = BitmapFactory.decodeResource(context.resources, R.drawable.cesb_header3)
+        printer.addTextAlign(Printer.ALIGN_LEFT)
 
         printer.addImage(
             logoData, 0, 0,
@@ -141,10 +149,7 @@ constructor(
             Printer.HALFTONE_DITHER,
             Printer.PARAM_DEFAULT.toDouble(),
             Printer.COMPRESS_AUTO
-        )
-
-        printer.addFeedLine(2)
-
+        )*/
         textData.append("The CESB Express\n")
         textData.append("Log-in, Log-out System\n")
         textData.append("------------------------------\n")
@@ -192,6 +197,22 @@ constructor(
         printer.addFeedLine(1)
         printer.addCut(Printer.CUT_FEED)
         printer.addSound(Printer.PATTERN_C,5,Printer.PARAM_DEFAULT)
+
+/*        printer.addTextAlign(Printer.ALIGN_LEFT)
+        val logoFooter = BitmapFactory.decodeResource(context.resources, R.drawable.cesb_footer)
+        printer.addImage(
+            logoFooter, 0, 0,
+            logoFooter.getWidth(),
+            logoFooter.getHeight(),
+            Printer.COLOR_1,
+            Printer.MODE_MONO,
+            Printer.HALFTONE_DITHER,
+            Printer.PARAM_DEFAULT.toDouble(),
+            Printer.COMPRESS_AUTO
+        )*/
+
+
+        printer.addFeedLine(2)
 
 
 
@@ -247,8 +268,6 @@ constructor(
             
             For compliments or suggestions, please
             email us at feedback@cesboard.gov.ph
-            
-            "Isang Karangalan ang Maglingkod sa Bayan" 
         """.trimIndent()
     }
 

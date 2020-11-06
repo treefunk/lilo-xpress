@@ -18,6 +18,7 @@ import com.myoptimind.lilo_xpress.shared.TabChildFragment
 import com.myoptimind.lilo_xpress.shared.displayAlert
 import com.myoptimind.lilo_xpress.shared.initLoading
 import kotlinx.android.synthetic.main.fragment_guest_logout_experience.*
+import timber.log.Timber
 
 class GuestLogoutExperienceFragment : TabChildFragment<GuestLogoutTab>() {
 
@@ -69,6 +70,7 @@ class GuestLogoutExperienceFragment : TabChildFragment<GuestLogoutTab>() {
         viewModel.guestLogout.observe(viewLifecycleOwner, Observer { result ->
             when(result){
                 is Result.Success -> {
+                    Timber.v("success logout")
                     loading_components_experience.visibility = View.GONE
                     enableInputs(true)
                     requireContext().displayAlert("Success", result.data.meta.message)
@@ -76,6 +78,7 @@ class GuestLogoutExperienceFragment : TabChildFragment<GuestLogoutTab>() {
 
                 }
                 is Result.Error -> {
+                    Timber.v("error logout")
                     loading_components_experience.visibility = View.GONE
                     enableInputs(true)
                     requireContext().displayAlert(

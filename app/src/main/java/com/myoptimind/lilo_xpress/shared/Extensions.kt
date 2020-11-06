@@ -14,6 +14,8 @@ import com.myoptimind.lilo_xpress.data.Result
 import kotlinx.android.synthetic.main.fragment_guest_logout_enter_pin.*
 import okhttp3.MediaType
 import okhttp3.RequestBody
+import org.json.JSONObject
+import retrofit2.HttpException
 import timber.log.Timber
 
 fun String.toRequestBody(): RequestBody {
@@ -57,4 +59,9 @@ fun Context.displayGenericFormError(){
         .setPositiveButton("Ok",null)
         .create()
         .show()
+}
+
+fun HttpException.getMessage(): String {
+    val errorJsonString = this.response()?.errorBody()?.string()
+    return JSONObject(errorJsonString!!).getJSONObject("meta").getString("message")
 }

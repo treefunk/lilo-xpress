@@ -11,8 +11,10 @@ import com.myoptimind.lilo_xpress.data.Result
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginResponse
 import com.myoptimind.lilo_xpress.guestlogout.api.GuestLogoutResponse
 import com.myoptimind.lilo_xpress.shared.LiloPrinter
+import com.myoptimind.lilo_xpress.shared.getMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import kotlin.Exception
 
 class GuestLogoutViewModel
@@ -57,6 +59,7 @@ constructor(
         experience.value = null
         feedback.value = null
         guestLogout.value = null
+        printResult.value = null
     }
 
     fun save(
@@ -72,6 +75,12 @@ constructor(
                 )
                 guestLogout.postValue(Result.Success(result))
             }catch (exception: Exception){
+//                if(exception is HttpException){
+//                    val message = exception.getMessage()
+//                    guestLogout.postValue(Result.Error(Exception(message)))
+//                }else{
+//                    guestLogout.postValue(Result.Error(exception))
+//                }
                 guestLogout.postValue(Result.Error(Exception(exception.message)))
             }
         }
@@ -91,7 +100,7 @@ constructor(
                     data.agency,
                     data.attachedAgency,
                     data.emailAddress,
-                    data.division,
+                    data?.division,
                     data.personVisited,
                     data.purpose,
                     data.temperature,
@@ -105,6 +114,8 @@ constructor(
 
                 printResult.postValue(Result.Success("Successfully printed receipt"))
             }catch (exception: Exception){
+
+
                 printResult.postValue(Result.Error(exception))
             }
         }

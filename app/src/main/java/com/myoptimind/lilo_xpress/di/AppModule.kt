@@ -1,6 +1,7 @@
 package com.myoptimind.lilo_xpress.di
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.myoptimind.lilo_xpress.BuildConfig
 import com.myoptimind.lilo_xpress.guestlogin.api.GuestLoginService
 import com.myoptimind.lilo_xpress.shared.DropdownDataSource
@@ -16,6 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(ApplicationComponent::class)
 class AppModule {
@@ -26,20 +28,27 @@ class AppModule {
     fun provideRetrofit(): Retrofit {
 
         val okHttpClient = OkHttpClient.Builder().addInterceptor { chain ->
-            chain.proceed(chain.request().newBuilder().addHeader(
+            chain.proceed(
+                chain.request().newBuilder().addHeader(
                     "x-api-key",
                     BuildConfig.APIKEY
                 ).build()
             )
         }.connectTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
-            .readTimeout(60, TimeUnit.SECONDS).build()
+            .readTimeout(60, TimeUnit.SECONDS)
+
+
+        val gson = GsonBuilder()
+            .setLenient()
+            .disableHtmlEscaping()
+            .create()
 
 
         return Retrofit.Builder()
             .baseUrl("http://lilo.blitzworx.com/api/")
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient.build())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
